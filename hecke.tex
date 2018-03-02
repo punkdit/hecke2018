@@ -1,0 +1,284 @@
+
+\documentclass[11pt,oneside]{article} 
+
+\usepackage{a4wide}
+
+\usepackage{amsmath}
+\usepackage{color}
+%\usepackage{natbib} % kills arxiv 
+\usepackage{framed}
+%\usepackage{cite}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{amsthm}
+%\RequirePackage{algorithmic}
+%\RequirePackage{algorithm}
+%\RequirePackage{theorem}
+%\RequirePackage{eucal}
+\RequirePackage{color}
+\RequirePackage{url}
+\RequirePackage{mdwlist}
+
+\RequirePackage[all]{xy}
+%\_CompileMatrices
+%\RequirePackage{hyperref}
+\RequirePackage{graphicx}
+%\RequirePackage[dvips]{geometry}
+
+\usepackage{xcolor}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage[caption=false]{subfig}
+\usepackage{enumerate}
+\usepackage{mathrsfs}
+
+% -------------- Commands ----------------------
+
+\newcommand{\Eref}[1]{(\ref{#1})}
+\newcommand{\Fref}[1]{Fig.~\ref{#1}}
+%\newcommand{\Aref}[1]{Appendix~\ref{#1}}
+\newcommand{\SRef}[1]{Section~\ref{#1}}
+
+\newcommand{\todo}[1]{\ \textcolor{red}{\{#1\}}\ }
+
+\newcommand{\Aut}{\mathrm{Aut}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Stab}{\mathrm{Stab}}
+\newcommand{\Fix}{\mathrm{Fix}}
+\newcommand{\Orbit}{\mathrm{Orbit}}
+\newcommand{\Complex}{\mathbb{C}}
+
+% Lemma, proof, theorem, etc.
+\newcommand\dolemma[1]{\vskip 5pt \noindent{\bf \underline{Lemma #1.}\ }}
+\newcommand\doproposition[1]{\vskip 5pt \noindent {\bf \underline{Proposition #1.}\ }}
+\newcommand\dotheorem[1]{\vskip 5pt \noindent {\bf \underline{Theorem #1.}\ }}
+\newcommand\doexample[1]{\vskip 5pt \noindent {\bf \underline{Example #1.}\ }}
+\newcommand\doproof{\vskip 5pt \noindent{\bf \underline{Proof:}\ }}
+
+\newcommand\tombstone{\rule{.36em}{2ex}\vskip 5pt}
+
+\newcounter{numitem}
+\newcommand{\numitem}[1]{\refstepcounter{numitem}\thenumitem\label{#1}}
+
+% braket notation...
+\newcommand{\ket}[1]{|{#1}\rangle}
+\newcommand{\expect}[1]{\langle{#1}\rangle}
+\newcommand{\bra}[1]{\langle{#1}|}
+\newcommand{\ketbra}[2]{\ket{#1}\!\bra{#2}}
+\newcommand{\braket}[2]{\langle{#1}|{#2}\rangle}
+
+% Categories
+\newcommand{\Set}{\mathbf{Set}}
+\newcommand{\FinSet}{\mathbf{FinSet}}
+\newcommand{\GSet}{\mathbf{GSet}}
+\newcommand{\GRep}{\mathbf{GRep}}
+
+
+
+\title{Notes on Hecke Operators}
+
+\author{Simon Burton}
+
+
+\date{\today}
+
+\flushbottom
+
+\begin{document}
+
+\maketitle
+
+%\begin{abstract}
+%\end{abstract}
+
+%\tableofcontents
+
+%\doublespacing
+%\onehalfspacing
+
+\subsection{Group acting on a set}
+
+We say a group $G$ \emph{acts} on a set $X$ when there
+is a group homomorphism:
+$$
+    G \to \Aut(X).
+$$
+We choose not to name this homomorphism, and instead
+confuse the elements of $G$ with their image in $\Aut(X).$
+In this way we understood expressions such as $gx$ for $g\in G, x\in X.$
+This is similar to how a field acts on a vector space:
+we don't usually write the homomorphism, and instead just
+let elements of the field act on the vectors (on the left.)
+
+We also call this setup a $G$-set $X$.
+
+%A map from a group action $G\to\Aut(X)$ to $G\to\Aut(Y)$
+A map of $G$-sets $X\to Y$
+is a set function $f:X\to Y$ that commutes with the group action.
+That is, for every $g\in G$ we have the commuting square:
+\[
+\begin{tikzcd}
+ X \arrow{d}{f} \arrow{r}{g} &  X \arrow{d}{f} \\
+ Y \arrow{r}{g} &  Y 
+\end{tikzcd}
+\]
+Thinking of $G$ as a one object category, a group action is
+then a set-valued functor and we see that a map of $G$-sets
+is the same as a natural transformation of functors.
+This gives the category of $G$-sets which we denote $\GSet.$
+
+For $x\in X$ the \emph{stabilizer} is defined
+$$
+    \Stab(x) := \{ g\in G \ | \ gx = x \}.
+$$
+This is clearly a subgroup of $G$.
+Dually, 
+the \emph{fixed point set} of $g\in G$
+is the subset of $X$ given by
+$$
+    \Fix(g) := \{ x\in X \ | \ gx = x \}.
+$$
+\todo{In what sense are these really dual?}
+
+The \emph{orbit} of $x\in X$ is the set
+$$
+    \Orbit(x) := \{ gx \ | \ g\in G \}.
+$$
+
+The following lemma shows that the stabilizers of
+points in the same orbit are related by conjugation.
+\begin{samepage}
+\dolemma{\numitem{lemmaStabConj}}
+Given a $G$-set $X$, with $x\in X, g\in G$, we have
+$$
+    \Stab(gx) = g\Stab(x) g^{-1}.
+$$
+\tombstone
+\end{samepage}
+
+\dotheorem{(orbit-stabilizer)}
+Given a $G$-set $X$ and a point $x\in X$
+there is a $\Set$ bijection:
+$$
+    \Orbit(x) \times \Stab(x) \cong G.
+$$
+
+\doproof
+Let $H$ be the subgroup
+$$
+    H = \Stab(x).
+$$
+Then $G$ is partitioned into cosets $\{gH\ |\ g\in G\}.$
+We claim that this set of cosets is in bijection with
+the orbit of $x$.
+The bijection is given by
+\begin{align*}
+    \Orbit(x) &\to \{gH \ |\ g\in G\} \\
+    gx  &\mapsto  gH.
+\end{align*}
+To show that this is well defined,
+let $gx=hx$ for $g,h\in G.$
+Then $h^{-1}gx = x$ and so $h^{-1}g\in H,$
+and the cosets $gH$ and $hH$ are identical.
+\todo{finish}
+\tombstone
+
+\subsection{Hecke operators}
+
+Let $\Complex[X]$ denote the complex vector space with basis $X.$
+Evidently, when $X$ is a $G$-set, we get a $\Complex$-linear
+representation of $G$ on $\Complex[X].$
+A $\Complex$-linear representation of $G$ obtained in this
+way we call a \emph{permutation representation}.
+
+Given a point $x\in X$ we denote the corresponding basis
+vector in $\Complex[X]$ as $\ket{x},$
+and corresponding dual vector as $\bra{x}.$
+We also denote generic vectors in $\Complex[X]$ by $\ket{v}$, $\ket{u}$, etc.
+
+Given $G$-sets $X$ and $Y$, and points $x\in X, y\in Y$
+we define the \emph{Hecke operator} as the linear operator
+$$
+    \Complex[X] \overset{r_{x,y}}{\longrightarrow} \Complex[Y]
+$$
+given by
+$$
+    r_{x,y} := \frac{1}{|\Stab(x)||\Stab(y)|} 
+    \sum_{g\in G} \ket{gy}\bra{gx}.
+$$
+
+\dolemma{\numitem{lemmaHecke1}}
+The Hecke operators are $G$-rep homomorphisms:
+$$
+    r_{x,y} \in \Hom_{\GRep}(\Complex[X], \Complex[Y]).
+$$
+
+\doproof
+We need to show that 
+$gr_{x,y}\ket{v} = r_{x,y} g\ket{v}$ for $\ket{v}\in\Complex[X], g\in G.$
+By linearity we need only consider this equation on basis vectors:
+$gr_{x,y}\ket{x'} = r_{x,y} g\ket{x'}$ for $x'\in X, g\in G.$
+Computing:
+\begin{align*}
+    \mathrm{LHS} &= g\sum_{h\in H} \ket{hy} \\
+     &= \sum_{h\in H} gh \ket{y} \\
+    \mathrm{RHS} &= \sum_{h\in G} \ket{hy}\braket{hx}{gx} \\
+     &= \sum_{h\in G, hx=gx} \ket{hy}\\
+     &= \sum_{h\in H} gh \ket{y}.
+\end{align*}
+\todo{what is $H$?}
+\tombstone
+
+
+\dotheorem{\numitem{thm1}}
+Given two permutation representation $\Complex[X]$
+and $\Complex[Y]$ of a group $G$,
+the Hecke operators
+$$
+    \{ r_{x,y} \ | \ x\in X, y\in Y \}
+$$
+form a basis for the linear space
+$$
+\Hom_{\GRep}(\Complex[X], \Complex[Y]).
+$$
+
+\doproof
+Let $f\in \Hom_{\GRep}(\Complex[X], \Complex[Y]).$
+Then for any $g\in G, x\in X, y\in Y$ we have:
+\begin{align*}
+    gf\ket{x} &= fg\ket{x} \\ 
+    f\ket{x} &= g^{-1}fg\ket{x} \\ 
+    \bra{y}f\ket{x} &= \bra{y}g^{-1}fg\ket{x} \\ 
+              &= \bra{gy}f\ket{gx}.
+\end{align*}
+ie., the matrix for $f$ is constant on the orbits of
+$X\times Y$ and so $f$ is a sum of Hecke operators.
+\tombstone
+
+\dolemma{\numitem{lemmaHecke2}}
+Given a doubly transitive action $G\to\Aut(X)$
+the permutation representation $\Complex[X]$
+breaks into exactly two irreducible representations. % in $\GRep.$
+\doproof
+There are two Hecke operators corresponding to the
+diagonal matrix, and the off-diagonal matrix.
+The result follows by the previous theorem and Schur's lemma.
+\tombstone
+
+\subsection{Bibliographic notes}
+
+See \cite{Dress1971}
+
+
+\bibliography{refs}{}
+\bibliographystyle{abbrv}
+
+
+
+\end{document}
+
+
+
