@@ -189,16 +189,28 @@ $$
     \Orbit(x) := \{ gx \ | \ g\in G \}.
 $$
 
-The following lemma shows that the stabilizers of
-points in the same orbit are related by conjugation.
-\begin{samepage}
-\dolemma{\numitem{lemmaStabConj}}
-Given a $G$-set $X$, with $x\in X, g\in G$, we have
+A simple calculation shows that the stabilizers of
+points in the same orbit are related by conjugation:
+given a $G$-set $X$, with $x\in X, g\in G$, we have
 $$
     \Stab(gx) = g\Stab(x) g^{-1}.
 $$
-\tombstone
-\end{samepage}
+
+Given an arbitrary group $G$, 
+there are many ways to cook up a set that $G$ acts on.
+The most important such recipe is the following.
+Let $H$ be any subgroup of $G$,
+and let $X=\{gH\}_{g\in G}$ be the set of left cosets of $H$.
+Then $G$ acts on $X$ by left-multiplication,
+and this action is transitive.
+We get the \emph{left regular action} when $H=\{1\}$ and
+we get the trivial action when $H=G.$
+But this recipe has a converse:
+any transitive $G$-set $X$ is
+isomorphic to a $G$-set $\{gH\}_{g\in G}$ for
+some subgroup $H\in G.$
+The subgroup can be chosen to be the
+stabilizer of any point $x\in X.$
 
 We now state the \emph{orbit-stabilizer theorem}.
 \dotheorem{\numitem{thmOS}}%{\bf (orbit-stabilizer)}
@@ -215,13 +227,13 @@ $$
 $$
 Then $G$ is partitioned into cosets $\{gH\ |\ g\in G\}.$
 We claim that this set of cosets is in bijection with
-the orbit of $x$.
-The bijection is given by
+the orbit of $x$,
+with bijection given by the relation
 \begin{align*}
     \Orbit(x) &\to \{gH \ |\ g\in G\} \\
     gx  &\mapsto  gH.
 \end{align*}
-To show that this is well defined,
+To show that this relation is actually a function,
 let $gx=hx$ for $g,h\in G.$
 Then $h^{-1}gx = x$ and so $h^{-1}g\in H,$
 and the cosets $gH$ and $hH$ are identical.
@@ -231,15 +243,14 @@ and the cosets $gH$ and $hH$ are identical.
 % https://math.stackexchange.com/questions/1659075/category-theoretic-relation-between-orbit-stabilizer-and-rank-nullity-theorems/2168381
 \doexample{\numitem{exvec}}
 The rank-nullity theorem says that given
-a linear map $A:V\to V$,
+a linear map on finite-dimensional vector spaces $A:V\to V$,
 $$
     \Dim(\Image(A)) + \Dim(\Ker(A)) = \Dim(V).
 $$
-Such a map also gives a group action:
+Such a map gives a group action:
 it is the additive group of $V$ acting on the set $V$
 by addition. That is, any $v\in V$ acts on $x\in V$ as
 $v: x \mapsto x+Av.$ 
-
 Now we see that given any $x\in V$ the stabilizer subgroup
 $\Stab(x)$ of this action is precisely the kernel
 of $A.$ The orbit of $x$ is $x$ plus the image of $A.$
@@ -278,16 +289,6 @@ the set of orbits:
 $$
     G\backslash X := \{\Orbit(x)\}_{x\in X}.
 $$
-For a $G$-invariant map of sets $f:X\to Y$, 
-ie., $f(x)=f(gx)$ for all $g\in G$,
-we can find a unique map $\tilde{f}: G\backslash X\to Y$ such that
-\[
-\begin{tikzcd}
- X \arrow{rd}{p} \arrow{r}{f} &  Y \\
-  &  G\backslash X \arrow{u}{\tilde{f}} 
-\end{tikzcd}
-\]
-Where $p$ is the projection map $p:X\to G\backslash X.$
 
 The following is known as ``Burnside's lemma''.
 \dotheorem{\numitem{thmBurnside}}%{\bf (Burnside's lemma)}
@@ -324,7 +325,7 @@ with $X_i$ simple, and the summation is unique up to reordering.
 Easy.
 \tombstone
 
-The next theorem is Schur's lemma for $G$-sets.
+The next theorem is a kind of ``Schur's lemma for $G$-sets''.
 \dotheorem{\numitem{F1schur}}
 Given $G$-sets $X$ and $Y$:
 
@@ -339,12 +340,84 @@ if $Y$ is simple then $f$ is surjective.
 Easy.
 \tombstone
 
-
 \subsection{The category of canonical orbits}
 
-Taken from \cite{Bredon2006}.
+Taken from \cite{Bredon2006,Dress1971}.
+
+\subsection{Double cosets}
+
+Given a map of sets $f:X\to Y$, 
+that is \emph{$G$-invariant}
+ie., $f(x)=f(gx)$ for all $g\in G, x\in X$,
+we can \emph{lift} to a unique map $\tilde{f}: G\backslash X\to Y$ such that
+\[
+\begin{tikzcd}
+ X \arrow{rd}{p} \arrow{r}{f} &  Y \\
+  &  G\backslash X \arrow{u}{\tilde{f}} 
+\end{tikzcd}
+\]
+where $p$ is the projection map $p:X\to G\backslash X.$
+We use this observation in the proof of the following.
+
+\doproposition{\numitem{propdcoset}}
+Given a group $G$ with subgroups $H$ and $K$,
+the orbit-space of the $G$-set $G/H~\times~G/K$ is in bijection
+with the $H,K$ double cosets:
+$$
+    G\backslash(G/H\times G/K) \cong \{ HgK \}_{g\in G}.
+$$
+\doproof
+We will show that the following relation
+\begin{align*}
+f : G/H\times G/K &\to \{HgK\}_{g\in G} \\
+    f(aH, bK) &:= Ha^{-1}bK,
+\end{align*}
+defines a $G$-invariant function that lifts
+to the required bijection on the orbits.
+
+(i) That $f$ defines a function:
+for any $h\in H, k\in K$,
+$f(aH,bK)=Ha^{-1}bK=H(h^{-1}a^{-1})(bk)K=f(ahH,bkK).$
+
+(ii) That $f$ is $G$-invariant: 
+$f(gaH, gbK) = Ha^{-1}g^{-1}gbK = f(aH, bK)$.
+
+(iii) $f$ is surjective, and so the lift $\tilde{f}$,
+\[
+\begin{tikzcd}
+ G/H\times G/K \arrow{rd}{p} \arrow{r}{f} &  Y \\
+  &  G\backslash (G/H\times G/K) \arrow{u}{\tilde{f}} 
+\end{tikzcd}
+\]
+is also surjective.
+
+(iv) That $\tilde{f}$ is injective,
+\begin{align*}
+    f(aH, bK) &= f(cH, dK) \ \ \mathrm{iff} \\
+    Ha^{-1}bK &= Hc^{-1}dK \ \ \mathrm{iff}  \\
+    \exists h,k\in G,\  a^{-1}b &= hc^{-1}dk \ \ \mathrm{iff} \\
+    b &= (ahc^{-1})dk \ \ \mathrm{iff} \\
+    bK = gdK,\ \  & aH = gcH, \ \ \mathrm{where}\ \  g=ahc^{-1} 
+\end{align*}
+And so $(aH, bK)$ and $(cH, dK)$ are in the same orbit.
+\tombstone
 
 
+\doproposition{\numitem{propfinestmut}}
+\todo{Not sure how this goes exactly...}
+Let $G$ be a group, with subgroups $H$ and $K$.
+Considered as an equivelance relation on the
+elements of $G$, the set of double cosets $\{HgK\}_{g\in G}$
+is the finest mutual coarsening of the equivelance
+relations given by the right and left cosets,
+$\{Hg\}_{g\in G}$ and $\{gK\}_{g\in G}.$
+In other words, as equivelance relations we have
+$$
+\{HgK\}_{g\in G} = \{Hg\}_{g\in G} \vee \{gK\}_{g\in G}.
+$$
+\doproof
+\todo{todo}
+\tombstone
 
 
 \subsection{Hecke operators}
@@ -427,19 +500,6 @@ breaks into exactly two irreducible representations. % in $\GRep.$
 There are two Hecke operators corresponding to the
 diagonal matrix, and the off-diagonal matrix.
 The result follows by the previous theorem and Schur's lemma.
-\tombstone
-
-\doproposition{\numitem{doublecosets}}
-For a group $G$ with subgroups $H, K$,
-the orbits of the $G$-set $G/H\times G/K$ 
-are in bijection with the double cosets $\{HgK\}_{g\in G}.$
-\doproof
-Define the function 
-\begin{align*}
-f : G/H\times G/K &\to \{HgK\}_{g\in G} \\
-    (aH, bK) &\mapsto Ha^{-1}bK.
-\end{align*}
-\todo{finish...}
 \tombstone
 
 \section{Examples}
