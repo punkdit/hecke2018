@@ -49,14 +49,21 @@
 \newcommand{\Stab}{\mathrm{Stab}}
 \newcommand{\Fix}{\mathrm{Fix}}
 \newcommand{\Orbit}{\mathrm{Orbit}}
+\newcommand{\Ker}{\mathrm{Ker}}
+\newcommand{\Image}{\mathrm{Im}}
+\newcommand{\Dim}{\mathrm{Dim}}
 \newcommand{\Complex}{\mathbb{C}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\Field}{\mathbb{F}}
 
 % Lemma, proof, theorem, etc.
+\newcommand\nounderline[1]{ #1} 
 \newcommand\dolemma[1]{\vskip 5pt \noindent{\bf \underline{Lemma #1.}\ }}
 \newcommand\doproposition[1]{\vskip 5pt \noindent {\bf \underline{Proposition #1.}\ }}
 \newcommand\dotheorem[1]{\vskip 5pt \noindent {\bf \underline{Theorem #1.}\ }}
+\newcommand\docorollary[1]{\vskip 5pt \noindent {\bf \underline{Corollary #1.}\ }}
 \newcommand\doexample[1]{\vskip 5pt \noindent {\bf \underline{Example #1.}\ }}
-\newcommand\doproof{\vskip 5pt \noindent{\bf \underline{Proof:}\ }}
+\newcommand\doproof{\vskip 5pt \noindent{\bf \nounderline{Proof:}\ }}
 
 \newcommand\tombstone{\rule{.36em}{2ex}\vskip 5pt}
 
@@ -99,7 +106,41 @@
 %\doublespacing
 %\onehalfspacing
 
-\subsection{Group acting on a set}
+\section{Introduction}
+
+Group representation theory concerns itself with
+homomorphisms from a group $G$ to the general
+linear group over a field $k:$
+$$
+    G \to \GL(n, k).
+$$
+The definition of the general linear group
+makes sense not just for
+a field $k$, but also for a ring, or even a 
+semi-ring (a ring without additive inverses.)
+In particular, we consider 
+the semi-ring of truth-values:
+$$
+    \Field_1 = \{\mathrm{false}, \mathrm{true}\}
+$$
+with addition as disjunction and multiplication
+as conjunction.
+The notation $\Field_1$ refers to the ``field
+with one element'',
+which however is not a field and doesn't have one element \cite{Lorscheid2018}. 
+We have the following
+\dotheorem{\numitem{F1thm}}
+The group $\GL(n, \Field_1)$ consists of $n\times n$
+permutation matrices, and is therefore isomorphic
+to the permutation group $S_n$.
+\doproof
+Adapted from \cite{Speyer2011}.
+\tombstone
+
+And so we find that group representation theory over the
+semi-ring of truth values is the theory of groups acting on sets.
+
+\section{Groups acting on sets}
 
 We say a group $G$ \emph{acts} on a set $X$ when there
 is a group homomorphism:
@@ -159,9 +200,10 @@ $$
 \tombstone
 \end{samepage}
 
-\dotheorem{(orbit-stabilizer)}
+We now state the \emph{orbit-stabilizer theorem}.
+\dotheorem{\numitem{thmOS}}%{\bf (orbit-stabilizer)}
 Given a $G$-set $X$ and a point $x\in X$
-there is a $\Set$ bijection:
+there is a bijection of sets:
 $$
     \Orbit(x) \times \Stab(x) \cong G.
 $$
@@ -185,6 +227,125 @@ Then $h^{-1}gx = x$ and so $h^{-1}g\in H,$
 and the cosets $gH$ and $hH$ are identical.
 \todo{finish}
 \tombstone
+
+% https://math.stackexchange.com/questions/1659075/category-theoretic-relation-between-orbit-stabilizer-and-rank-nullity-theorems/2168381
+\doexample{\numitem{exvec}}
+The rank-nullity theorem says that given
+a linear map $A:V\to V$,
+$$
+    \Dim(\Image(A)) + \Dim(\Ker(A)) = \Dim(V).
+$$
+Such a map also gives a group action:
+it is the additive group of $V$ acting on the set $V$
+by addition. That is, any $v\in V$ acts on $x\in V$ as
+$v: x \mapsto x+Av.$ 
+
+Now we see that given any $x\in V$ the stabilizer subgroup
+$\Stab(x)$ of this action is precisely the kernel
+of $A.$ The orbit of $x$ is $x$ plus the image of $A.$
+
+Working with a vector space over a finite field,
+we can take the cardinality of these sets as in the formula
+$|\Orbit(x)||\Stab(x)| = |G|$ and 
+take the logarithm of this where the base is
+the size of the field and we get exactly the rank-nullity
+equation.
+
+Over an infinite field this doesn't work and
+we need to think more along the lines of a categorified
+orbit-stabilizer theorem. 
+\todo{Does this really work?}
+In this case, for each $x\in
+V$ we can find a bijection:
+
+$$
+\Orbit(x) \cong G / \Stab(x)
+$$
+and this bijection gives us the First Isomorphism Theorem:
+$$
+\Image(A) \cong V / \Ker(A). 
+$$ 
+\todo{Question: 
+Can we bootstrap this one more time in order
+to say something about the size of the homology 
+groups in a chain complex?
+Perhaps thinking of a (length 2) 
+chain complex as a 2-category?}
+\tombstone
+
+For a $G$-set $X$, the \emph{orbit space} is defined as
+the set of orbits:
+$$
+    G\backslash X := \{\Orbit(x)\}_{x\in X}.
+$$
+For a $G$-invariant map of sets $f:X\to Y$, 
+ie., $f(x)=f(gx)$ for all $g\in G$,
+we can find a unique map $\tilde{f}: G\backslash X\to Y$ such that
+\[
+\begin{tikzcd}
+ X \arrow{rd}{p} \arrow{r}{f} &  Y \\
+  &  G\backslash X \arrow{u}{\tilde{f}} 
+\end{tikzcd}
+\]
+Where $p$ is the projection map $p:X\to G\backslash X.$
+
+The following is known as ``Burnside's lemma''.
+\dotheorem{\numitem{thmBurnside}}%{\bf (Burnside's lemma)}
+Given a $G$-set $X$,
+$$
+    |G\backslash X| = \frac{1}{|G|} \sum_{g\in G} | \Fix(g) |.
+$$
+\doproof
+\todo{todo}
+\tombstone
+
+An action is \emph{faithful} when for each $g\in G$ with
+$g\ne 1$ we have $\Fix(g)\ne X.$
+An action is \emph{free} when for each $g\in G$ with
+$g\ne 1$ we have $\Fix(g)=\phi.$
+
+\todo{define a torsor}
+
+A $G$-set $X$ with only one orbit is called \emph{simple} 
+(or \emph{transitive}, or \emph{indecomposable}).
+
+Given two $G$-sets $X$ and $Y$, we define the sum $X+Y$ 
+\todo{...} and the product $X\times Y$ \todo{...}
+
+The following theorem shows that 
+$G$-sets are semi-simple.
+\dotheorem{\numitem{F1semisimple}}
+For a $G$-set $X$, we have
+$$
+    X = \sum_{i=1}^{n} X_i
+$$
+with $X_i$ simple, and the summation is unique up to reordering.
+\doproof
+Easy.
+\tombstone
+
+The next theorem is Schur's lemma for $G$-sets.
+\dotheorem{\numitem{F1schur}}
+Given $G$-sets $X$ and $Y$:
+
+(a) For $f:X\to Y,$ we have $f(X)$ is a $G$-set, $f(X)\subseteq Y.$
+
+(b) For $f:X\to Y,$ and $X\ne\phi$,
+if $Y$ is simple then $f$ is surjective.
+
+(c) For $f:X\to X$ with $X$ simple, $f$ is an automorpism.
+
+\doproof
+Easy.
+\tombstone
+
+
+\subsection{The category of canonical orbits}
+
+Taken from \cite{Bredon2006}.
+
+
+
 
 \subsection{Hecke operators}
 
@@ -258,7 +419,7 @@ ie., the matrix for $f$ is constant on the orbits of
 $X\times Y$ and so $f$ is a sum of Hecke operators.
 \tombstone
 
-\dolemma{\numitem{lemmaHecke2}}
+\docorollary{\numitem{Hecke2}}
 Given a doubly transitive action $G\to\Aut(X)$
 the permutation representation $\Complex[X]$
 breaks into exactly two irreducible representations. % in $\GRep.$
@@ -268,9 +429,26 @@ diagonal matrix, and the off-diagonal matrix.
 The result follows by the previous theorem and Schur's lemma.
 \tombstone
 
-\subsection{Bibliographic notes}
+\doproposition{\numitem{doublecosets}}
+For a group $G$ with subgroups $H, K$,
+the orbits of the $G$-set $G/H\times G/K$ 
+are in bijection with the double cosets $\{HgK\}_{g\in G}.$
+\doproof
+Define the function 
+\begin{align*}
+f : G/H\times G/K &\to \{HgK\}_{g\in G} \\
+    (aH, bK) &\mapsto Ha^{-1}bK.
+\end{align*}
+\todo{finish...}
+\tombstone
 
-See \cite{Dress1971}
+\section{Examples}
+
+\section{Bibliographic notes}
+
+Group actions with applications to group theory: \cite{ConradGroup,ConradTransitive}.
+
+See \cite{Dress1971}.
 
 
 \bibliography{refs}{}
