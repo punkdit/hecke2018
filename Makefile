@@ -1,8 +1,6 @@
 
-all: hecke.pdf
 
-
-hecke.pdf: hecke.tex  refs.bib
+all: hecke.tex  refs.bib
 	pdflatex hecke.tex
 	bibtex hecke
 	pdflatex hecke.tex

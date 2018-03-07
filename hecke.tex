@@ -83,6 +83,10 @@
 \newcommand{\GSet}{\mathbf{GSet}}
 \newcommand{\GRep}{\mathbf{GRep}}
 
+\newcommand{\thinplus}{\!+\!}
+
+\renewcommand{\arraystretch}{1.2}
+
 
 
 \title{Notes on Hecke Operators}
@@ -307,7 +311,7 @@ $g\ne 1$ we have $\Fix(g)=\phi.$
 
 \todo{define a torsor}
 
-A $G$-set $X$ with only one orbit is called \emph{simple} 
+A $G$-set with only one orbit is called \emph{simple} 
 (or \emph{transitive}, or \emph{indecomposable}).
 
 Given two $G$-sets $X$ and $Y$, we define the sum $X+Y$ 
@@ -502,7 +506,295 @@ diagonal matrix, and the off-diagonal matrix.
 The result follows by the previous theorem and Schur's lemma.
 \tombstone
 
-\section{Examples}
+\section{Kleinien geometry}
+
+Given a homogeneous ``space'' $X$ 
+the idea is to refer to, or define, geometric 
+figures (a ``line'' or ``point'', etc.)
+by the subgroup that fixes that figure.
+%This is essentially the same idea as in Galois theory, 
+
+\begin{center}
+\includegraphics[]{pic-structure.pdf} 
+\end{center}
+
+\subsection{Example: $S_3$}
+
+We consider the group $G = S_3$ 
+the permutation group on three things.
+Enumerating these three things, we write
+the elements of $S_3$ according to their
+action:
+$$
+    S_3 = \bigl\{ (1)(2)(3), (1)(23), (13)(2), (12)(3), (123), (132) \bigr\}.
+$$
+
+This group acts on the triangle:
+\begin{center}
+\includegraphics[]{pic-triangle.pdf} 
+\end{center}
+but we can only see this action if we add some
+\emph{structure}. 
+For example, we can number the
+points (vertices) of the triangle:
+\begin{center}
+\includegraphics[]{pic-triangle-numbered.pdf} 
+\end{center}
+We call this kind of structure a \emph{frame}
+because it allows us to see everything that is going on.
+
+Here we do the same, but instead of numbering the points
+we shade a portion of the interior.
+This is a more geometric kind of frame.
+\begin{center}
+\includegraphics[]{pic-triangle-frames.pdf} 
+\end{center}
+By shading a different portion we find the structure
+corresponding to a \emph{point}:
+\begin{center}
+\includegraphics[]{pic-triangle-points.pdf} 
+\end{center}
+There is one other structure that we haven't found yet:
+\begin{center}
+\includegraphics[]{pic-triangle-orientations.pdf} 
+\end{center}
+This structure we call an \emph{orientation}.
+
+Using the Kleinien perspective, we associate
+each of these structures with the subgroup of $G$
+that stabilizes the structure.
+And vice-versa: every subgroup of $G$ corresponds
+to some kind of structure.
+
+%\begin{samepage}
+%%\underline{title }
+%\begin{center}
+%\begin{tabular}{ |c|l| }
+%\hline
+%structure & stabilizer subgroup, other cosets           \\
+%\hline
+%nothing   & $\bigl\{(1)(2)(3), (1)(23), (13)(2), (12)(3), (123), (132) \bigr\}$ \\
+%\hline
+%orientation   & $\bigl\{(1)(2)(3), (123), (132)\bigr\}, \ \bigl\{ (1)(23), (13)(2), (12)(3)\bigr\}$ \\
+%\hline
+%point  & $\bigl\{(1)(2)(3), (1)(23) \bigr\}, \ \bigl\{(13)(2), (123)\bigr\}, \ \bigl\{(12)(3), (132)\bigr\} $ \\
+%\hline
+%"  & $\bigl\{(1)(2)(3), (13)(2) \bigr\}, \ \bigl\{ (1)(23), (132) \bigr\}, \ \bigl\{(12)(3), (123)\bigr\} $ \\
+%\hline
+%"  & $\bigl\{(1)(2)(3), (12)(3) \bigr\}, \ \bigl\{ (13)(2), (132) \bigr\}, \ \bigl\{(1)(23), (123)\bigr\} $ \\
+%\hline
+%frame   & $\bigl\{(1)(2)(3)\bigr\}, \ \bigl\{ (1)(23)\bigr\}, \ \bigl\{ (13)(2)\bigr\}, \ \bigl\{ (12)(3)\bigr\}, \ \bigl\{ (123)\bigr\}, \ \bigl\{ (132) \bigr\}$ \\
+%\hline
+%\end{tabular}
+%\end{center}
+%\end{samepage}
+
+%\begin{samepage}
+%%\underline{title }
+%\begin{center}
+%\begin{tabular}{ |c|l| }
+%\hline
+%structure & stabilizer subgroup, other cosets           \\
+%\hline
+%nothing   & $\bigl\{(), (23), (13), (12), (123), (132) \bigr\}$ \\
+%\hline
+%orientation   & $\bigl\{(), (123), (132)\bigr\}, \ \bigl\{ (23), (13), (12)\bigr\}$ \\
+%\hline
+%point  & $\bigl\{(), (23) \bigr\}, \ \bigl\{(13), (123)\bigr\}, \ \bigl\{(12), (132)\bigr\} $ \\
+%\hline
+%"  & $\bigl\{(), (13) \bigr\}, \ \bigl\{ (23), (132) \bigr\}, \ \bigl\{(12), (123)\bigr\} $ \\
+%\hline
+%"  & $\bigl\{(), (12) \bigr\}, \ \bigl\{ (13), (132) \bigr\}, \ \bigl\{(23), (123)\bigr\} $ \\
+%\hline
+%frame   & $\bigl\{()\bigr\}, \ \bigl\{ (23)\bigr\}, \ \bigl\{ (13)\bigr\}, \ \bigl\{ (12)\bigr\}, \ \bigl\{ (123)\bigr\}, \ \bigl\{ (132) \bigr\}$ \\
+%\hline
+%\end{tabular}
+%\end{center}
+%\end{samepage}
+
+\begin{samepage}
+%\underline{title }
+\begin{center}
+\begin{tabular}{ |c|l|l| }
+\hline
+structure & stabilizer subgroup $H\le G$ & cosets $\{gH\}_{g\in G} $     \\
+\hline
+\hline
+nothing   & $\bigl\{(), (23), (13), (12), (123), (132) \bigr\}$ &$\bigl\{(), (23), (13), (12), (123), (132) \bigr\}$    \\
+\hline
+orientation   & $\bigl\{(), (123), (132)\bigr\}$ & $\bigl\{(), (123), (132)\bigr\}, \ \bigl\{ (23), (13), (12)\bigr\}$ \\
+\hline
+point  & $\bigl\{(), (23) \bigr\}$  & $\bigl\{(), (23) \bigr\},  \ \bigl\{(13), (123)\bigr\}, \ \bigl\{(12), (132)\bigr\} $ \\
+\hline
+"  & $\bigl\{(), (13) \bigr\}$  & $\bigl\{(), (13) \bigr\},  \ \bigl\{ (23), (132) \bigr\}, \ \bigl\{(12), (123)\bigr\} $ \\
+\hline
+"  & $\bigl\{(), (12) \bigr\}$  & $\bigl\{(), (12) \bigr\},  \ \bigl\{ (13), (132) \bigr\}, \ \bigl\{(23), (123)\bigr\} $ \\
+\hline
+frame   & $\bigl\{()\bigr\}$  & $\bigl\{()\bigr\},  \bigl\{ (23)\bigr\},  \bigl\{ (13)\bigr\},  \bigl\{ (12)\bigr\},  \bigl\{ (123)\bigr\},  \bigl\{ (132) \bigr\}$ \\
+\hline
+\end{tabular}
+\end{center}
+\end{samepage}
+
+
+%This is also the symmetry group of the triangle.
+
+%This group has 6 elements, and has 6 subgroups.
+%These subgroups have orders: 1, 2, 2, 2, 3 and 6.
+%
+%Each subgroup preserves (stabilizes) something, which we
+%think of as a type of figure. 
+%The one element subgroup preserves any FRAME (which we call F)
+%Each 2 element subgroup preserves a POINT (P) 
+%The 3 element subgroup preserves any ORIENTATION (O)
+%The 6 element subgroup preserves any NOTHING (N)
+%
+%The 2 element subgroups are all conjugates of
+%each other, so these three subgroups are all considered the "same" subgroup.
+%Conjugate subgroups correspond to
+%isomorphic objects in the category of G-sets.
+%
+%Now, an actual thing of type F, P, O, or N corresponds to
+%a coset of the subgroup for that type.
+%
+%Therefore, we have 6 things of type FRAME,
+%3 things of type POINT,
+%2 things of type ORIENTATION,
+%and 1 thing of type NOTHING.
+
+Each of the three subgroups that stabilize a point are conjugate
+to each other, and so the corresponding $G$-sets $G/H$ are isomorphic.
+So in calculations we just pick one of these subgroups
+to stand for the point structure.
+We label each of these subgroups (structures) with 
+the letters A, B, C and D.
+
+\begin{samepage}
+%\underline{title }
+\begin{center}
+\begin{tabular}{ |l|l|c|c|c| }
+\hline
+structure & stabilizer subgroup & order & \#cosets & \#conjugates \\
+\hline
+\hline
+nothing & $A=G$ &       6        &  1      &   1         \\
+\hline
+orientation &$B$ &       3        &  2      &   1         \\
+\hline
+point & $C$ &       2        &  3      &   3         \\
+\hline
+frame & $D=\{1\}$ &       1        &  6      &   1         \\
+\hline
+\end{tabular}
+\end{center}
+\end{samepage}
+
+The same table in picture form:
+\begin{center}
+\includegraphics[]{pic-triangle-structures.pdf} 
+\end{center}
+
+$$
+\begin{array}{r|rrrr}
+* & A & B & C & D \\
+\hline
+A & A & B & C & D \\
+B & B & 2B & D & 2D \\
+C & C & D & C\thinplus D & 3D \\
+D & D & 2D & 3D & 6D \\
+\end{array}
+$$
+
+\subsection{Example: $D_8$}
+
+The dihedral group of order 8.
+
+%G: 8
+%equ: [8]
+%equ: [4]
+%equ: [4]
+%equ: [4]
+%equ: [2, 2]
+%equ: [2, 2]
+%equ: [2]
+%equ: [1]
+%total: 8
+%A subgroup order = 8, number of cosets = 1
+%B subgroup order = 4, number of cosets = 2
+%C subgroup order = 4, number of cosets = 2
+%D subgroup order = 4, number of cosets = 2
+%E subgroup order = 2, number of cosets = 4
+%F subgroup order = 2, number of cosets = 4
+%G subgroup order = 2, number of cosets = 4
+%H subgroup order = 1, number of cosets = 8
+
+
+$$
+\begin{array}{r|rrrrrrrr}
+* & A & B & C & D & E & F & G & H \\
+\hline
+A & A & B & C & D & E & F & G & H \\
+B & B & 2B & G & G & 2E & H & 2G & 2H \\
+C & C & G & 2C & G & H & 2F & 2G & 2H \\
+D & D & G & G & 2D & H & H & 2G & 2H \\
+E & E & 2E & H & H & 2E\thinplus H & 2H & 2H & 4H \\
+F & F & H & 2F & H & 2H & 2F\thinplus H & 2H & 4H \\
+G & G & 2G & 2G & 2G & 2H & 2H & 4G & 4H \\
+H & H & 2H & 2H & 2H & 4H & 4H & 4H & 8H \\
+\end{array}
+$$
+
+
+\subsection{Example: $S_4$}
+
+%G: 24
+%equ: [24]
+%equ: [12]
+%equ: [8, 8, 8]
+%equ: [6, 6, 6, 6]
+%equ: [4, 4, 4]
+%equ: [4]
+%equ: [4, 4, 4]
+%equ: [3, 3, 3, 3]
+%equ: [2, 2, 2, 2, 2, 2]
+%equ: [2, 2, 2]
+%equ: [1]
+%total: 11
+%A subgroup order = 24, number of cosets = 1
+%B subgroup order = 12, number of cosets = 2
+%C subgroup order = 8, number of cosets = 3
+%D subgroup order = 6, number of cosets = 4
+%E subgroup order = 4, number of cosets = 6
+%F subgroup order = 4, number of cosets = 6
+%G subgroup order = 4, number of cosets = 6
+%H subgroup order = 3, number of cosets = 8
+%I subgroup order = 2, number of cosets = 12
+%J subgroup order = 2, number of cosets = 12
+%K subgroup order = 1, number of cosets = 24
+
+
+$$
+\begin{array}{r|rrrrrrrrrrr}
+* & A & B & C & D & E & F & G & H & I & J & K \\
+\hline
+A & A & B & C & D & E & F & G & H & I & J & K \\
+B & B & 2B & F & H & J & 2F & J & 2H & K & 2J & 2K \\
+C & C & F & C\thinplus F & I & E\thinplus J & 3F & G\thinplus J & K & I\thinplus K & 3J & 3K \\
+D & D & H & I & D\thinplus I & 2I & K & K & H\thinplus K & 2I\thinplus K & 2K & 4K \\
+E & E & J & E\thinplus J & 2I & 2E\thinplus K & 3J & J\thinplus K & 2K & 2I\thinplus 2K & 2J\thinplus 2K & 6K \\
+F & F & 2F & 3F & K & 3J & 6F & 3J & 2K & 3K & 6J & 6K \\
+G & G & J & G\thinplus J & K & J\thinplus K & 3J & 2G\thinplus K & 2K & 3K & 2J\thinplus 2K & 6K \\
+H & H & 2H & K & H\thinplus K & 2K & 2K & 2K & 2H\thinplus 2K & 4K & 4K & 8K \\
+I & I & K & I\thinplus K & 2I\thinplus K & 2I\thinplus 2K & 3K & 3K & 4K & 2I\thinplus 5K & 6K & 12K \\
+J & J & 2J & 3J & 2K & 2J\thinplus 2K & 6J & 2J\thinplus 2K & 4K & 6K & 4J\thinplus 4K & 12K \\
+K & K & 2K & 3K & 4K & 6K & 6K & 6K & 8K & 12K & 12K & 24K \\
+\end{array}
+$$
+
+\subsection{Example: $\GL(3, 2)$}
+
+
+
 
 \section{Bibliographic notes}
 
