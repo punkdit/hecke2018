@@ -670,14 +670,13 @@ We label each of these subgroups (structures) with
 the letters A, B, C and D.
 
 \begin{samepage}
-%\underline{title }
 \begin{center}
 \begin{tabular}{ |l|l|c|c|c| }
 \hline
 structure & stabilizer subgroup & order & \#cosets & \#conjugates \\
 \hline
 \hline
-nothing & $A=G$ &       6        &  1      &   1         \\
+nothing & $A=S_3$ &       6        &  1      &   1         \\
 \hline
 orientation &$B$ &       3        &  2      &   1         \\
 \hline
@@ -694,9 +693,19 @@ The same table in picture form:
 \includegraphics[]{pic-triangle-structures.pdf} 
 \end{center}
 
+The ordering of the table is misleading.
+It's really a partially ordered set:
+\begin{center}
+\includegraphics[width=0.3\columnwidth]{subgroups_s3.pdf} 
+\end{center}
+
+We next consider the conjunction (logical ``and'')
+of two structures.
+
+
 $$
 \begin{array}{r|rrrr}
-* & A & B & C & D \\
+\times & A & B & C & D \\
 \hline
 A & A & B & C & D \\
 B & B & 2B & D & 2D \\
@@ -708,6 +717,37 @@ $$
 \subsection{Example: $D_8$}
 
 The dihedral group of order 8.
+
+\begin{samepage}
+\begin{center}
+\begin{tabular}{ |l|l|c|c|c| }
+\hline
+structure & stabilizer subgroup & order & \#cosets & \#conjugates \\
+\hline
+\hline
+nothing & $A=D_8$ &       8        &  1      &   1         \\
+\hline
+short axis& $B$ &       4        &  2      &   1         \\
+\hline
+long axis & $C$ &       4        &  2      &   1         \\
+\hline
+orientation & $D$ &       4        &  2      &   1         \\
+\hline
+point & $E$ &       2        &  4      &   2         \\
+\hline
+line  & $F$ &       2        &  4      &   2         \\
+\hline
+        & $G$ &       2        &  4      &   1         \\
+\hline
+frame & $H=\{1\} $ &       1        &  8      &   1         \\
+\hline
+\end{tabular}
+\end{center}
+\end{samepage}
+
+\begin{center}
+\includegraphics[width=0.4\columnwidth]{subgroups_d8.pdf} 
+\end{center}
 
 %G: 8
 %equ: [8]
@@ -731,7 +771,7 @@ The dihedral group of order 8.
 
 $$
 \begin{array}{r|rrrrrrrr}
-* & A & B & C & D & E & F & G & H \\
+\times & A & B & C & D & E & F & G & H \\
 \hline
 A & A & B & C & D & E & F & G & H \\
 B & B & 2B & G & G & 2E & H & 2G & 2H \\
@@ -775,7 +815,7 @@ $$
 
 $$
 \begin{array}{r|rrrrrrrrrrr}
-* & A & B & C & D & E & F & G & H & I & J & K \\
+\times & A & B & C & D & E & F & G & H & I & J & K \\
 \hline
 A & A & B & C & D & E & F & G & H & I & J & K \\
 B & B & 2B & F & H & J & 2F & J & 2H & K & 2J & 2K \\
