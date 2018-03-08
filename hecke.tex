@@ -518,10 +518,15 @@ by the subgroup that fixes that figure.
 \includegraphics[]{pic-structure.pdf} 
 \end{center}
 
-\subsection{Example: $S_3$}
+\subsection{Example: the triangle}
+
+This is about the simplest example that has
+some substance to it.
+Because it is our first example we go into
+great detail.
 
 We consider the group $G = S_3$ 
-the permutation group on three things.
+acting as the permutation group on three things.
 Enumerating these three things, we write
 the elements of $S_3$ according to their
 action:
@@ -529,11 +534,11 @@ $$
     S_3 = \bigl\{ (1)(2)(3), (1)(23), (13)(2), (12)(3), (123), (132) \bigr\}.
 $$
 
-This group acts on the triangle:
+This group acts by isometries on the equi-angle triangle:
 \begin{center}
 \includegraphics[]{pic-triangle.pdf} 
 \end{center}
-but we can only see this action if we add some
+but we can only ``see'' this action if we add some
 \emph{structure}. 
 For example, we can number the
 points (vertices) of the triangle:
@@ -541,11 +546,12 @@ points (vertices) of the triangle:
 \includegraphics[]{pic-triangle-numbered.pdf} 
 \end{center}
 We call this kind of structure a \emph{frame}
-because it allows us to see everything that is going on.
+because it allows us to see everything that is going on
+with the group action.
 
 Here we do the same, but instead of numbering the points
 we shade a portion of the interior.
-This is a more geometric kind of frame.
+This is a more graphical depiction of a frame.
 \begin{center}
 \includegraphics[]{pic-triangle-frames.pdf} 
 \end{center}
@@ -554,11 +560,10 @@ corresponding to a \emph{point}:
 \begin{center}
 \includegraphics[]{pic-triangle-points.pdf} 
 \end{center}
-There is one other structure that we haven't found yet:
+There is one other structure which we call an \emph{orientation}:
 \begin{center}
 \includegraphics[]{pic-triangle-orientations.pdf} 
 \end{center}
-This structure we call an \emph{orientation}.
 
 Using the Kleinien perspective, we associate
 each of these structures with the subgroup of $G$
@@ -701,8 +706,106 @@ It's really a partially ordered set:
 
 We next consider the conjunction (logical ``and'')
 of two structures.
+To keep track of the two structures when we combine them,
+we use two colours, red and blue. 
+\begin{center}
+\includegraphics[]{pic-triangle-pairs.pdf} 
+\end{center}
+When we have two points that are not the same
+this is what the orbit looks like:
+\begin{center}
+\includegraphics[]{pic-triangle-point-point-ne.pdf} 
+\end{center}
+This $G$-set is isomorphic to $D$. In other words,
+two distinct (ordered) points are sufficient structure to pick
+out a frame.
+When we have two points that are the same
+this is what the orbit looks like:
+\begin{center}
+\includegraphics[]{pic-triangle-point-point-eq.pdf} 
+\end{center}
+The two points overlap which we show as purple. The resulting
+$G$-set is isomorphic to the original $G$-set, $C.$
+And this makes sense: ``two points that are identical''
+is really no more structure than just having one point.
 
+We therefore have the isomorphism:
+$$
+    C\times C \cong C + D.
+$$
 
+We can also examine the entire $G$-set $C\times C$ in a graphical way.
+Here we show a matrix, with rows labelled by the orbit of one kind of
+structure, and columns by the orbit of the other kind of structure.
+The entries of the matrix then show the elements of the $G$-set $C\times C:$
+\begin{center}
+\includegraphics[]{pic-triangle-point-point-matrix.pdf} 
+\end{center}
+And we see the elements of this matrix break down into two
+orbits. One orbit is on the diagonal,
+and the other orbit is off the diagonal.
+Once again we see that $C\times C \cong C+D.$
+From this matrix we can also read off matrices for the two Hecke
+operators corresponding to these two orbits:
+$$
+\left( \begin{array}{ccc}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1 \\
+\end{array} \right),\ \ 
+\left( \begin{array}{ccc}
+0 & 1 & 1 \\
+1 & 0 & 1 \\
+1 & 1 & 0 \\
+\end{array} \right).
+$$
+
+What we are doing here is (in great detail) examining how
+two structures can \emph{geometrically relate} to each other.
+For two points, there are two such relationships:
+they can either be the same, or different.
+
+\begin{samepage}
+Here we show matrices for $B\times B\cong 2B$ and 
+$B\times C\cong D:$
+\begin{center}
+\includegraphics[]{pic-triangle-orient-orient-matrix.pdf} 
+\ \ \ \ \ \ \ 
+\includegraphics[]{pic-triangle-point-orient-matrix.pdf} 
+\end{center}
+\end{samepage}
+In terms of geometric relationships: 
+there are two ways for an orientation to relate to another
+orientation (same or not), and there is only one way
+for a point to relate to an orientation.
+
+The most boring structure of all is the nothing structure $A$.
+When we combine this structure with any other structure, we
+just get the other structure.
+For example, $A\times C\cong C:$
+\begin{center}
+\includegraphics[]{pic-triangle-nothing-point-matrix.pdf} 
+\end{center}
+
+At the other end of the structures, 
+when we combine a frame $D$ with any other structure,
+we ``see everything''.
+What this means is 
+for some structure ($G$-set) $X$, we find that $D\times X$
+breaks into $n$ copies of $D$, one for every element of $X$.
+For example, $D\times C\cong 3D:$
+\begin{center}
+\includegraphics[]{pic-triangle-point-frame-matrix.pdf} 
+\end{center}
+It is a little hard to see, but there are three different
+kinds of shapes in the above matrix, 
+each of which is sufficient to serve as (isomorphic to) a frame.
+And we see that there are three ways for a point to relate to
+a frame. This makes sense: there are three points, and if we
+have a frame then we can see each of these three points as distinct.
+
+We summarize everything we know about 
+multiplying these $G$-sets in the following table:
 $$
 \begin{array}{r|rrrr}
 \times & A & B & C & D \\

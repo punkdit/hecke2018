@@ -11,6 +11,7 @@ from math import *
 import pyx 
 from pyx import path, deco, trafo, style, text, color, deformer
 from pyx.color import rgb, cmyk
+from pyx.color import rgbfromhexstring as rgbhex
 
 
 text.set(mode="latex") 
@@ -152,14 +153,20 @@ c.writePDFfile("pic-triangle-numbered")
 
 def flaged(x, y, r, flags):
 
-    for (i, a) in flags:
-        assert i in [0, 1, 2]
-        assert a in [0, 1]
+    for flag in flags:
+        idx = flag[0]
+        pos = flag[1]
+        if len(flag)==3:
+            deco = flag[2]
+        else:
+            deco = [grey]
+        assert idx in [0, 1, 2]
+        assert pos in [0, 1]
     
-        theta = 2*pi*i/3
+        theta = 2*pi*idx/3
         x0, y0 = (x, y)
         x1, y1 = (x + r*sin(theta), y + r*cos(theta))
-        theta += 2*pi/6 if a else -2*pi/6
+        theta += 2.0*pi/6 if pos else -2.0*pi/6
         x2, y2 = (x + 0.5*r*sin(theta), y + 0.5*r*cos(theta))
     
         p = path.path(
@@ -167,8 +174,8 @@ def flaged(x, y, r, flags):
             path.lineto(x1, y1),
             path.lineto(x2, y2),
             path.closepath())
-        c.stroke(p, [grey])
-        c.fill(p, [grey])
+        #c.stroke(p, deco)
+        c.fill(p, deco)
 
     triangle(x, y, r, st_THick)
 
@@ -232,6 +239,8 @@ tabs = [0., 5*r, 10*r, 10*r+6*R]
 def dorow():
     c.stroke(path.rect(tabs[0]-r, y-r, tabs[3]-tabs[0], R))
 
+flags = [ (0, 0), (0, 1), (1, 1), (2, 1), (2, 0), (1, 0)]
+
 dorow()
 c.text(x, y, "structure", [pyx.text.size.large])
 x = tabs[1]
@@ -246,7 +255,7 @@ c.text(x, y, "nothing", [pyx.text.size.large])
 x = tabs[1]
 c.text(x, y, "$A$", [pyx.text.size.large])
 x = tabs[2]
-flaged(x, y, r, []); x += R
+flaged(x, y, r, flags); x += R
 y -= R; x = tabs[0]
 
 dorow()
@@ -277,7 +286,6 @@ c.text(x, y, "frame", [pyx.text.size.large])
 x = tabs[1]
 c.text(x, y, "$D$", [pyx.text.size.large])
 x = tabs[2]
-flags = [ (0, 0), (0, 1), (1, 1), (2, 1), (2, 0), (1, 0)]
 for flag in flags:
     flaged(x, y, r, [flag]); x += R
 #c.writePDFfile("pic-triangle-frames")
@@ -290,6 +298,185 @@ c.writePDFfile("pic-triangle-structures")
 # -----------------------------------------------------------------------------
 
 
+c = pyx.canvas.canvas()
+
+x, y = 0., 0.
+r = 0.5
+R = r*2./0.8
+
+
+
+#         red               green             blue              yellow
+colors = [rgbhex("ff1e1e"), rgbhex("3ee53e"), rgbhex("011fff"), rgbhex("fdff57"), ]
+def alpha(a):
+    return color.transparency(1.0-a)
+
+clr_a = [colors[0], alpha(0.7)]
+clr_b = [colors[2], alpha(0.7)]
+
+flags = [ (0, 0), (0, 1), (1, 1), (2, 1), (2, 0), (1, 0)]
+flags_a = [(i, j, clr_a) for (i, j) in flags]
+flags_b = [(i, j, clr_b) for (i, j) in flags]
+
+frames_a = [[flag] for flag in flags_a]
+frames_b = [[flag] for flag in flags_b]
+
+points_a = [[(i, 0, clr_a), (i, 1, clr_a)] for i in range(3)]
+points_b = [[(i, 0, clr_b), (i, 1, clr_b)] for i in range(3)]
+
+orients_a = [[(i, j, clr_a) for i in range(3)] for j in range(2)]
+orients_b = [[(i, j, clr_b) for i in range(3)] for j in range(2)]
+
+nothings_a = [flags_a]
+nothings_b = [flags_b]
+
+#for point in points_a:
+#    flaged(x, y, r, point); x += R
+
+flaged(x, y, r, nothings_a[0]); x += R
+flaged(x, y, r, orients_a[0]); x += R
+flaged(x, y, r, points_a[0]); x += R
+flaged(x, y, r, frames_a[0]); x += R
+
+y -= R
+x = 0.
+flaged(x, y, r, nothings_b[0]); x += R
+flaged(x, y, r, orients_b[0]); x += R
+flaged(x, y, r, points_b[0]); x += R
+flaged(x, y, r, frames_b[0]); x += R
+
+c.writePDFfile("pic-triangle-pairs")
+
+
+# -----------------------------------------------------------------------------
+
+
+c = pyx.canvas.canvas()
+
+x, y = 0., 0.
+r = 0.5
+R = r*2./0.8
+
+flaged(x, y, r, points_a[0]); flaged(x, y, r, points_b[1]); x += R
+flaged(x, y, r, points_a[0]); flaged(x, y, r, points_b[2]); x += R
+flaged(x, y, r, points_a[1]); flaged(x, y, r, points_b[0]); x += R
+flaged(x, y, r, points_a[1]); flaged(x, y, r, points_b[2]); x += R
+flaged(x, y, r, points_a[2]); flaged(x, y, r, points_b[0]); x += R
+flaged(x, y, r, points_a[2]); flaged(x, y, r, points_b[1]); x += R
+
+c.writePDFfile("pic-triangle-point-point-ne")
+
+
+# -----------------------------------------------------------------------------
+
+
+c = pyx.canvas.canvas()
+
+x, y = 0., 0.
+r = 0.5
+R = r*2./0.8
+
+flaged(x, y, r, points_a[0]); flaged(x, y, r, points_b[0]); x += R
+flaged(x, y, r, points_a[1]); flaged(x, y, r, points_b[1]); x += R
+flaged(x, y, r, points_a[2]); flaged(x, y, r, points_b[2]); x += R
+
+
+c.writePDFfile("pic-triangle-point-point-eq")
+
+
+# -----------------------------------------------------------------------------
+
+def do_matrix(x0, y0, r, R, left, right):
+    x, y = x0, y0
+    for item in left:
+        x += R
+        flaged(x, y, r, item)
+    x, y = x0, y0
+
+    for item in right:
+        y -= R
+        flaged(x, y, r, item)
+    x, y = x0, y0
+    for l_item in left:
+        x += R
+        for r_item in right:
+            y -= R
+            flaged(x, y, r, l_item)
+            flaged(x, y, r, r_item)
+        y = y0
+
+    c.stroke(path.rect(x0+0.5*R, y0-0.5*R, R*len(left), -R*len(right)))
+
+    
+
+# -----------------------------------------------------------------------------
+
+c = pyx.canvas.canvas()
+
+x, y = 0., 0.
+r = 0.5
+R = 3.*r
+
+do_matrix(x, y, r, R, points_a, points_b)
+
+
+c.writePDFfile("pic-triangle-point-point-matrix")
+
+
+# -----------------------------------------------------------------------------
+
+c = pyx.canvas.canvas()
+
+x, y = 0., 0.
+r = 0.5
+R = 3.*r
+
+do_matrix(x, y, r, R, points_a, orients_b)
+
+
+c.writePDFfile("pic-triangle-point-orient-matrix")
+
+
+# -----------------------------------------------------------------------------
+
+c = pyx.canvas.canvas()
+
+x, y = 0., 0.
+r = 0.5
+R = 3.*r
+
+do_matrix(x, y, r, R, orients_a, orients_b)
+
+
+c.writePDFfile("pic-triangle-orient-orient-matrix")
+
+# -----------------------------------------------------------------------------
+
+c = pyx.canvas.canvas()
+
+x, y = 0., 0.
+r = 0.5
+R = 3.*r
+
+do_matrix(x, y, r, R, points_a, nothings_b)
+
+
+c.writePDFfile("pic-triangle-nothing-point-matrix")
+
+
+# -----------------------------------------------------------------------------
+
+
+c = pyx.canvas.canvas()
+
+x, y = 0., 0.
+r = 0.5
+R = 3.*r
+
+do_matrix(x, y, r, R, frames_a, points_b)
+
+
+c.writePDFfile("pic-triangle-point-frame-matrix")
 
 
 

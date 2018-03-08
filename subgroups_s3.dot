@@ -1,5 +1,6 @@
 digraph 
 {
+    rankdir = BT;
     D -> C;
     D -> B;
     C -> A;
