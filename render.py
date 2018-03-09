@@ -500,7 +500,7 @@ def square(x, y, r, deco=[]):
 
 def flaged(x, y, r, flags):
 
-    y += 0.2*r
+    y += 0.3*r
     for flag in flags:
         idx = flag[0]
         pos = flag[1]
@@ -533,12 +533,12 @@ c = pyx.canvas.canvas()
 
 x, y = 0., 0.
 r = 0.5
-R = r*2./0.8
+R = r*2.
 
-tabs = [0., 5*r, 10*r, 10*r+8*R]
+tabs = [0., 6*r, 11*r, 11*r+8*R/0.8]
 
 def dorow():
-    c.stroke(path.rect(tabs[0]-r, y-r, tabs[3]-tabs[0], R))
+    c.stroke(path.rect(tabs[0]-r, y-0.7*r, tabs[3]-tabs[0], R))
 
 flags = [(i, j) for i in range(4) for j in range(2)]
 
@@ -560,23 +560,23 @@ flaged(x, y, r, flags); x += R
 y -= R; x = tabs[0]
 
 dorow()
-c.text(x, y, "short axis", [pyx.text.size.large])
+c.text(x, y, "long axis", [pyx.text.size.large])
 x = tabs[1]
 c.text(x, y, "$B$", [pyx.text.size.large])
+x = tabs[2]
+flaged(x, y, r, [(0, 0), (2, 0), (0, 1), (2, 1)]); x += R
+flaged(x, y, r, [(1, 0), (3, 0), (1, 1), (3, 1)]); x += R
+y -= R; x = tabs[0]
+
+dorow()
+c.text(x, y, "short axis", [pyx.text.size.large])
+x = tabs[1]
+c.text(x, y, "$C$", [pyx.text.size.large])
 x = tabs[2]
 flaged(x, y, r, [(0, 0), (2, 0)]); #x += R
 flaged(x, y, r, [(1, 1), (3, 1)]); x += R
 flaged(x, y, r, [(0, 1), (2, 1)]); #x += R
 flaged(x, y, r, [(1, 0), (3, 0)]); x += R
-y -= R; x = tabs[0]
-
-dorow()
-c.text(x, y, "long axis", [pyx.text.size.large])
-x = tabs[1]
-c.text(x, y, "$C$", [pyx.text.size.large])
-x = tabs[2]
-flaged(x, y, r, [(0, 0), (2, 0), (0, 1), (2, 1)]); x += R
-flaged(x, y, r, [(1, 0), (3, 0), (1, 1), (3, 1)]); x += R
 y -= R; x = tabs[0]
 
 dorow()
@@ -606,15 +606,15 @@ x = tabs[1]
 c.text(x, y, "$F$", [pyx.text.size.large])
 x = tabs[2]
 
-flaged(x, y, r, [(i, j) for i in [0,1] for j in range(2)]); x += R
-flaged(x, y, r, [(i, j) for i in [1,2] for j in range(2)]); x += R
-flaged(x, y, r, [(i, j) for i in [2,3] for j in range(2)]); x += R
-flaged(x, y, r, [(i, j) for i in [3,0] for j in range(2)]); x += R
+flaged(x, y, r, [(1-j, j) for j in range(2)]); x += R
+flaged(x, y, r, [(2-j, j) for j in range(2)]); x += R
+flaged(x, y, r, [(3-j, j) for j in range(2)]); x += R
+flaged(x, y, r, [((4-j)%4, j) for j in range(2)]); x += R
 
 y -= R; x = tabs[0]
 
 dorow()
-c.text(x, y, "s\&l axis", [pyx.text.size.large])
+c.text(x, y, "short\&long axis", [pyx.text.size.large])
 x = tabs[1]
 c.text(x, y, "$G$", [pyx.text.size.large])
 x = tabs[2]

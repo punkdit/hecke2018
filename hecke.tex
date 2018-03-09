@@ -53,6 +53,7 @@
 \newcommand{\Image}{\mathrm{Im}}
 \newcommand{\Dim}{\mathrm{Dim}}
 \newcommand{\Complex}{\mathbb{C}}
+\newcommand{\Integer}{\mathbb{Z}}
 \newcommand{\GL}{\mathrm{GL}}
 \newcommand{\Field}{\mathbb{F}}
 
@@ -707,7 +708,7 @@ It's really a partially ordered set:
 We next consider the conjunction (logical ``and'')
 of two structures.
 To keep track of the two structures when we combine them,
-we use two colours, red and blue. 
+we use two colors, red and blue. 
 \begin{center}
 \includegraphics[]{pic-triangle-pairs.pdf} 
 \end{center}
@@ -819,7 +820,8 @@ $$
 
 \subsection{Example: the square}
 
-The dihedral group of order 8.
+Here we consider the dihedral group of order 8 as
+it acts on the square by isometries.
 
 \begin{samepage}
 \begin{center}
@@ -840,7 +842,7 @@ point & $E$ &       2        &  4      &   2         \\
 \hline
 line  & $F$ &       2        &  4      &   2         \\
 \hline
-        & $G$ &       2        &  4      &   1         \\
+short \& long axis & $G$ &       2        &  4      &   1         \\
 \hline
 frame & $H=\{1\} $ &       1        &  8      &   1         \\
 \hline
@@ -848,13 +850,21 @@ frame & $H=\{1\} $ &       1        &  8      &   1         \\
 \end{center}
 \end{samepage}
 
+There are two different subgroups that fix a ''point''.
+These are conjugate to each other.
+Similarly for ''line''.
+Here we show pictures of these geometric figures:
+
 \begin{center}
 \includegraphics[]{pic-square-structures.pdf} 
 \end{center}
 
+And the morphisms that generate the category of canonical orbits for this
+group:
 \begin{center}
 \includegraphics[width=0.4\columnwidth]{subgroups_d8.pdf} 
 \end{center}
+
 
 %G: 8
 %equ: [8]
@@ -891,8 +901,23 @@ H & H & 2H & 2H & 2H & 4H & 4H & 4H & 8H \\
 \end{array}
 $$
 
+All of this would suggest the following lemma:
+\dolemma{\numitem{lemmagsetmorph}}
+Given a $G$-set morphism $X\to Y$ with no morphism $Y\to X$
+then $X\times Y\cong n X$ for some $n\ge 1.$
+\doproof
+\todo{???}
+\tombstone
 
-\subsection{Example: $S_4$}
+\todo{Is there a formula for $n$ ?}
+
+\todo{It seems like this lemma can be made stronger: the
+product of non-isomorphic $G$-sets is some multiple of the (poset) join?}
+
+\subsection{Example: the tetrahedron}
+
+This is the group $S_4$ acting on the regular tetrahedron,
+or otherwise a set of four elements.
 
 %G: 24
 %equ: [24]
@@ -920,6 +945,41 @@ $$
 %K subgroup order = 1, number of cosets = 24
 
 
+
+\begin{samepage}
+\begin{center}
+\begin{tabular}{ |l|l|r|r|r| }
+\hline
+structure & stabilizer subgroup & order & \#cosets & \#conjugates \\
+\hline
+\hline
+nothing & $A=S_4$ &       24        &  1      &   1         \\
+\hline
+orientation & $B$ &       12        &  2      &   1         \\
+\hline
+opposite edges & $C$ &       8        &  3      &   3         \\
+\hline
+partition 3+1 & $D$ &       6        &  4      &   4         \\
+\hline
+partition 2+2 & $E$ &       4        &  6      &   3 or 1  ?      \\
+\hline
+3-coloring of edges & $F$ &       4        &  6      &   3 or 1?        \\
+\hline
+4-cycle & $G$ &       4        &  6      &   3 or 1     ?   \\
+\hline
+oriented face & $H$ &       3        &  8      &   4         \\
+\hline
+partition 2+1+1 & $I$ &       2        &  12      &   6       \\
+\hline
+   & $J$ &       2        &  12      &    3       \\
+\hline
+frame & $K=\{1\} $ &       1        &  24      &   1         \\
+\hline
+\end{tabular}
+\end{center}
+\end{samepage}
+
+
 $$
 \begin{array}{r|rrrrrrrrrrr}
 \times & A & B & C & D & E & F & G & H & I & J & K \\
@@ -938,8 +998,66 @@ K & K & 2K & 3K & 4K & 6K & 6K & 6K & 8K & 12K & 12K & 24K \\
 \end{array}
 $$
 
-\subsection{Example: $\GL(3, 2)$}
 
+Just the parabolic subgroups:
+
+\begin{verbatim}
+  | A  D    E     I     K    
+--+-------------------------
+A | A  D    E     I     K    
+D | D  D+I  2I    2I+K  4K   
+E | E  2I   2E+K  2I+2K 6K   
+I | I  2I+K 2I+2K 2I+5K 12K  
+K | K  4K   6K    12K   24K  
+\end{verbatim}
+
+
+\subsection{Example: the Fano plane}
+
+This is the group $\GL(3, 2)$ of order 168.
+
+
+
+\begin{samepage}
+\begin{center}
+\begin{tabular}{ |l|l|r|r|r| }
+\hline
+structure & stabilizer subgroup & order & \#cosets & \#conjugates \\
+\hline
+\hline
+nothing & $A=\GL(3,2)$ &       168        &  1      &   1         \\
+\hline
+point   & $B$ &       24        &  7      &   7         \\
+\hline
+line & $C$ &       24        &  7      &   7         \\
+\hline
+octonionic multiplication rule & $D$ &       21        &  8      &   8         \\
+\hline
+oriented point & $E$ &       12        &  14      &   7         \\
+\hline
+oriented line & $F$ &       12        &  14      &   7         \\
+\hline
+flag & $G$ &       8        &  21      &   21         \\
+\hline
+        & $H=\Integer_7 $ &       7        &  24      &   8         \\
+\hline
+anti-flag & $I=S_3$ &       6        &  28      &   28         \\
+\hline
+oriented flag & $J=\Integer_4$ &       4        &  42      &   21         \\
+\hline
+pair of distinct lines & $K=\Integer_2\times\Integer_2$ & 4 &  42 & 7 \\
+\hline
+pair of distinct points & $L=\Integer_2\times\Integer_2$ &       4        &  42      &   7 \\
+\hline
+oriented triangle & $M=\Integer_3$ &       3        &  56      &   28         \\
+\hline
+        & $N$ &       2        &  84      &   21         \\
+\hline
+frame & $P=\{1\} $ &       1        &  168      &   1         \\
+\hline
+\end{tabular}
+\end{center}
+\end{samepage}
 
 
 
