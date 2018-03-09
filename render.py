@@ -479,6 +479,167 @@ do_matrix(x, y, r, R, frames_a, points_b)
 c.writePDFfile("pic-triangle-point-frame-matrix")
 
 
+# -----------------------------------------------------------------------------
+
+############## SQUARE ########################
+
+
+def square(x, y, r, deco=[]):
+
+    theta = 2*pi/8.
+    ps = [path.moveto(x + r*sin(theta), y + r*cos(theta))]
+    theta += 2*pi/4.
+    ps.append(path.lineto(x + r*sin(theta), y + r*cos(theta)))
+    theta += 2*pi/4.
+    ps.append(path.lineto(x + r*sin(theta), y + r*cos(theta)))
+    theta += 2*pi/4.
+    ps.append(path.lineto(x + r*sin(theta), y + r*cos(theta)))
+    ps.append(path.closepath())
+    c.stroke(path.path(*ps), deco)
+
+
+def flaged(x, y, r, flags):
+
+    y += 0.2*r
+    for flag in flags:
+        idx = flag[0]
+        pos = flag[1]
+        if len(flag)==3:
+            deco = flag[2]
+        else:
+            deco = [grey]
+        assert idx in [0, 1, 2, 3]
+        assert pos in [0, 1]
+    
+        theta = 2*pi*(idx+0.5)/4
+        x0, y0 = (x, y)
+        x1, y1 = (x + r*sin(theta), y + r*cos(theta))
+        theta += 2.0*pi/8 if pos else -2.0*pi/8
+        r1 = r/(2**0.5)
+        x2, y2 = (x + r1*sin(theta), y + r1*cos(theta))
+    
+        p = path.path(
+            path.moveto(x0, y0),
+            path.lineto(x1, y1),
+            path.lineto(x2, y2),
+            path.closepath())
+        #c.stroke(p, deco)
+        c.fill(p, deco)
+
+    square(x, y, r, st_THick)
+
+
+c = pyx.canvas.canvas()
+
+x, y = 0., 0.
+r = 0.5
+R = r*2./0.8
+
+tabs = [0., 5*r, 10*r, 10*r+8*R]
+
+def dorow():
+    c.stroke(path.rect(tabs[0]-r, y-r, tabs[3]-tabs[0], R))
+
+flags = [(i, j) for i in range(4) for j in range(2)]
+
+dorow()
+c.text(x, y, "structure", [pyx.text.size.large])
+x = tabs[1]
+c.text(x, y, "subgroup", [pyx.text.size.large])
+x = tabs[2]
+c.text(x-r, y, "orbit", [pyx.text.size.large])
+y -= R; x = tabs[0]
+y -= 0.1
+
+dorow()
+c.text(x, y, "nothing", [pyx.text.size.large])
+x = tabs[1]
+c.text(x, y, "$A$", [pyx.text.size.large])
+x = tabs[2]
+flaged(x, y, r, flags); x += R
+y -= R; x = tabs[0]
+
+dorow()
+c.text(x, y, "short axis", [pyx.text.size.large])
+x = tabs[1]
+c.text(x, y, "$B$", [pyx.text.size.large])
+x = tabs[2]
+flaged(x, y, r, [(0, 0), (2, 0)]); #x += R
+flaged(x, y, r, [(1, 1), (3, 1)]); x += R
+flaged(x, y, r, [(0, 1), (2, 1)]); #x += R
+flaged(x, y, r, [(1, 0), (3, 0)]); x += R
+y -= R; x = tabs[0]
+
+dorow()
+c.text(x, y, "long axis", [pyx.text.size.large])
+x = tabs[1]
+c.text(x, y, "$C$", [pyx.text.size.large])
+x = tabs[2]
+flaged(x, y, r, [(0, 0), (2, 0), (0, 1), (2, 1)]); x += R
+flaged(x, y, r, [(1, 0), (3, 0), (1, 1), (3, 1)]); x += R
+y -= R; x = tabs[0]
+
+dorow()
+c.text(x, y, "orientation", [pyx.text.size.large])
+x = tabs[1]
+c.text(x, y, "$D$", [pyx.text.size.large])
+x = tabs[2]
+flaged(x, y, r, [(i, 0) for i in range(4)]); x += R
+flaged(x, y, r, [(i, 1) for i in range(4)]); x += R
+#c.writePDFfile("pic-triangle-orientations")
+y -= R; x = tabs[0]
+
+
+dorow()
+c.text(x, y, "point", [pyx.text.size.large])
+x = tabs[1]
+c.text(x, y, "$E$", [pyx.text.size.large])
+x = tabs[2]
+for i in range(4):
+    st = [(i, 0), (i, 1)]
+    flaged(x, y, r, st); x += R
+y -= R; x = tabs[0]
+
+dorow()
+c.text(x, y, "line", [pyx.text.size.large])
+x = tabs[1]
+c.text(x, y, "$F$", [pyx.text.size.large])
+x = tabs[2]
+
+flaged(x, y, r, [(i, j) for i in [0,1] for j in range(2)]); x += R
+flaged(x, y, r, [(i, j) for i in [1,2] for j in range(2)]); x += R
+flaged(x, y, r, [(i, j) for i in [2,3] for j in range(2)]); x += R
+flaged(x, y, r, [(i, j) for i in [3,0] for j in range(2)]); x += R
+
+y -= R; x = tabs[0]
+
+dorow()
+c.text(x, y, "s\&l axis", [pyx.text.size.large])
+x = tabs[1]
+c.text(x, y, "$G$", [pyx.text.size.large])
+x = tabs[2]
+flaged(x, y, r, [(0, 0), (2, 0)]); x += R
+flaged(x, y, r, [(0, 1), (2, 1)]); x += R
+flaged(x, y, r, [(1, 0), (3, 0)]); x += R
+flaged(x, y, r, [(1, 1), (3, 1)]); x += R
+y -= R; x = tabs[0]
+
+
+dorow()
+c.text(x, y, "frame", [pyx.text.size.large])
+x = tabs[1]
+c.text(x, y, "$H$", [pyx.text.size.large])
+x = tabs[2]
+for flag in flags:
+    flaged(x, y, r, [flag]); x += R
+y -= R; x = tabs[0]
+
+#c.stroke(path.line(tabs[1], 0, tabs[1], y))
+
+c.writePDFfile("pic-square-structures")
+
+# -----------------------------------------------------------------------------
+
 
 
 
