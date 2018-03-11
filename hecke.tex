@@ -22,6 +22,9 @@
 \RequirePackage{url}
 \RequirePackage{mdwlist}
 
+\RequirePackage{rotating}
+
+
 \RequirePackage[all]{xy}
 %\_CompileMatrices
 %\RequirePackage{hyperref}
@@ -817,6 +820,16 @@ C & C & D & C\thinplus D & 3D \\
 D & D & 2D & 3D & 6D \\
 \end{array}
 $$
+%$$
+%\begin{array}{r|rrrr}
+%\times & A & B & C & D \\
+%\hline
+%A & A & B & C & D \\
+%B &   & 2B & D & 2D \\
+%C &   &   & C\thinplus D & 3D \\
+%D &   &   &   & 6D \\
+%\end{array}
+%$$
 
 \subsection{Example: the square}
 
@@ -900,6 +913,21 @@ G & G & 2G & 2G & 2G & 2H & 2H & 4G & 4H \\
 H & H & 2H & 2H & 2H & 4H & 4H & 4H & 8H \\
 \end{array}
 $$
+%$$
+%\begin{array}{r|rrrrrrrr}
+%\times & A & B & C & D & E & F & G & H \\
+%\hline
+%A & A & B & C & D & E & F & G & H \\
+%B &   & 2B & G & G & 2E & H & 2G & 2H \\
+%C &   &   & 2C & G & H & 2F & 2G & 2H \\
+%D &   &   &   & 2D & H & H & 2G & 2H \\
+%E &   &   &   &   & 2E\thinplus H & 2H & 2H & 4H \\
+%F &   &   &   &   &   & 2F\thinplus H & 2H & 4H \\
+%G &   &   &   &   &   &   & 4G & 4H \\
+%H &   &   &   &   &   &   &   & 8H \\
+%\end{array}
+%$$
+
 
 All of this would suggest the following lemma:
 \dolemma{\numitem{lemmagsetmorph}}
@@ -961,11 +989,11 @@ opposite edges & $C$ &       8        &  3      &   3         \\
 \hline
 partition 3+1 & $D$ &       6        &  4      &   4         \\
 \hline
-partition 2+2 & $E$ &       4        &  6      &   3 or 1  ?      \\
+partition 2+2 & $E$ &       4        &  6      &   3      \\
 \hline
-3-coloring of edges & $F$ &       4        &  6      &   3 or 1?        \\
+3-coloring of edges & $F$ &       4        &  6      &   1     \\
 \hline
-4-cycle & $G$ &       4        &  6      &   3 or 1     ?   \\
+4-cycle & $G$ &       4        &  6      &   3    \\
 \hline
 oriented face & $H$ &       3        &  8      &   4         \\
 \hline
@@ -979,6 +1007,9 @@ frame & $K=\{1\} $ &       1        &  24      &   1         \\
 \end{center}
 \end{samepage}
 
+\begin{center}
+\includegraphics[width=0.5\columnwidth]{subgroups_s4.pdf} 
+\end{center}
 
 $$
 \begin{array}{r|rrrrrrrrrrr}
@@ -997,6 +1028,23 @@ J & J & 2J & 3J & 2K & 2J\thinplus 2K & 6J & 2J\thinplus 2K & 4K & 6K & 4J\thinp
 K & K & 2K & 3K & 4K & 6K & 6K & 6K & 8K & 12K & 12K & 24K \\
 \end{array}
 $$
+%$$
+%\begin{array}{r|rrrrrrrrrrr}
+%\times & A & B & C & D & E & F & G & H & I & J & K \\
+%\hline
+%A & A & B & C & D & E & F & G & H & I & J & K \\
+%B &   & 2B & F & H & J & 2F & J & 2H & K & 2J & 2K \\
+%C &   &   & C\thinplus F & I & E\thinplus J & 3F & G\thinplus J & K & I\thinplus K & 3J & 3K \\
+%D &   &   &   & D\thinplus I & 2I & K & K & H\thinplus K & 2I\thinplus K & 2K & 4K \\
+%E &   &   &   &   & 2E\thinplus K & 3J & J\thinplus K & 2K & 2I\thinplus 2K & 2J\thinplus 2K & 6K \\
+%F &   &   &   &   &   & 6F & 3J & 2K & 3K & 6J & 6K \\
+%G &   &   &   &   &   &   & 2G\thinplus K & 2K & 3K & 2J\thinplus 2K & 6K \\
+%H &   &   &   &   &   &   &   & 2H\thinplus 2K & 4K & 4K & 8K \\
+%I &   &   &   &   &   &   &   &   & 2I\thinplus 5K & 6K & 12K \\
+%J &   &   &   &   &   &   &   &   &   & 4J\thinplus 4K & 12K \\
+%K &   &   &   &   &   &   &   &   &   &   & 24K \\
+%\end{array}
+%$$
 
 
 Just the parabolic subgroups:
@@ -1033,31 +1081,85 @@ line & $C$ &       24        &  7      &   7         \\
 \hline
 octonionic multiplication rule & $D$ &       21        &  8      &   8         \\
 \hline
-oriented point & $E$ &       12        &  14      &   7         \\
+oriented line & $E$ &       12        &  14      &   7         \\
 \hline
-oriented line & $F$ &       12        &  14      &   7         \\
+oriented point & $F$ &       12        &  14      &   7         \\
 \hline
 flag & $G$ &       8        &  21      &   21         \\
 \hline
         & $H=\Integer_7 $ &       7        &  24      &   8         \\
 \hline
-anti-flag & $I=S_3$ &       6        &  28      &   28         \\
+triangle & $I=S_3$ &       6        &  28      &   28         \\
 \hline
-oriented flag & $J=\Integer_4$ &       4        &  42      &   21         \\
+pair of distinct lines & $J=\Integer_2\times\Integer_2$ & 4 &  42 & 7 \\
 \hline
-pair of distinct lines & $K=\Integer_2\times\Integer_2$ & 4 &  42 & 7 \\
+oriented flag & $K=\Integer_4$ &       4        &  42      &   21         \\
 \hline
 pair of distinct points & $L=\Integer_2\times\Integer_2$ &       4        &  42      &   7 \\
 \hline
 oriented triangle & $M=\Integer_3$ &       3        &  56      &   28         \\
 \hline
-        & $N$ &       2        &  84      &   21         \\
+pointed triangle & $N=\Integer_2$ &       2        &  84      &   21         \\
 \hline
 frame & $P=\{1\} $ &       1        &  168      &   1         \\
 \hline
 \end{tabular}
 \end{center}
 \end{samepage}
+
+\todo{structure for $J$ and $L$ around the right way?}
+
+\begin{center}
+\includegraphics[width=0.6\columnwidth]{subgroups_gl32.pdf} 
+\end{center}
+
+
+%$$
+%\begin{array}{r|rrrrrrrrrrrrrrr}
+%\times & A & B & C & D & E & F & G & H & I & J & K & L & M & N & O \\
+%\hline
+%A & A & B & C & D & E & F & G & H & I & J & K & L & M & N & O \\
+%B &   & B\thinplus J & G\thinplus I & M & J\thinplus M & F\thinplus N & G\thinplus J\thinplus N & O & I\thinplus 2N & 3J\thinplus O & K\thinplus N\thinplus O & L\thinplus 3N & M\thinplus 2O & 3N\thinplus 2O & 7O \\
+%C &   &   & C\thinplus L & M & E\thinplus N & L\thinplus M & G\thinplus L\thinplus N & O & I\thinplus 2N & J\thinplus 3N & K\thinplus N\thinplus O & 3L\thinplus O & M\thinplus 2O & 3N\thinplus 2O & 7O \\
+%D &   &   &   & D\thinplus M & 2M & 2M & O & H\thinplus O & M\thinplus O & 2O & 2O & 2O & 2M\thinplus 2O & 4O & 8O \\
+%E &   &   &   &   & 2E\thinplus O & 2M\thinplus N & J\thinplus N\thinplus O & 2O & M\thinplus 2N\thinplus O & 2J\thinplus 3O & N\thinplus 3O & 3N\thinplus 2O & 2M\thinplus 4O & 2N\thinplus 6O & 14O \\
+%F &   &   &   &   &   & 2F\thinplus O & L\thinplus N\thinplus O & 2O & M\thinplus 2N\thinplus O & 3N\thinplus 2O & N\thinplus 3O & 2L\thinplus 3O & 2M\thinplus 4O & 2N\thinplus 6O & 14O \\
+%G &   &   &   &   &   &   & G\thinplus J\thinplus L\thinplus 2N\thinplus O & 3O & 5N\thinplus O & 3J\thinplus 3N\thinplus 3O & K\thinplus 2N\thinplus 4O & 3L\thinplus 3N\thinplus 3O & 7O & 5N\thinplus 8O & 21O \\
+%H &   &   &   &   &   &   &   & 3H\thinplus 3O & 4O & 6O & 6O & 6O & 8O & 12O & 24O \\
+%I &   &   &   &   &   &   &   &   & I\thinplus 3N\thinplus 3O & 6N\thinplus 4O & 2N\thinplus 6O & 6N\thinplus 4O & M\thinplus 9O & 4N\thinplus 12O & 28O \\
+%J &   &   &   &   &   &   &   &   &   & 6J\thinplus 9O & 3N\thinplus 9O & 9N\thinplus 6O & 14O & 6N\thinplus 18O & 42O \\
+%K &   &   &   &   &   &   &   &   &   &   & 2K\thinplus 10O & 3N\thinplus 9O & 14O & 2N\thinplus 20O & 42O \\
+%L &   &   &   &   &   &   &   &   &   &   &   & 6L\thinplus 9O & 14O & 6N\thinplus 18O & 42O \\
+%M &   &   &   &   &   &   &   &   &   &   &   &   & 2M\thinplus 18O & 28O & 56O \\
+%N &   &   &   &   &   &   &   &   &   &   &   &   &   & 4N\thinplus 40O & 84O \\
+%O &   &   &   &   &   &   &   &   &   &   &   &   &   &   & 168O \\
+%\end{array}
+%$$
+
+%\begin{sidewaystable}
+%$$
+%\begin{array}{r|rrrrrrrrrrrrrrr}
+%\times & A & B & C & D & E & F & G & H & I & J & K & L & M & N & P \\
+%\hline
+%A & A & B & C & D & E & F & G & H & I & J & K & L & M & N & P \\
+%B & B & B\thinplus J & G\thinplus I & M & J\thinplus M & F\thinplus N & G\thinplus J\thinplus N & P & I\thinplus 2N & 3J\thinplus P & K\thinplus N\thinplus P & L\thinplus 3N & M\thinplus 2P & 3N\thinplus 2P & 7P \\
+%C & C & G\thinplus I & C\thinplus L & M & E\thinplus N & L\thinplus M & G\thinplus L\thinplus N & P & I\thinplus 2N & J\thinplus 3N & K\thinplus N\thinplus P & 3L\thinplus P & M\thinplus 2P & 3N\thinplus 2P & 7P \\
+%D & D & M & M & D\thinplus M & 2M & 2M & P & H\thinplus P & M\thinplus P & 2P & 2P & 2P & 2M\thinplus 2P & 4P & 8P \\
+%E & E & J\thinplus M & E\thinplus N & 2M & 2E\thinplus P & 2M\thinplus N & J\thinplus N\thinplus P & 2P & M\thinplus 2N\thinplus P & 2J\thinplus 3P & N\thinplus 3P & 3N\thinplus 2P & 2M\thinplus 4P & 2N\thinplus 6P & 14P \\
+%F & F & F\thinplus N & L\thinplus M & 2M & 2M\thinplus N & 2F\thinplus P & L\thinplus N\thinplus P & 2P & M\thinplus 2N\thinplus P & 3N\thinplus 2P & N\thinplus 3P & 2L\thinplus 3P & 2M\thinplus 4P & 2N\thinplus 6P & 14P \\
+%G & G & G\thinplus J\thinplus N & G\thinplus L\thinplus N & P & J\thinplus N\thinplus P & L\thinplus N\thinplus P & G\thinplus J\thinplus L\thinplus 2N\thinplus P & 3P & 5N\thinplus P & 3J\thinplus 3N\thinplus 3P & K\thinplus 2N\thinplus 4P & 3L\thinplus 3N\thinplus 3P & 7P & 5N\thinplus 8P & 21P \\
+%H & H & P & P & H\thinplus P & 2P & 2P & 3P & 3H\thinplus 3P & 4P & 6P & 6P & 6P & 8P & 12P & 24P \\
+%I & I & I\thinplus 2N & I\thinplus 2N & M\thinplus P & M\thinplus 2N\thinplus P & M\thinplus 2N\thinplus P & 5N\thinplus P & 4P & I\thinplus 3N\thinplus 3P & 6N\thinplus 4P & 2N\thinplus 6P & 6N\thinplus 4P & M\thinplus 9P & 4N\thinplus 12P & 28P \\
+%J & J & 3J\thinplus P & J\thinplus 3N & 2P & 2J\thinplus 3P & 3N\thinplus 2P & 3J\thinplus 3N\thinplus 3P & 6P & 6N\thinplus 4P & 6J\thinplus 9P & 3N\thinplus 9P & 9N\thinplus 6P & 14P & 6N\thinplus 18P & 42P \\
+%K & K & K\thinplus N\thinplus P & K\thinplus N\thinplus P & 2P & N\thinplus 3P & N\thinplus 3P & K\thinplus 2N\thinplus 4P & 6P & 2N\thinplus 6P & 3N\thinplus 9P & 2K\thinplus 10P & 3N\thinplus 9P & 14P & 2N\thinplus 20P & 42P \\
+%L & L & L\thinplus 3N & 3L\thinplus P & 2P & 3N\thinplus 2P & 2L\thinplus 3P & 3L\thinplus 3N\thinplus 3P & 6P & 6N\thinplus 4P & 9N\thinplus 6P & 3N\thinplus 9P & 6L\thinplus 9P & 14P & 6N\thinplus 18P & 42P \\
+%M & M & M\thinplus 2P & M\thinplus 2P & 2M\thinplus 2P & 2M\thinplus 4P & 2M\thinplus 4P & 7P & 8P & M\thinplus 9P & 14P & 14P & 14P & 2M\thinplus 18P & 28P & 56P \\
+%N & N & 3N\thinplus 2P & 3N\thinplus 2P & 4P & 2N\thinplus 6P & 2N\thinplus 6P & 5N\thinplus 8P & 12P & 4N\thinplus 12P & 6N\thinplus 18P & 2N\thinplus 20P & 6N\thinplus 18P & 28P & 4N\thinplus 40P & 84P \\
+%P & P & 7P & 7P & 8P & 14P & 14P & 21P & 24P & 28P & 42P & 42P & 42P & 56P & 84P & 168P \\
+%\end{array}
+%$$
+%\end{sidewaystable}
+
 
 
 

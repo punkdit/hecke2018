@@ -239,7 +239,8 @@ tabs = [0., 5*r, 10*r, 10*r+6*R]
 def dorow():
     c.stroke(path.rect(tabs[0]-r, y-r, tabs[3]-tabs[0], R))
 
-flags = [ (0, 0), (0, 1), (1, 1), (2, 1), (2, 0), (1, 0)]
+#flags = [ (0, 0), (0, 1), (1, 1), (2, 1), (2, 0), (1, 0)]
+flags = [(i, j) for i in range(3) for j in range(2)]
 
 dorow()
 c.text(x, y, "structure", [pyx.text.size.large])
@@ -314,7 +315,8 @@ def alpha(a):
 clr_a = [colors[0], alpha(0.7)]
 clr_b = [colors[2], alpha(0.7)]
 
-flags = [ (0, 0), (0, 1), (1, 1), (2, 1), (2, 0), (1, 0)]
+#flags = [ (0, 0), (0, 1), (1, 1), (2, 1), (2, 0), (1, 0)]
+flags = [(i, j) for i in range(3) for j in range(2)]
 flags_a = [(i, j, clr_a) for (i, j) in flags]
 flags_b = [(i, j, clr_b) for (i, j) in flags]
 

@@ -1,0 +1,21 @@
+digraph
+{
+    rankdir = BT;
+    B -> A;
+    C -> A;
+    D -> A;
+    F -> B;
+    H -> B;
+    E -> C;
+    F -> C;
+    G -> C;
+    H -> D;
+    I -> D;
+    I -> E;
+    J -> E;
+    J -> F;
+    J -> G;
+    K -> H;
+    K -> I;
+    K -> J;
+}
