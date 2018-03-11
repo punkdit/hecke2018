@@ -537,7 +537,7 @@ x, y = 0., 0.
 r = 0.5
 R = r*2.
 
-tabs = [0., 6*r, 11*r, 11*r+8*R/0.8]
+tabs = [0., 7*r, 13*r, 10*r+8*R/0.8]
 
 def dorow():
     c.stroke(path.rect(tabs[0]-r, y-0.7*r, tabs[3]-tabs[0], R))
@@ -616,7 +616,7 @@ flaged(x, y, r, [((4-j)%4, j) for j in range(2)]); x += R
 y -= R; x = tabs[0]
 
 dorow()
-c.text(x, y, "short\&long axis", [pyx.text.size.large])
+c.text(x, y, "short \& long axis", [pyx.text.size.large])
 x = tabs[1]
 c.text(x, y, "$G$", [pyx.text.size.large])
 x = tabs[2]
