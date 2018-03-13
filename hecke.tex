@@ -894,6 +894,17 @@ $$
 %\end{array}
 %$$
 
+After row-reduction:
+$$
+\begin{array}{rrrr}
+ A & B & C & D \\
+\hline
+1 & 1 & 1 & 1 \\
+0 & 1 & 0 & 1 \\
+0 & 0 & 1 & 2 \\
+\end{array}
+$$
+
 \subsection{Example: the square}
 
 Here we consider the dihedral group of order 8 as
@@ -942,25 +953,6 @@ group:
 \end{center}
 
 
-%G: 8
-%equ: [8]
-%equ: [4]
-%equ: [4]
-%equ: [4]
-%equ: [2, 2]
-%equ: [2, 2]
-%equ: [2]
-%equ: [1]
-%total: 8
-%A subgroup order = 8, number of cosets = 1
-%B subgroup order = 4, number of cosets = 2
-%C subgroup order = 4, number of cosets = 2
-%D subgroup order = 4, number of cosets = 2
-%E subgroup order = 2, number of cosets = 4
-%F subgroup order = 2, number of cosets = 4
-%G subgroup order = 2, number of cosets = 4
-%H subgroup order = 1, number of cosets = 8
-
 
 {\small
 $$
@@ -993,38 +985,25 @@ $$
 %\end{array}
 %$$
 
+After row-reduction:
+$$
+\begin{array}{rrrrrrrr}
+ A & B & C & D & E & F & G & H \\
+\hline
+1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+0 & 1 & 0 & 0 & 1 & 0 & 1 & 1 \\
+0 & 0 & 1 & 0 & 0 & 1 & 1 & 1 \\
+0 & 0 & 0 & 1 & 0 & 0 & 1 & 1 \\
+0 & 0 & 0 & 0 & 1 & 1 & 0 & 2 \\
+\end{array}
+$$
+
+
 
 \subsection{Example: the tetrahedron}
 
 This is the group $S_4$ acting on the regular tetrahedron,
 or otherwise a set of four elements.
-
-%G: 24
-%equ: [24]
-%equ: [12]
-%equ: [8, 8, 8]
-%equ: [6, 6, 6, 6]
-%equ: [4, 4, 4]
-%equ: [4]
-%equ: [4, 4, 4]
-%equ: [3, 3, 3, 3]
-%equ: [2, 2, 2, 2, 2, 2]
-%equ: [2, 2, 2]
-%equ: [1]
-%total: 11
-%A subgroup order = 24, number of cosets = 1
-%B subgroup order = 12, number of cosets = 2
-%C subgroup order = 8, number of cosets = 3
-%D subgroup order = 6, number of cosets = 4
-%E subgroup order = 4, number of cosets = 6
-%F subgroup order = 4, number of cosets = 6
-%G subgroup order = 4, number of cosets = 6
-%H subgroup order = 3, number of cosets = 8
-%I subgroup order = 2, number of cosets = 12
-%J subgroup order = 2, number of cosets = 12
-%K subgroup order = 1, number of cosets = 24
-
-
 
 \begin{samepage}
 \begin{center}
@@ -1082,23 +1061,19 @@ K & K & 2K & 3K & 4K & 6K & 6K & 6K & 8K & 12K & 12K & 24K \\
 \end{array}
 $$
 }
-%$$
-%\begin{array}{r|rrrrrrrrrrr}
-%\times & A & B & C & D & E & F & G & H & I & J & K \\
-%\hline
-%A & A & B & C & D & E & F & G & H & I & J & K \\
-%B &   & 2B & F & H & J & 2F & J & 2H & K & 2J & 2K \\
-%C &   &   & C\thinplus F & I & E\thinplus J & 3F & G\thinplus J & K & I\thinplus K & 3J & 3K \\
-%D &   &   &   & D\thinplus I & 2I & K & K & H\thinplus K & 2I\thinplus K & 2K & 4K \\
-%E &   &   &   &   & 2E\thinplus K & 3J & J\thinplus K & 2K & 2I\thinplus 2K & 2J\thinplus 2K & 6K \\
-%F &   &   &   &   &   & 6F & 3J & 2K & 3K & 6J & 6K \\
-%G &   &   &   &   &   &   & 2G\thinplus K & 2K & 3K & 2J\thinplus 2K & 6K \\
-%H &   &   &   &   &   &   &   & 2H\thinplus 2K & 4K & 4K & 8K \\
-%I &   &   &   &   &   &   &   &   & 2I\thinplus 5K & 6K & 12K \\
-%J &   &   &   &   &   &   &   &   &   & 4J\thinplus 4K & 12K \\
-%K &   &   &   &   &   &   &   &   &   &   & 24K \\
-%\end{array}
-%$$
+
+After row-reduction:
+$$
+\begin{array}{rrrrrrrrrrr}
+ A & B & C & D & E & F & G & H & I & J & K \\
+\hline
+1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+0 & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 0 & 1 & 1 \\
+0 & 0 & 1 & 0 & 1 & 2 & 1 & 0 & 1 & 2 & 2 \\
+0 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 2 & 1 & 3 \\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 3 \\
+\end{array}
+$$
 
 
 %Just the parabolic subgroups:
@@ -1113,6 +1088,72 @@ $$
 %K | K  4K   6K    12K   24K  
 %\end{verbatim}
 
+
+
+\subsection{Example: the oriented dodecahedron}
+
+This is the alternating group on five elements.
+
+\begin{samepage}
+\begin{center}
+\begin{tabular}{ |l|l|r|r|r| }
+\hline
+structure & stabilizer subgroup & order & \#cosets & \#conjugates \\
+\hline
+\hline
+ & $A$ &       60        &  1      &   1         \\
+\hline
+ & $B$ &       12        &  5      &   5         \\
+\hline
+ & $C$ &       10        &  6      &   6         \\
+\hline
+ & $D$ &       6        &  10      &   10         \\
+\hline
+ & $E$ &       5        &  12      &   6      \\
+\hline
+ & $F$ &       4        &  15      &   5     \\
+\hline
+ & $G$ &       3        &  20      &   10    \\
+\hline
+ & $H$ &       2        &  30      &   15         \\
+\hline
+frame & $I=1$ &       1        &  60      &   1       \\
+\hline
+\end{tabular}
+\end{center}
+\end{samepage}
+
+\begin{center}
+\includegraphics[width=0.4\columnwidth]{subgroups_alt5.pdf} 
+\end{center}
+
+$$
+\begin{array}{r|rrrrrrrrr}
+\times & A & B & C & D & E & F & G & H & I \\
+\hline
+A & A & B & C & D & E & F & G & H & I \\
+B & B & B\thinplus G & H & G\thinplus H & I & F\thinplus I & 2G\thinplus I & H\thinplus 2I & 5I \\
+C & C & H & C\thinplus H & 2H & E\thinplus I & 3H & 2I & 2H\thinplus 2I & 6I \\
+D & D & G\thinplus H & 2H & D\thinplus H\thinplus I & 2I & 3H\thinplus I & G\thinplus 3I & 2H\thinplus 4I & 10I \\
+E & E & I & E\thinplus I & 2I & 2E\thinplus 2I & 3I & 4I & 6I & 12I \\
+F & F & F\thinplus I & 3H & 3H\thinplus I & 3I & 3F\thinplus 3I & 5I & 3H\thinplus 6I & 15I \\
+G & G & 2G\thinplus I & 2I & G\thinplus 3I & 4I & 5I & 2G\thinplus 6I & 10I & 20I \\
+H & H & H\thinplus 2I & 2H\thinplus 2I & 2H\thinplus 4I & 6I & 3H\thinplus 6I & 10I & 2H\thinplus 14I & 30I \\
+I & I & 5I & 6I & 10I & 12I & 15I & 20I & 30I & 60I \\
+\end{array}
+$$
+
+After row-reduction:
+$$
+\begin{array}{rrrrrrrrr}
+ A & B & C & D & E & F & G & H & I \\
+\hline
+1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+0 & 1 & 0 & 1 & 0 & 1 & 2 & 2 & 4 \\
+0 & 0 & 1 & 1 & 1 & 2 & 1 & 3 & 5 \\
+0 & 0 & 0 & 0 & 2 & 0 & 2 & 2 & 6 \\
+\end{array}
+$$
 
 \subsection{Example: the Fano plane}
 
@@ -1249,6 +1290,19 @@ N | N 3N+2P 3N+2P 4P    2N+6P  2N+6P  5N+8P      12P   4N+12P  6N+18P   2N+20P  
 P | P 7P    7P    8P    14P    14P    21P        24P   28P     42P      42P     42P      56P    84P    168P 
 \end{verbatim}
 %}
+
+After row-reduction:
+$$
+\begin{array}{rrrrrrrrrrrrrrrr}
+ A & B & C & D & E & F & G & H & I & J & K & L & M & N & P \\
+\hline
+1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+0 & 1 & 1 & 0 & 1 & 1 & 2 & 0 & 2 & 3 & 2 & 3 & 2 & 4 & 6 \\
+0 & 0 & 0 & 1 & 1 & 1 & 0 & 1 & 1 & 1 & 1 & 1 & 3 & 3 & 7 \\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 2 & 1 & 2 & 2 & 2 & 2 & 4 & 8 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 2 & 0 & 2 & 2 & 6 \\
+\end{array}
+$$
 
 \section{Bibliographic notes}
 
