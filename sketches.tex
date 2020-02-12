@@ -1,0 +1,181 @@
+
+\documentclass[11pt,oneside]{article} 
+
+\usepackage{a4wide}
+
+\usepackage{amsmath}
+\usepackage{color}
+%\usepackage{natbib} % kills arxiv 
+\usepackage{framed}
+%\usepackage{cite}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{amsthm}
+
+%\RequirePackage{algorithmic}
+%\RequirePackage{algorithm}
+%\RequirePackage{theorem}
+%\RequirePackage{eucal}
+\RequirePackage{color}
+\RequirePackage{url}
+\RequirePackage{mdwlist}
+
+\RequirePackage{rotating}
+
+
+\RequirePackage[all]{xy}
+%\_CompileMatrices
+%\RequirePackage{hyperref}
+\RequirePackage{graphicx}
+%\RequirePackage[dvips]{geometry}
+
+\usepackage{xcolor}
+%\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage[caption=false]{subfig}
+\usepackage{enumerate}
+\usepackage{mathrsfs}
+\usepackage{bbm}
+
+% -------------- Commands ----------------------
+
+\makeatletter
+\newcommand{\verbatimfont}[1]{\renewcommand{\verbatim@font}{\ttfamily#1}}
+\makeatother
+
+\newcommand{\Eref}[1]{(\ref{#1})}
+\newcommand{\Fref}[1]{Fig.~\ref{#1}}
+%\newcommand{\Aref}[1]{Appendix~\ref{#1}}
+\newcommand{\SRef}[1]{Section~\ref{#1}}
+
+\newcommand{\todo}[1]{\ \textcolor{red}{\{#1\}}\ }
+
+\newcommand{\Aut}{\mathrm{Aut}}
+\newcommand{\Hom}{\mathrm{Hom}}
+%\newcommand{\hom}{\mathrm{hom}} % internal hom ?
+\newcommand{\Stab}{\mathrm{Stab}}
+\newcommand{\Fix}{\mathrm{Fix}}
+\newcommand{\Orbit}{\mathrm{Orbit}}
+\newcommand{\Ker}{\mathrm{Ker}}
+\newcommand{\Image}{\mathrm{Im}}
+\newcommand{\Dim}{\mathrm{Dim}}
+\newcommand{\Complex}{\mathbb{C}}
+\newcommand{\Integer}{\mathbb{Z}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\Field}{\mathbb{F}}
+
+% Lemma, proof, theorem, etc.
+\newcommand\nounderline[1]{ #1} 
+\newcommand\dodef[1]{\vskip 5pt \noindent{\bf \underline{Definition #1.}\ }}
+\newcommand\dolemma[1]{\vskip 5pt \noindent{\bf \underline{Lemma #1.}\ }}
+\newcommand\doproposition[1]{\vskip 5pt \noindent {\bf \underline{Proposition #1.}\ }}
+\newcommand\dotheorem[1]{\vskip 5pt \noindent {\bf \underline{Theorem #1.}\ }}
+\newcommand\docorollary[1]{\vskip 5pt \noindent {\bf \underline{Corollary #1.}\ }}
+\newcommand\doexample[1]{\vskip 5pt \noindent {\bf \underline{Example #1.}\ }}
+\newcommand\doproof{\vskip 5pt \noindent{\bf \nounderline{Proof:}\ }}
+
+\newcommand\tombstone{\rule{.36em}{2ex}\vskip 5pt}
+
+\newcounter{numitem}
+\newcommand{\numitem}[1]{\refstepcounter{numitem}\thenumitem\label{#1}}
+
+% braket notation...
+\newcommand{\ket}[1]{|{#1}\rangle}
+\newcommand{\expect}[1]{\langle{#1}\rangle}
+\newcommand{\bra}[1]{\langle{#1}|}
+\newcommand{\ketbra}[2]{\ket{#1}\!\bra{#2}}
+\newcommand{\braket}[2]{\langle{#1}|{#2}\rangle}
+
+% Categories
+\newcommand{\Set}{\mathbf{Set}}
+\newcommand{\FinSet}{\mathbf{FinSet}}
+\newcommand{\GSet}{\mathbf{GSet}}
+\newcommand{\GRep}{\mathbf{GRep}}
+
+\newcommand{\thinplus}{\!+\!}
+
+\renewcommand{\arraystretch}{1.2}
+
+
+
+\title{Notes on Locally Presentable Categories}
+
+\author{Simon Burton}
+
+
+\date{\today}
+
+\flushbottom
+
+\begin{document}
+
+\maketitle
+
+%\begin{abstract}
+%\end{abstract}
+
+%\tableofcontents
+
+%\doublespacing
+%\onehalfspacing
+
+
+\section*{Constructing locally presentable categories}
+
+\newcommand{\CatA}{\mathsf{A}}
+\newcommand{\CatB}{\mathsf{B}}
+\newcommand{\CatSet}{\mathsf{Set}}
+\newcommand{\Ob}{\mathrm{Ob}}
+\newcommand{\Mor}{\mathrm{Mor}}
+
+\dodef{1}
+A {\it locally presentable category} is defined recursively as:
+
+{\bf (Axiom)} The terminal category $\mathbbm{1}$ is locally presentable.
+
+{\bf (0-cell)} 
+Given a locally presentable category $\mathsf{A}$,
+we freely adjoin an object to $\mathsf{A}$ giving
+$$
+    \mathsf{B} = \mathsf{A}\times\mathsf{Set}.
+$$
+The new object is $(0,\star)\in \mathsf{A}\times\mathsf{Set}.$
+
+{\bf (1-cell)} 
+Given a locally presentable category $\mathsf{A}$,
+and objects $c,d\in \mathsf{A}$,
+we freely adjoin a morphism $f:d\to c$ to $\mathsf{A}$ giving
+$\mathsf{B}$ with
+$$
+    \Ob(\CatB) := \{ (b,g) : b\in\Ob(\CatA), g:\Hom(c,b)\to\Hom(d,b) \}
+$$
+and morphism $(b_1,f_1)\to(b_2, f_2)$ any $f:b_1\to b_2$ in $\CatA$ such that
+$$
+\begin{tikzcd}
+ \Hom(c,b_1) \arrow{d}{\Hom(c,f)} \arrow{r}{f_1} &  \Hom(d,b_1) \arrow{d}{\Hom(d,f)} \\
+ \Hom(c,b_2) \arrow{r}{f_2} &  \Hom(d,b_2) 
+\end{tikzcd}
+$$
+commutes.
+
+{\bf (2-cell)}
+Given a locally presentable category $\mathsf{A}$,
+with morphism $f:d\to c$ we freely adjoin an inverse $g:c\to d$
+giving $\CatB$ as the full subcategory of $\CatA$
+with objects 
+$ b\in\Ob(\CatA) $ such that  $\Hom(f,b):\Hom(c,b)\to\Hom(d,b)$
+        is invertible in $\CatSet$.
+
+
+\tombstone
+
+
+References: \cite{Adamek1994} \cite{Riehl2017} \cite{Heunen2019}
+
+\bibliography{refs2}{}
+\bibliographystyle{abbrv}
+
+\end{document}

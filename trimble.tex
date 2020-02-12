@@ -1,0 +1,811 @@
+\documentclass[12pt,titlepage]{article}
+
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage{xparse}
+\usepackage{hyperref}
+
+%----Macros----------
+%
+% Unresolved issues:
+%
+%  \righttoleftarrow
+%  \lefttorightarrow
+%
+%  \color{} with HTML colorspec
+%  \bgcolor
+%  \array with options (without options, it's equivalent to the matrix environment)
+
+% Of the standard HTML named colors, white, black, red, green, blue and yellow
+% are predefined in the color package. Here are the rest.
+\definecolor{aqua}{rgb}{0, 1.0, 1.0}
+\definecolor{fuschia}{rgb}{1.0, 0, 1.0}
+\definecolor{gray}{rgb}{0.502, 0.502, 0.502}
+\definecolor{lime}{rgb}{0, 1.0, 0}
+\definecolor{maroon}{rgb}{0.502, 0, 0}
+\definecolor{navy}{rgb}{0, 0, 0.502}
+\definecolor{olive}{rgb}{0.502, 0.502, 0}
+\definecolor{purple}{rgb}{0.502, 0, 0.502}
+\definecolor{silver}{rgb}{0.753, 0.753, 0.753}
+\definecolor{teal}{rgb}{0, 0.502, 0.502}
+
+% Because of conflicts, \space and \mathop are converted to
+% \itexspace and \operatorname during preprocessing.
+
+% itex: \space{ht}{dp}{wd}
+%
+% Height and baseline depth measurements are in units of tenths of an ex while
+% the width is measured in tenths of an em.
+\makeatletter
+\newdimen\itex@wd%
+\newdimen\itex@dp%
+\newdimen\itex@thd%
+\def\itexspace#1#2#3{\itex@wd=#3em%
+\itex@wd=0.1\itex@wd%
+\itex@dp=#2ex%
+\itex@dp=0.1\itex@dp%
+\itex@thd=#1ex%
+\itex@thd=0.1\itex@thd%
+\advance\itex@thd\the\itex@dp%
+\makebox[\the\itex@wd]{\rule[-\the\itex@dp]{0cm}{\the\itex@thd}}}
+\makeatother
+
+% \tensor and \multiscript
+\makeatletter
+\newif\if@sup
+\newtoks\@sups
+\def\append@sup#1{\edef\act{\noexpand\@sups={\the\@sups #1}}\act}%
+\def\reset@sup{\@supfalse\@sups={}}%
+\def\mk@scripts#1#2{\if #2/ \if@sup ^{\the\@sups}\fi \else%
+  \ifx #1_ \if@sup ^{\the\@sups}\reset@sup \fi {}_{#2}%
+  \else \append@sup#2 \@suptrue \fi%
+  \expandafter\mk@scripts\fi}
+\def\tensor#1#2{\reset@sup#1\mk@scripts#2_/}
+\def\multiscripts#1#2#3{\reset@sup{}\mk@scripts#1_/#2%
+  \reset@sup\mk@scripts#3_/}
+\makeatother
+
+% \slash
+\makeatletter
+\newbox\slashbox \setbox\slashbox=\hbox{$/$}
+\def\itex@pslash#1{\setbox\@tempboxa=\hbox{$#1$}
+  \@tempdima=0.5\wd\slashbox \advance\@tempdima 0.5\wd\@tempboxa
+  \copy\slashbox \kern-\@tempdima \box\@tempboxa}
+\def\slash{\protect\itex@pslash}
+\makeatother
+
+% math-mode versions of \rlap, etc
+% from Alexander Perlis, "A complement to \smash, \llap, and lap"
+%   http://math.arizona.edu/~aprl/publications/mathclap/
+\def\clap#1{\hbox to 0pt{\hss#1\hss}}
+\def\mathllap{\mathpalette\mathllapinternal}
+\def\mathrlap{\mathpalette\mathrlapinternal}
+\def\mathclap{\mathpalette\mathclapinternal}
+\def\mathllapinternal#1#2{\llap{$\mathsurround=0pt#1{#2}$}}
+\def\mathrlapinternal#1#2{\rlap{$\mathsurround=0pt#1{#2}$}}
+\def\mathclapinternal#1#2{\clap{$\mathsurround=0pt#1{#2}$}}
+
+% Renames \sqrt as \oldsqrt and redefine root to result in \sqrt[#1]{#2}
+\let\oldroot\root
+\def\root#1#2{\oldroot #1 \of{#2}}
+\renewcommand{\sqrt}[2][]{\oldroot #1 \of{#2}}
+
+% Manually declare the txfonts symbolsC font
+\DeclareSymbolFont{symbolsC}{U}{txsyc}{m}{n}
+\SetSymbolFont{symbolsC}{bold}{U}{txsyc}{bx}{n}
+\DeclareFontSubstitution{U}{txsyc}{m}{n}
+
+% Manually declare the stmaryrd font
+\DeclareSymbolFont{stmry}{U}{stmry}{m}{n}
+\SetSymbolFont{stmry}{bold}{U}{stmry}{b}{n}
+
+% Manually declare the MnSymbolE font
+\DeclareFontFamily{OMX}{MnSymbolE}{}
+\DeclareSymbolFont{mnomx}{OMX}{MnSymbolE}{m}{n}
+\SetSymbolFont{mnomx}{bold}{OMX}{MnSymbolE}{b}{n}
+\DeclareFontShape{OMX}{MnSymbolE}{m}{n}{
+    <-6>  MnSymbolE5
+   <6-7>  MnSymbolE6
+   <7-8>  MnSymbolE7
+   <8-9>  MnSymbolE8
+   <9-10> MnSymbolE9
+  <10-12> MnSymbolE10
+  <12->   MnSymbolE12}{}
+
+% Declare specific arrows from txfonts without loading the full package
+\makeatletter
+\def\re@DeclareMathSymbol#1#2#3#4{%
+    \let#1=\undefined
+    \DeclareMathSymbol{#1}{#2}{#3}{#4}}
+\re@DeclareMathSymbol{\neArrow}{\mathrel}{symbolsC}{116}
+\re@DeclareMathSymbol{\neArr}{\mathrel}{symbolsC}{116}
+\re@DeclareMathSymbol{\seArrow}{\mathrel}{symbolsC}{117}
+\re@DeclareMathSymbol{\seArr}{\mathrel}{symbolsC}{117}
+\re@DeclareMathSymbol{\nwArrow}{\mathrel}{symbolsC}{118}
+\re@DeclareMathSymbol{\nwArr}{\mathrel}{symbolsC}{118}
+\re@DeclareMathSymbol{\swArrow}{\mathrel}{symbolsC}{119}
+\re@DeclareMathSymbol{\swArr}{\mathrel}{symbolsC}{119}
+\re@DeclareMathSymbol{\nequiv}{\mathrel}{symbolsC}{46}
+\re@DeclareMathSymbol{\Perp}{\mathrel}{symbolsC}{121}
+\re@DeclareMathSymbol{\Vbar}{\mathrel}{symbolsC}{121}
+\re@DeclareMathSymbol{\sslash}{\mathrel}{stmry}{12}
+\re@DeclareMathSymbol{\bigsqcap}{\mathop}{stmry}{"64}
+\re@DeclareMathSymbol{\biginterleave}{\mathop}{stmry}{"6}
+\re@DeclareMathSymbol{\invamp}{\mathrel}{symbolsC}{77}
+\re@DeclareMathSymbol{\parr}{\mathrel}{symbolsC}{77}
+\makeatother
+
+% \llangle, \rrangle, \lmoustache and \rmoustache from MnSymbolE
+\makeatletter
+\def\Decl@Mn@Delim#1#2#3#4{%
+  \if\relax\noexpand#1%
+    \let#1\undefined
+  \fi
+  \DeclareMathDelimiter{#1}{#2}{#3}{#4}{#3}{#4}}
+\def\Decl@Mn@Open#1#2#3{\Decl@Mn@Delim{#1}{\mathopen}{#2}{#3}}
+\def\Decl@Mn@Close#1#2#3{\Decl@Mn@Delim{#1}{\mathclose}{#2}{#3}}
+\Decl@Mn@Open{\llangle}{mnomx}{'164}
+\Decl@Mn@Close{\rrangle}{mnomx}{'171}
+\Decl@Mn@Open{\lmoustache}{mnomx}{'245}
+\Decl@Mn@Close{\rmoustache}{mnomx}{'244}
+\makeatother
+
+% Widecheck
+\makeatletter
+\DeclareRobustCommand\widecheck[1]{{\mathpalette\@widecheck{#1}}}
+\def\@widecheck#1#2{%
+    \setbox\z@\hbox{\m@th$#1#2$}%
+    \setbox\tw@\hbox{\m@th$#1%
+       \widehat{%
+          \vrule\@width\z@\@height\ht\z@
+          \vrule\@height\z@\@width\wd\z@}$}%
+    \dp\tw@-\ht\z@
+    \@tempdima\ht\z@ \advance\@tempdima2\ht\tw@ \divide\@tempdima\thr@@
+    \setbox\tw@\hbox{%
+       \raise\@tempdima\hbox{\scalebox{1}[-1]{\lower\@tempdima\box
+\tw@}}}%
+    {\ooalign{\box\tw@ \cr \box\z@}}}
+\makeatother
+
+% \mathraisebox{voffset}[height][depth]{something}
+\makeatletter
+\NewDocumentCommand\mathraisebox{moom}{%
+\IfNoValueTF{#2}{\def\@temp##1##2{\raisebox{#1}{$\m@th##1##2$}}}{%
+\IfNoValueTF{#3}{\def\@temp##1##2{\raisebox{#1}[#2]{$\m@th##1##2$}}%
+}{\def\@temp##1##2{\raisebox{#1}[#2][#3]{$\m@th##1##2$}}}}%
+\mathpalette\@temp{#4}}
+\makeatletter
+
+% udots (taken from yhmath)
+\makeatletter
+\def\udots{\mathinner{\mkern2mu\raise\p@\hbox{.}
+\mkern2mu\raise4\p@\hbox{.}\mkern1mu
+\raise7\p@\vbox{\kern7\p@\hbox{.}}\mkern1mu}}
+\makeatother
+
+%% Fix array
+\newcommand{\itexarray}[1]{\begin{matrix}#1\end{matrix}}
+%% \itexnum is a noop
+\newcommand{\itexnum}[1]{#1}
+
+%% Renaming existing commands
+\newcommand{\underoverset}[3]{\underset{#1}{\overset{#2}{#3}}}
+\newcommand{\widevec}{\overrightarrow}
+\newcommand{\darr}{\downarrow}
+\newcommand{\nearr}{\nearrow}
+\newcommand{\nwarr}{\nwarrow}
+\newcommand{\searr}{\searrow}
+\newcommand{\swarr}{\swarrow}
+\newcommand{\curvearrowbotright}{\curvearrowright}
+\newcommand{\uparr}{\uparrow}
+\newcommand{\downuparrow}{\updownarrow}
+\newcommand{\duparr}{\updownarrow}
+\newcommand{\updarr}{\updownarrow}
+\newcommand{\gt}{>}
+\newcommand{\lt}{<}
+\newcommand{\map}{\mapsto}
+\newcommand{\embedsin}{\hookrightarrow}
+\newcommand{\Alpha}{A}
+\newcommand{\Beta}{B}
+\newcommand{\Zeta}{Z}
+\newcommand{\Eta}{H}
+\newcommand{\Iota}{I}
+\newcommand{\Kappa}{K}
+\newcommand{\Mu}{M}
+\newcommand{\Nu}{N}
+\newcommand{\Rho}{P}
+\newcommand{\Tau}{T}
+\newcommand{\Upsi}{\Upsilon}
+\newcommand{\omicron}{o}
+\newcommand{\lang}{\langle}
+\newcommand{\rang}{\rangle}
+\newcommand{\Union}{\bigcup}
+\newcommand{\Intersection}{\bigcap}
+\newcommand{\Oplus}{\bigoplus}
+\newcommand{\Otimes}{\bigotimes}
+\newcommand{\Wedge}{\bigwedge}
+\newcommand{\Vee}{\bigvee}
+\newcommand{\coproduct}{\coprod}
+\newcommand{\product}{\prod}
+\newcommand{\closure}{\overline}
+\newcommand{\integral}{\int}
+\newcommand{\doubleintegral}{\iint}
+\newcommand{\tripleintegral}{\iiint}
+\newcommand{\quadrupleintegral}{\iiiint}
+\newcommand{\conint}{\oint}
+\newcommand{\contourintegral}{\oint}
+\newcommand{\infinity}{\infty}
+\newcommand{\bottom}{\bot}
+\newcommand{\minusb}{\boxminus}
+\newcommand{\plusb}{\boxplus}
+\newcommand{\timesb}{\boxtimes}
+\newcommand{\intersection}{\cap}
+\newcommand{\union}{\cup}
+\newcommand{\Del}{\nabla}
+\newcommand{\odash}{\circleddash}
+\newcommand{\negspace}{\!}
+\newcommand{\widebar}{\overline}
+\newcommand{\textsize}{\normalsize}
+\renewcommand{\scriptsize}{\scriptstyle}
+\newcommand{\scriptscriptsize}{\scriptscriptstyle}
+\newcommand{\mathfr}{\mathfrak}
+\newcommand{\statusline}[2]{#2}
+\newcommand{\tooltip}[2]{#2}
+\newcommand{\toggle}[2]{#2}
+
+% Theorem Environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{cor}{Corollary}
+\newtheorem*{utheorem}{Theorem}
+\newtheorem*{ulemma}{Lemma}
+\newtheorem*{uprop}{Proposition}
+\newtheorem*{ucor}{Corollary}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\newtheorem{example}{Example}
+\newtheorem*{udefn}{Definition}
+\newtheorem*{uexample}{Example}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem*{uremark}{Remark}
+\newtheorem*{unote}{Note}
+
+%-------------------------------------------------------------------
+
+\begin{document}
+
+%-------------------------------------------------------------------
+
+
+\section*{notes on representation theory}
+
+\hypertarget{contents}{}\section*{{Contents}}\label{contents}
+
+\noindent\hyperlink{the_monoidal_closed_category_of_group_representations}{The monoidal closed category of group representations}\dotfill \pageref*{the_monoidal_closed_category_of_group_representations} \linebreak
+\noindent\hyperlink{basic_results_on_representations_of_finite_groups}{Basic results on representations of finite groups}\dotfill \pageref*{basic_results_on_representations_of_finite_groups} \linebreak
+\noindent\hyperlink{maschkes_theorem}{Maschke's theorem}\dotfill \pageref*{maschkes_theorem} \linebreak
+\noindent\hyperlink{schurs_lemma}{Schur's lemma}\dotfill \pageref*{schurs_lemma} \linebreak
+\noindent\hyperlink{character_theory}{Character theory}\dotfill \pageref*{character_theory} \linebreak
+\noindent\hyperlink{characters_of_permutation_representations}{Characters of permutation representations}\dotfill \pageref*{characters_of_permutation_representations} \linebreak
+\noindent\hyperlink{representations_of_symmetric_groups}{Representations of symmetric groups}\dotfill \pageref*{representations_of_symmetric_groups} \linebreak
+
+
+\hypertarget{the_monoidal_closed_category_of_group_representations}{}\subsection*{{The monoidal closed category of group representations}}\label{the_monoidal_closed_category_of_group_representations}
+
+Let $G$ be a (discrete) group, and let $k$ be a field. The category of $k$-linear representations of $G$ is defined to be the category of (left) modules over the group algebra $k G$ (which as a $k$-vector space has $G$ as a canonical basis).
+
+The group algebra $k G$ is actually a cocommutative Hopf algebra, where the comultiplication
+
+\begin{displaymath}
+\delta: k G \to k G \otimes_k k G
+\end{displaymath}
+is the linear map sending a basis element $g \in G$ to $g \otimes g$, the counit $\varepsilon: k G \to k$ sends each $g$ to $1 \in k$, and the antipode $\iota: k G \to k G$ sends $g$ to $g^{-1}$. For those who like categorical explanations: the free vector space functor $k \cdot -\; : (Set, \times) \to (Vect_k, \otimes)$ is strong symmetric monoidal, and so preserves cocommutative comonoids internal to the symmetric monoidal categories, hence induces a product-preserving functor
+
+\begin{displaymath}
+Set \simeq CoCom(Set, \times) \stackrel{k \cdot -}{\to} CoCom(Vect_k, \otimes) \simeq CoCoalg_k
+\end{displaymath}
+between cartesian monoidal categories. Any such product-preserving functor preserves group objects, hence takes a group $G$ in $Set$ to a group object $k G$ in $CoCoalg_k$, aka a cocommutative Hopf algebra.
+
+
+In more detail, for any object $c$, the diagonal map $c \to c \times c$ together
+with the unique map $c \to 1$ to the terminal object provide a cocommutative
+comonoid structure on $c$. Conversely, if $d: c \to c \times c, e: c \to 1$ is any
+cocommutative monoid, then it can be shown that $d$ coincides with the
+diagonal map (and of course $e$ is the unique map to 1). The key to showing
+this resides in the two counit equations. One first observes that the first
+projection map $p_1: c \times c \to c$ equals the composite
+\begin{displaymath}
+c \times c \xrightarrow{1_c \times e} c \times 1 \cong c
+\end{displaymath}
+
+and similarly for the second projection $p_2$. Next, by the universal
+property of products, any map $d: c \to c \times c$ is uniquely determined by the
+pair of maps $d_1 = p_1 d = (1_c \times e)d,  d_2 = p_2 d = (e \times 1_c)d$. In the
+case of a comultiplication map $d$, the counit equations yield $d_1 = 1_c, d_2 = 1_c$.
+But that's the same result as you would get for the diagonal map,
+so by the uniqueness clause of the universal property, we deduce that $d$
+must be equal to the diagonal.
+
+The story goes deeper than that, however. If $C$ is any symmetric monoidal
+category, then the category of cocommutative comonoids $(c, d: c \to c \otimes c, e: c \to 1)$
+[where now 1 denotes the monoidal unit] is not just
+symmetric monoidal under the monoidal product inherited by $\otimes$ on $C$:
+this symmetric monoidal product is exactly the cartesian product on
+$CoCMon(C)$ -- even if $C$ has no products!  So the passage from $C$ to $CoCMon(C)$
+is a canonical way of producing a cartesian monoidal category from a
+symmetric monoidal category.  To say it even better: this passage can be
+interpreted as a right biadjoint to the inclusion (2-)functor
+
+\begin{displaymath}
+CartMonCat \to SymmMonCat.
+\end{displaymath}
+
+This theme manifested itself further in the study of "cartesian
+bicategories", and many other things.
+Generally speaking, $CoCMon(C)$ is an important construction, that is not
+generally appreciated by mathematicians at large.
+
+Using the Hopf algebra structure on $k G$, one may endow the category $Vect^{k G}$ of $k G$-modules with a symmetric monoidal closed structure that is preserved by the forgetful functor
+
+\begin{displaymath}
+U: Vect^{k G} \to Vect.
+\end{displaymath}
+In detail, if $V, W$ are $k G$-modules, then $V \otimes_k W$ carries a $k G$-module structure given by the evident composite
+
+\begin{displaymath}
+k G \otimes_k V \otimes_k W \stackrel{\delta \otimes 1 \otimes 1}{\to} k G \otimes_k k G \otimes_k V \otimes_k W \cong k G \otimes_k V \otimes_k k G \otimes_k W \stackrel{\alpha \otimes \beta}{\to} V \otimes_k W
+\end{displaymath}
+where $\alpha, \beta$ are the actions on $V, W$. Thus $\otimes_k$ may be regarded as a monoidal product on $k G$-modules. The monoidal unit is $k$ with the trivial action,
+
+\begin{displaymath}
+k G \otimes_k k \stackrel{\varepsilon \otimes 1}{\to} k \otimes_k k \stackrel{mult}{\to} k.
+\end{displaymath}
+The \emph{internal} hom is $\hom_k(V, W)$, the space of $k$-linear maps $V \to W$, where the $k G$-action $k G \otimes_k \hom_k(V, W) \to \hom_k(V, W)$ is mated to the composite
+
+\begin{displaymath}
+\itexarray{
+k G \otimes_k \hom_k(V, W) \otimes_k V & \stackrel{(1 \otimes \iota)\delta \otimes 1 \otimes 1}{\to} & k G \otimes_k k G \otimes_k \hom_k(V, W) \otimes_k V \\
+ & \cong & k G \otimes_k \hom_k(V, W) \otimes_k k G \otimes_k V \\ 
+ & \stackrel{1 \otimes 1 \otimes \alpha}{\to} & k G \otimes_k \hom_k(V, W) \otimes_k V \\ 
+ & \stackrel{1 \otimes eval}{\to} & k G \otimes_k W \\ 
+ & \stackrel{\beta}{\to} & W.
+}
+\end{displaymath}
+Clearly these constructions apply generally to modules over a Hopf algebra. In the case of the Hopf algebra $k G$, the action of $k G$ on $\hom_k(V, W)$ is just the linear extension of the $G$-action defined by the formula
+
+\begin{displaymath}
+(g \cdot f)(v) = g f(g^{-1} v)
+\end{displaymath}
+where $f: V \to W$ is a linear map. Below we will denote the map taking $v$ to $g f(g^{-1} v)$ by $g f g^{-1}$.
+
+There is also an \emph{external} hom, namely $\hom_{k G}(V, W)$ which is the vector space of $k G$-module maps $V \to W$. The internal and external homs are related by the formula
+
+\begin{displaymath}
+\hom_{k G}(V, W) \cong \hom_{k G}(k, \hom_k(V, W))
+\end{displaymath}
+and note here that $\hom_{k G}(k, -)$ takes a module $V$ to $V^G$, the space of fixed points under the action of $G$. Thus the preceding formula simply says that a linear map $f: V \to W$ is a $k G$-module map precisely when $f$ is a $G$-fixed point, i.e., $f = g f g^{-1}$ for all $g \in G$. Meanwhile, the forgetful functor $U$ is representable:
+
+\begin{displaymath}
+U \cong \hom_{k G}(k G, -): Vect^{k G} \to Vect.
+\end{displaymath}
+All of the preceding remarks apply without any assumption of finite-dimensionality or any assumption on $G$. However, if we restrict to modules that are finite-dimensional over $k$, then the forgetful functor $U$ creates a compact closed structure on $Vect_{fd}^{k G}$, i.e., the canonical isomorphism
+
+\begin{displaymath}
+W \otimes_k V^\ast \cong \hom_k(V, W)
+\end{displaymath}
+is an isomorphism of $k G$-modules (where $V^\ast = \hom_k(V, k)$ is the dual space). The forgetful functor $U: Vect_{fd}^{k G} \to Vect_{fd}$ will be representable by $k G$ if and only if $G$ is finite.
+
+\hypertarget{basic_results_on_representations_of_finite_groups}{}\subsection*{{Basic results on representations of finite groups}}\label{basic_results_on_representations_of_finite_groups}
+
+Now let $G$ be a \emph{finite} group, and let $k$ be a field of characteristic $0$. In this section we recall some of the arguments underlying the theory of finite-dimensional $k G$-modules (i.e., $k$-linear representations of $G$). The results themselves may be very familiar ground to many readers, but we work from scratch, and arrange the proofs to emphasize simple concepts, avoiding combinatorial manipulations found in many accounts.
+
+\hypertarget{maschkes_theorem}{}\subsubsection*{{Maschke's theorem}}\label{maschkes_theorem}
+
+\begin{prop}
+\label{Maschke}\hypertarget{Maschke}{}
+\textbf{(Maschke's theorem)} All exact sequences of $k G$-modules
+
+\begin{displaymath}
+0 \to W \stackrel{i}{\to} V \stackrel{p}{\to} V/W \to 0
+\end{displaymath}
+split.
+
+\end{prop}
+\begin{proof}
+Let $s: V/W \to V$ be any $k$-linear section of $p$. Put $t = 1_V - s p$, a linear endomorphism on $V$, and let $T$ be the average of the evident operators $g t g^{-1}$ with $g$ ranging over $G$. (Taking the average involves dividing the sum by ${|G|}$, which we can do in characteristic $0$.) It's straightforward to check that (1) $T h = h T$ for all $h \in G$, i.e., that $T$ is $G$-equivariant, (2) that values of $T$ lie in $\ker(p) = W$, and (3) that $T(w) = w$ for all $w$ in $W$. Thus the idempotent $T$ splits as $V \stackrel{q}{\to} W \stackrel{i}{\to} V$ in $k G$-$Mod$, and $p$ maps the complementary submodule $im(1_V - T)$ isomorphically onto $V/W$.
+
+\end{proof}
+\begin{remark}
+\label{average}\hypertarget{average}{}
+Quite generally, for any $k G$-module $M$, the averaging construction
+
+\begin{displaymath}
+\frac1{{|G|}} \sum_{g \in G} g: M \to M^G
+\end{displaymath}
+gives a ($k G$-module) retraction to the inclusion $M^G \hookrightarrow M$ of fixed points. The preceding proof simply applied this to the special case $M = \hom_k(V, W)$, where $M^G = \hom_{k G}(V, W)$ is the space of module maps, according to the general results of the previous section.
+
+\end{remark}
+\begin{remark}
+\label{decomp}\hypertarget{decomp}{}
+It follows by induction on dimension that every $k G$-module is a direct sum of \emph{simple} $k G$-modules $V$, defined to be modules with exactly two quotient maps up to isomorphism: $1_V$ and $V \to 0$. If $V$ and $W$ are simple modules, then a $k G$-module map $f: V \to W$ either is an isomorphism or is $0$ (if $f$ is not $0$, then $W \to W/im(f)$ is a proper quotient, hence $0$, so $im(f) = W$, and the epi $V \to im(f)$ is not $0$, hence isomorphic to $1_V$).
+
+\end{remark}
+The last remark applies in particular to the regular module $k G$: we may write it as a finite sum of simple modules, say $k G \cong \sum_i n_i V_i$. A priori this isomorphism is not given canonically, but soon we will find some canonical maps to work with.
+
+\begin{prop}
+\label{all}\hypertarget{all}{}
+Every simple $k G$-module $V$ appears among the $V_i$, up to isomorphism.
+
+\end{prop}
+\begin{proof}
+For any given non-zero $v$ in $V$, the map $f: k G \to V$ defined by $f(g) = g v$ is a nonzero $k G$-module map. But if $V$ were not isomorphic to any $V_i$, then by Remark \ref{decomp}, the restriction of $f$ to every summand $V_i$ would have to be $0$, contradiction.
+
+\end{proof}
+The consequences of Maschke's theorem run deeper than may first be apparent. For one thing, it implies that every $k G$-module $V$ is projective, and for another that if $V$ is finitely generated (i.e., finite-dimensional), the representable
+
+\begin{displaymath}
+Vect^{k G}(V, -): Vect^{k G} \to Vect
+\end{displaymath}
+preserves small colimits. By general categorical facts, such a colimit-preserving functor $F$ is of the form
+
+\begin{displaymath}
+A \otimes_{k G} -: Vect^{k G} \to Vect
+\end{displaymath}
+where $A: (k G)^{op} \to Vect$ is the right $k G$-module $F \circ y$ obtained by composing with the Yoneda embedding (= regular representation) $y: (k G)^{op} \to Vect^{k G}$. In our case this right module is $Vect^{k G}(V, k G)$, also written as $\hom_{k G}(V, k G)$.
+
+The situation may be analyzed further: if $\phi: V \to k G$ is a left module map and for $v \in V$ we denote $\phi(v)$ by
+
+\begin{displaymath}
+\frac1{{|G|}} \sum_{g \in G} \phi_g(v) g,
+\end{displaymath}
+then preservation of the left $k G$-action leads to the equation
+
+\begin{displaymath}
+\phi_g(v) = \phi_{h g}(h v)
+\end{displaymath}
+for all elements $h \in G$, or in other words $\phi_g(v) = \phi_1(g^{-1} v)$ for all $g \in G$. Thus a left module map $\phi: V \to k G$ determines and is uniquely determined by the linear map $\phi_1: V \to k$ that returns the coefficient at the identity $1 \in G$. All told, there is a canonical right $k G$-module isomorphism
+
+\begin{displaymath}
+V^\ast = \hom_k(V, k) \stackrel{\sim}{\to} \hom_{k G}(V, k G)
+\end{displaymath}
+and hence, according to the analysis, a natural isomorphism
+
+\begin{displaymath}
+V^\ast \otimes_{k G} - \cong \hom_{k G}(V, -)
+\end{displaymath}
+whose component at a left module $W$ is a map $V \otimes_{k G} W \to \hom_{k G}(V, W)$ evidently described as
+
+\begin{equation}
+f \otimes w \mapsto \left(v \mapsto \frac1{{|G|}} \sum_{g \in G} f(g^{-1}v) g w \right).
+\label{adj}\end{equation}
+\hypertarget{schurs_lemma}{}\subsubsection*{{Schur's lemma}}\label{schurs_lemma}
+
+So far we have used only the fact that $k$ is a field of characteristic $0$. A bit more can be said if $k$ is algebraically closed, which we henceforth assume.
+
+\begin{prop}
+\label{}\hypertarget{}{}
+\textbf{(Schur's lemma)} If $V$ is a simple $k G$-module, then $\hom_{k G}(V, V)$ is $1$-dimensional.
+
+\end{prop}
+\begin{proof}
+Any nonzero $k$-linear map $f: V \to V$ has an eigenvalue $\lambda$ if $k$ is algebraically closed. If $f$ is a $k G$-module map, then so is the map $f - \lambda \cdot 1_V$, and by definition of eigenvalue this map is not a linear isomorphism, hence it must be $0$. Therefore every $k G$-module map $f: V \to V$ is a scalar multiple of the identity.
+
+\end{proof}
+The next result strengthens Proposition \ref{all}.
+
+\begin{prop}
+\label{mult}\hypertarget{mult}{}
+Every simple module $V$ has multiplicity $dim_k(V)$ in $k G$.
+
+\end{prop}
+\begin{proof}
+There is a canonical linear isomorphism between $V$ and $\hom_{k G}(k G, V)$, leading to linear isomorphisms
+
+\begin{displaymath}
+V \cong \hom_{k G}(\sum_i n_i V_i, V) \cong \sum_i n_i hom_{k G}(V_i, V)
+\end{displaymath}
+where all the $\hom_{k G}(V_i, V)$ vanish except in the case where $V_i \cong V$, where the hom is $1$-dimensional by Schur's lemma. In that case $dim(V)$ is the multiplicity $n_i$.
+
+\end{proof}
+Let $\lambda \in G^\vee$ index a complete set of representatives of simple modules $V_\lambda$. For each $\lambda$, the action $a_\lambda: k G \otimes_k V_\lambda \to V_\lambda$ transforms to an algebra map $k G \to \hom_k(V_\lambda, V_\lambda)$. These collectively induce a canonical algebra map
+
+\begin{equation}
+k G \stackrel{\phi}{\to} \prod_{\lambda \in G^\vee} \hom_k(V_\lambda, V_\lambda)
+\label{canon}\end{equation}
+and in fact we have canonical $k G$-bimodule maps
+
+\begin{displaymath}
+k G \to \prod_{\lambda \in G^\vee} \hom_k(V_\lambda, V_\lambda) \cong \sum_{\lambda \in G^\vee} V_\lambda \otimes_k V_\lambda^\ast
+\end{displaymath}
+where $V^\ast$ denotes the $k$-linear dual of $V$. By Proposition \ref{mult}, the linear dimensions of these three objects are the same:
+
+\begin{displaymath}
+dim(k G) = \sum_{\lambda \in G^\vee} dim(V_\lambda)^2.
+\end{displaymath}
+\begin{prop}
+\label{}\hypertarget{}{}
+The algebra map $\phi$ of \eqref{canon} is an isomorphism.
+
+\end{prop}
+\begin{proof}
+Since the dimensions are the same, it suffices to check that $\phi$ is an injective map. If $U: k G\text{-}Mod \to Vect_k$ is the forgetful functor, then $U \cong \hom_{k G}(k G, -)$, and $k G \cong Nat(U, U)$ (cf. Yoneda lemma). Naturality of $u: U \to U$ implies that the evident diagram of injections $i$ and projections $p$,
+
+\begin{displaymath}
+\itexarray{
+U(V) & \stackrel{\overset{p_V}{\leftarrow}}{\underset{i_V}{\rightarrow}} & U(V \oplus W) & \stackrel{\overset{p_W}{\rightarrow}}{\underset{i_W}{\leftarrow}} & U(W) \\ 
+\mathllap{u_V} \downarrow & & \downarrow \mathrlap{u_{V \oplus W}} & & \downarrow \mathrlap{u_W} \\ 
+U(V) & \stackrel{\overset{p_V}{\leftarrow}}{\underset{i_V}{\rightarrow}} & U(V \oplus W) & \stackrel{\overset{p_W}{\rightarrow}}{\underset{i_W}{\leftarrow}} & U(W),
+}
+\end{displaymath}
+commutes in series, and it easily follows that $u_{V \oplus W} = u_V \oplus u_W$. This equation and Remark \ref{decomp} show that natural transformations $u: U \to U$ are completely determined by their values $u_{V_\lambda}: U(V_\lambda) \to U(V_\lambda)$ at simple modules $V_\lambda$, which completes the proof.
+
+\end{proof}
+\hypertarget{character_theory}{}\subsection*{{Character theory}}\label{character_theory}
+
+A fairly explicit description of the inverse algebra isomorphism
+
+\begin{displaymath}
+\prod_{\lambda \in G^\vee} \hom_k(V_\lambda, V_\lambda) \to k G
+\end{displaymath}
+can be given by following the analysis given earlier. This leads very quickly to \emph{characters}, a fundamental concept of representation theory.
+
+We may consider one simple module $V = V_\lambda$ at a time and describe how the component $\hom_k(V, V)$ sits in $k G$ (as a 2-sided ideal) under the isomorphism. This is effected via a chain of $k G$-bimodule maps
+
+\begin{displaymath}
+\hom_k(V, V) \stackrel{\sim}{\to} V \otimes_k V^\ast \cong V \otimes_k \hom_{k G}(V, k G) \stackrel{eval}{\to} k G
+\end{displaymath}
+where the second and third maps in the chain have already been considered above.
+
+The first map is simply the inverse of the well-known canonical map $V \otimes_k V^\ast \to \hom_k(V, V)$ which takes $v \otimes f$ to the linear map $w \mapsto f(w) v$. ``Canonical'' can be taken to mean ``natural'' or ``independent of choice of coordinates''; clearly the inverse of a canonical map is also canonical according to this formulation, although set-theoretic descriptions can look spuriously coordinate-dependent. Particularly, if we choose a basis $e_i$ of $V$ with dual basis $f^j$ for $V^\ast$ (so that $f^j(e_i) = \delta_{i j}$), then the inverse canonical map
+
+\begin{displaymath}
+\hom_k(V, V) \to V \otimes_k V^\ast
+\end{displaymath}
+can be described as taking an endomorphism $M \in \hom_k(V, V)$ to the element
+
+\begin{displaymath}
+\sum_i M e_i \otimes f^i,
+\end{displaymath}
+but by canonicity, this description is independent of choice of basis $e_i$.
+
+Putting all this together (particularly \eqref{adj}), we calculate the desired map $\hom_k(V, V) \to k G$ as taking an $k$-linear endomorphism $M: V \to V$ to
+
+\begin{displaymath}
+\itexarray{
+eval\left(\sum_i M e_i \otimes \left(v \mapsto \frac1{{|G|}} \sum_{g \in G} f^i(g^{-1} v) g) \right)\right) & = & \sum_i \frac1{{|G|}} \sum_{g \in G} f^i(g^{-1} M e_i) g \\ 
+ & = & \frac1{{|G|}} \sum_{g \in G} \left( \sum_i f^i(g^{-1} M e_i) \right) g
+}
+\end{displaymath}
+where the coefficient of $g$ (the parenthesized inner sum of the last expression) is better known as the \emph{trace} of the evident endomorphism $g^{-1}M: V \to V$, denoted $Trace(g^{-1}M)$ or $Tr(g^{-1}M)$. In other words, the map
+
+\begin{displaymath}
+\hom_k(V, V) \to k G
+\end{displaymath}
+takes $M: V \to V$ to
+
+\begin{displaymath}
+\frac1{{|G|}} \sum_{g \in G} Tr(g^{-1}M) g.
+\end{displaymath}
+These observations may help to motivate the following definition:
+
+\begin{defn}
+\label{}\hypertarget{}{}
+Let $V$ be a $k G$-module. The \emph{character} of $G$ is the map $\chi_V: G \to k$ given by the composite of canonical maps
+
+\begin{displaymath}
+G \to \hom_k(V, V) \cong V^\ast \otimes_k V \stackrel{eval}{\to} k.
+\end{displaymath}
+\end{defn}
+This is equivalent to the usual formula $\chi_V(g) = Trace(v \mapsto g v)$. It follows readily from properties of trace that $\chi_{V \oplus W} = \chi_V + \chi_W$ and $\chi_{V \otimes W} = \chi_V \cdot \chi_W$; the latter result has a nice proof by string diagrams.
+
+The dual space $V^\ast = \hom_k(V, k)$ has left $k G$-module structure given by $(g \cdot f)(v) = f(g^{-1}v)$, and an eigenvalue $\mu^{-1}$ of $g^{-1}$ acting on $V$ will be an eigenvalue of $g$ acting on $V^\ast$. Such eigenvalues satisfy $\mu^{-1} = \widebar{\mu}$ since they are roots of unity; taking traces which is the sum of eigenvalues, we find $\chi_{V^\ast} = \widebar{\chi_V}$ (as valued in the algebraic closure $\widebar{\mathbb{Q}} \hookrightarrow k$).
+
+By cyclicity of trace, the maps $v \mapsto g v$ and $v \mapsto h g h^{-1} v$ have the same trace, and it follows that the character $\chi_V$ is a \emph{class function}, i.e., factors through the set of conjugacy classes $Conj(G)$.
+
+The character can also be regarded as a linear map $\chi_V: k G \to k$. In particular we may apply it to the averaging element of Remark \ref{average},
+
+\begin{displaymath}
+a = \frac1{{|G|}} \sum_{g \in G} g,
+\end{displaymath}
+which acts as an idempotent projection operator on a module $M$, with image $M^G$. The trace of this operator is just $\dim(M^G)$. Hence
+
+\begin{displaymath}
+\itexarray{
+\dim(M^G) & = & \chi_M(a) \\ 
+ & = & \frac1{{|G|}} \sum_{g \in G} \chi_M(g)
+}
+\end{displaymath}
+Applying this in the case $M = \hom_k(V, W) \cong V^\ast \otimes_k W$, where $\chi_M = \widebar{\chi_V} \cdot \chi_W$ according to the development above, we obtain
+
+\begin{prop}
+\label{inner}\hypertarget{inner}{}
+$\dim (\hom_{k G}(V, W)) = \frac1{{|G|}} \sum_{g \in G} \widebar{\chi_V(g)} \chi_W(g)$.
+
+\end{prop}
+The right side of the preceding formula suggests an inner product on the space of class functions $\phi: G \to k$, or at least when $\phi$ is valued in $\widebar{\mathbb{Q}}$:
+
+\begin{displaymath}
+\langle \phi, \psi \rangle \coloneqq \frac1{{|G|}} \sum_{g \in G} \widebar{\phi(g)} \psi(g).
+\end{displaymath}
+\begin{cor}
+\label{}\hypertarget{}{}
+If $V, W$ are simple modules, then $\langle \chi_V, \chi_W \rangle = 0$ if $V \cong W$ is false, and $\langle \chi_V, \chi_W \rangle = 1$ if $V \cong W$ is true. Hence the characters of simple modules form an orthonormal set inside $Class(G)$.
+
+\end{cor}
+\begin{proof}
+Combine Proposition \ref{inner} with Schur's lemma.
+
+\end{proof}
+In fact, the characters of simple modules form an orthonormal \emph{basis} of $Class(G)$. We first make a simple observation.
+
+\begin{lemma}
+\label{central}\hypertarget{central}{}
+For any class function $\phi: G \to k$, the group algebra element $c_\phi \coloneqq \sum_{g \in G} \phi(g) g$ is central in $k G$.
+
+\end{lemma}
+\begin{proof}
+For any $h \in G$, we have
+
+\begin{displaymath}
+\itexarray{
+h \sum_{g \in G} \phi(g) g & = & h \sum_{g \in G} \phi(h^{-1}g h) h^{-1}g h \\ 
+ & = & \sum_{g \in G} \phi(h^{-1}g h) g h \\ 
+ & = & \left(\sum_{g \in G} \phi(g) g\right)h
+}
+\end{displaymath}
+where the last step used the class function property.
+
+\end{proof}
+It follows from this lemma that multiplication by $c_\phi$ on any module $V$ defines a module map (preserves the $k G$-action).
+
+To show that characters span $Class(G)$, it suffices to show the orthogonal complement of the span is zero:
+
+\begin{prop}
+\label{}\hypertarget{}{}
+If $\phi \in Class(G)$ and $\langle \chi_V, \phi \rangle = 0$ for all modules $V$, then $\phi = 0$.
+
+\end{prop}
+\begin{proof}
+Multiplication by $c_\phi$ is a module map $V \to V$; for $V$ simple, this map is of the form $\lambda \cdot Id$ by Schur's lemma. It follows that
+
+\begin{displaymath}
+\chi_V(c_\phi) = \lambda \cdot \dim(V)
+\end{displaymath}
+or in other words
+
+\begin{displaymath}
+\itexarray{
+\lambda \cdot \dim(V) & = & \chi_V(\sum_{g \in G} \phi(g) g) \\ 
+ & = & \sum_{g \in G} \phi(g) \chi_V(g) \\ 
+ & = & {|G|} \cdot \langle \chi_{V^\ast}, \phi \rangle \\ 
+ & = & 0
+}
+\end{displaymath}
+under the hypothesis. Hence multiplication by $c_\phi$ is zero for every simple module $V$, hence for every module by additivity. In particular, for the module $k G$, so that $c_\phi = c_\phi \cdot 1 = 0$. Thus $\phi(g) = 0$ for all $g \in G$.
+
+\end{proof}
+\begin{cor}
+\label{}\hypertarget{}{}
+The number of isomorphism classes of irreducible representations of $G$ equals the number of conjugacy classes of $G$.
+
+\end{cor}
+\begin{proof}
+The number of elements in ${|Conj(G)|}$ equals the dimension of the space of class functions $Conj(G) \to k$, which by the proposition is the cardinality of the orthonormal basis given by characters of irreducible representations.
+
+\end{proof}
+The same proof technique as used for the previous proposition allows one to deduce the structure of the central idempotents in the group algebra $k G$:
+
+\begin{theorem}
+\label{}\hypertarget{}{}
+For any $\lambda \in G^\vee$, putting $V = V_\lambda$, the element $e_\lambda \in k G$ defined by the formula
+
+\begin{displaymath}
+e_\lambda = \frac{\dim(V)}{{|G|}} \sum_{g \in G} \widebar{\chi_V(g)} g
+\end{displaymath}
+acts as the identity on $V$, and as $0$ on $V_\mu$ for any $\mu \neq \lambda$.
+
+\end{theorem}
+\begin{proof}
+By Lemma \ref{central}, the element $e_\lambda$ is central and hence acts as a $k G$-module map on any module; for the simple module $V = V_\lambda$, the map is of the form $c \cdot Id_V$ by Schur's lemma. Taking traces,
+
+\begin{displaymath}
+\itexarray{
+c \cdot \dim(V) & = & Tr_V \left(\frac{\dim(V)}{{|G|}} \sum_{g \in G} \widebar{\chi_V(g)} g\right) \\ 
+ & = & \frac{\dim(V)}{{|G|}} \sum_{g \in G} \widebar{\chi_V(g)} \chi_V(g) \\ 
+ & = & \dim(V) 
+}
+\end{displaymath}
+again using Schur's lemma. Hence $c = 1$ and (as endomorphisms on $V$)
+
+\begin{displaymath}
+e_\lambda = Id_V
+\end{displaymath}
+which is the first claim. For the second, putting $W = V_\mu$, a similar technique together with orthogonality of characters of simple modules shows that the element $e_\lambda$ acts as $0$ on $W$.
+
+\end{proof}
+\hypertarget{characters_of_permutation_representations}{}\subsubsection*{{Characters of permutation representations}}\label{characters_of_permutation_representations}
+
+If a representation is explicitly given, then computing the character is just a matter of linear algebra. In this subsection we look at some simple cases in which the linear algebra is minimized and determining the character comes down to exercises in counting.
+
+\begin{remark}
+\label{}\hypertarget{}{}
+It is an interesting point that although the character is a complete invariant of a representation, actually computing a $G$-module structure from a character is generally not so easy. For instance, when the existence of the Monster as simple group was still a matter of conjecture, it was known what its table of characters had to be, but extracting irreducible representations from this information was no routine matter.
+
+\end{remark}
+For us, a \emph{permutation representation} of $G$, a $G$-\emph{set} for short, is a set $S$ together with a group homomorphism $G \to Aut(S)$ (or an appropriate action $\alpha: G \times S \to S$), although for representation theorists, what is usually meant by a permutation representation is the $k G$-module obtained by linearizing:
+
+\begin{displaymath}
+k G \otimes_k k S \to k S.
+\end{displaymath}
+Using the elements of $S$ as a basis, the matrix representation of an element $g \in G$ is a permutation matrix, with exactly one $1$ in each row and in each column, the other entries $0$. The trace of such a matrix is simply the number of $1$'s on the diagonal. It is the number of elements $s \in S$ that are fixed by $g$.
+
+The category of $G$-sets forms a topos $Set^G$ with some very nice properties. Every $G$-set $S$ is partitioned as a coproduct (a disjoint union) of uniquely determined orbits (connected components of the associated action groupoid): nonempty sets $S_i$ on which $G$ acts transitively. If $S$ is finite, then the character $\chi_{k S}$ is the sum of the characters $\chi_i = \chi_{k S_i}$.
+
+Choosing a representative element $x_i$ for each $S_i$, the stabilizer $G_i$ at $x_i$ is simply the subgroup $\{g \in G: g x_i = x_i\}$, and the $G$-set $S_i$ is isomorphic to the set $G/G_i$ of left cosets, where $h G_i$ corresponds to $h x_i$. The character value $\chi_i(h)$ is the number of cosets $g G_i$ that are fixed by $h$. But $h g G_i = g G_i$ means $g^{-1} h g \in G_i$, or $h \in g G_i g^{-1}$. Of course we need to avoid double counting, so we don't count all such $g$: if $g, g'$ correspond to the same coset $g G_i = g' G_i$, then they are reckoned the same for the count. Hence we compute
+
+\begin{displaymath}
+\chi_i(h) = {|\{g G_i: h \in g G_i g^{-1}\}|}.
+\end{displaymath}
+\begin{example}
+\label{}\hypertarget{}{}
+For the group $G = S_3$ (the permutation group of $\{1, 2, 3\}$), we compute the characters of coset representations $G/G_i$ where $G_1 = G$, $G_2 = \{e, (1\; 2)\}$, and $G_3 = \{e\}$.
+
+The case $G_3$ is truly simple: cosets are identified with elements $g \in S_3$, and no non-identity $h$ satisfies $h g = g$ for any $g$, whereas for $h = e$, $e g = g$ for all six $g$. Hence the class function $\chi_3$ is given by
+
+\begin{displaymath}
+\chi_3(e) = 6 \qquad \chi_3((1\; 2)) = 0 \qquad \chi_3((1\; 2\; 3)) = 0.
+\end{displaymath}
+The case $G_1$ is also simple, since there is only one coset and the representation is trivial:
+
+\begin{displaymath}
+\chi_1(e) = 1 \qquad \chi_1((1\; 2)) = 1 \qquad \chi_1((1\; 2\; 3)) = 1.
+\end{displaymath}
+The case $G_2$ is easy: $G/G_2$ has three elements, so $\chi_2(e) = 3$. No element $g$ conjugates $(1\; 2\; 3)$ into $\{e, (1\; 2)\}$, and only one coset (namely $G_2$) conjugates $(1\; 2)$ into $\{e, (1\; 2)\}$. Hence
+
+\begin{displaymath}
+\chi_2(e) = 3 \qquad \chi_2((1\; 2)) = 1 \qquad \chi_2((1\; 2\; 3)) = 0.
+\end{displaymath}
+\end{example}
+\begin{example}
+\label{}\hypertarget{}{}
+For $G = S_4$, we exhibit the characters of permutation representations corresponding to the action of $S_4$ on ordered partitions of $\{1, 2, 3, 4\}$ of given type $(m_1, \ldots, m_k)$, where $m_i$ denotes the number of elements of $\{1, 2, 3, 4\}$ belonging to the $i^{th}$ class of the partition. Up to isomorphism it does no harm to assume that $m_i \geq m_{i+1}$, so there are five representatives:
+
+\begin{displaymath}
+(4) \qquad (3, 1) \qquad (2, 2) \qquad (2, 1, 1) \qquad (1, 1, 1, 1).
+\end{displaymath}
+These correspond to Young diagrams of size $4$. Representing conjugacy classes of $S_4$ by $e, (1\; 2), (1\; 2\; 3), (1\; 2)(3\; 4),$ and $(1\; 2\; 3\; 4)$, once again the character for $(m_1,\ldots, m_k)$ counts, for each one of these group elements, the number of partitions of type $(m_1, \ldots, m_k)$ fixed by that element. The results are displayed in the following table:
+
+\begin{displaymath}
+\itexarray{
+\text{Partition:} & (4) & (3, 1) & (2, 2) & (2, 1, 1) & (1, 1, 1, 1) \\ 
+e & 1 & 4 & 6 & 12 & 24 \\ 
+(1\; 2) & 1 & 2 & 2 & 2 & 0 \\ 
+(1\; 2\; 3) & 1 & 1 & 0 & 0 & 0 \\ 
+(1\; 2)(3\; 4) & 1 & 0 & 2 & 0 & 0 \\ 
+(1\; 2\; 3\; 4) & 1 & 0 & 0 & 0 & 0
+}
+\end{displaymath}
+For example, there are exactly two ordered partitions of type $(2, 2)$ that are fixed by the transposition $(1\; 2)$: they are $(\{1, 2\}, \{3, 4\})$ and $(\{3, 4\}, \{1, 2\})$. As it happens, these are the same as the partitions of type $(2, 2)$ that are fixed by the group element $(1\; 2)(3\; 4)$. For another example: there are two partitions of type $(2, 1, 1)$ fixed by $(1\; 2)$: they are $(\{1, 2\}, \{3\}, \{4\})$ and $(\{1, 2\}, \{4\}, \{3\})$.
+
+\end{example}
+\hypertarget{representations_of_symmetric_groups}{}\subsection*{{Representations of symmetric groups}}\label{representations_of_symmetric_groups}
+
+
+
+\end{document}
+
+
+
+
