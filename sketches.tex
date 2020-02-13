@@ -80,7 +80,8 @@
 \newcommand\tombstone{\rule{.36em}{2ex}\vskip 5pt}
 
 \newcounter{numitem}
-\newcommand{\numitem}[1]{\refstepcounter{numitem}\thenumitem\label{#1}}
+\newcommand{\numlabel}[1]{\refstepcounter{numitem}\thenumitem\label{#1}}
+\newcommand{\numitem}{\refstepcounter{numitem}\thenumitem}
 
 % braket notation...
 \newcommand{\ket}[1]{|{#1}\rangle}
@@ -123,15 +124,39 @@
 %\onehalfspacing
 
 
-\section*{Constructing locally presentable categories}
 
-\newcommand{\CatA}{\mathsf{A}}
-\newcommand{\CatB}{\mathsf{B}}
+\newcommand{\ACat}{\mathsf{A}}
+\newcommand{\BCat}{\mathsf{B}}
 \newcommand{\CatSet}{\mathsf{Set}}
 \newcommand{\Ob}{\mathrm{Ob}}
 \newcommand{\Mor}{\mathrm{Mor}}
 
-\dodef{1}
+\section*{Adjoint functors}
+
+A functor that preserves colimits is called {\it cocontinuous.}
+\dotheorem{\numitem}
+(\cite{Riehl2017} 4.5.3)
+Any left adjoint functor is cocontinuous.
+\tombstone
+
+\dodef{\numitem}
+(\cite{Riehl2017} 4.5.12)
+A {\it reflective subcategory}
+of a category $\ACat$ is a full subcategory $\BCat$
+where the inclusion
+$ \BCat \rightarrowtail \ACat $ 
+admits a left adjoint, called the {\it reflector}
+or {\it localization}:
+$$
+\begin{tikzcd}
+    \ACat \arrow{r}{L} & \BCat \arrow[d, rightarrowtail, "\dashv"'] &          \\
+                       & \ACat \arrow{r}{L}              & \BCat    
+\end{tikzcd}
+$$
+
+\section*{Constructing locally presentable categories}
+
+\dodef{\numitem} (\cite{Dolan})
 A {\it locally presentable category} is defined recursively as:
 
 {\bf (Axiom)} The terminal category $\mathbbm{1}$ is locally presentable.
@@ -150,9 +175,9 @@ and objects $c,d\in \mathsf{A}$,
 we freely adjoin a morphism $f:d\to c$ to $\mathsf{A}$ giving
 $\mathsf{B}$ with
 $$
-    \Ob(\CatB) := \{ (b,g) : b\in\Ob(\CatA), g:\Hom(c,b)\to\Hom(d,b) \}
+    \Ob(\BCat) := \{ (b,g) : b\in\Ob(\ACat), g:\Hom(c,b)\to\Hom(d,b) \}
 $$
-and morphism $(b_1,f_1)\to(b_2, f_2)$ any $f:b_1\to b_2$ in $\CatA$ such that
+and morphism $(b_1,f_1)\to(b_2, f_2)$ any $f:b_1\to b_2$ in $\ACat$ such that
 $$
 \begin{tikzcd}
  \Hom(c,b_1) \arrow{d}{\Hom(c,f)} \arrow{r}{f_1} &  \Hom(d,b_1) \arrow{d}{\Hom(d,f)} \\
@@ -164,16 +189,28 @@ commutes.
 {\bf (2-cell)}
 Given a locally presentable category $\mathsf{A}$,
 with morphism $f:d\to c$ we freely adjoin an inverse $g:c\to d$
-giving $\CatB$ as the full subcategory of $\CatA$
+giving $\BCat$ as the full subcategory of $\ACat$
 with objects 
-$ b\in\Ob(\CatA) $ such that  $\Hom(f,b):\Hom(c,b)\to\Hom(d,b)$
+$ b\in\Ob(\ACat) $ such that  $\Hom(f,b):\Hom(c,b)\to\Hom(d,b)$
         is invertible in $\CatSet$.
-
-
 \tombstone
 
+An alternate name for a locally presentable category is
+a {\it smally sketched colimit theory} (\cite{Dolan} 2019-07-19).
 
-References: \cite{Adamek1994} \cite{Riehl2017} \cite{Heunen2019}
+\dotheorem{\numitem}
+(\cite{Riehl2017} 4.6.17)
+A functor $F:\ACat\to\BCat$ between locally
+presentable categories is a left adjoint
+if and only if it is cocontinuous.
+\tombstone
+
+\section*{Sketches}
+
+\dodef{\numitem} (\cite{Adamek1994} 1.49)
+
+
+References: \cite{Adamek1994} \cite{Durov2007} \cite{Riehl2017} \cite{Heunen2019}
 
 \bibliography{refs2}{}
 \bibliographystyle{abbrv}
