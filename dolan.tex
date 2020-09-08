@@ -1,0 +1,149 @@
+
+%\documentclass[11pt,oneside,twocolumn]{article} 
+\documentclass[11pt,oneside]{article} 
+
+\usepackage{a4wide}
+
+\usepackage{amsmath}
+\usepackage{color}
+%\usepackage{natbib} % kills arxiv 
+\usepackage{framed}
+%\usepackage{cite}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{amsthm}
+%\RequirePackage{algorithmic}
+%\RequirePackage{algorithm}
+%\RequirePackage{theorem}
+%\RequirePackage{eucal}
+\RequirePackage{color}
+\RequirePackage{url}
+\RequirePackage{mdwlist}
+
+\RequirePackage{rotating}
+
+
+\RequirePackage[all]{xy}
+%\_CompileMatrices
+%\RequirePackage{hyperref}
+\RequirePackage{graphicx}
+\RequirePackage{subcaption}
+%\RequirePackage[dvips]{geometry}
+
+\usepackage{xcolor}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+%\usepackage[caption=false]{subfig}
+\usepackage{enumerate}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+
+\input{header.tex}
+
+\title{Notes}
+
+\author{James Dolan}
+
+
+\date{\today}
+
+\flushbottom
+
+\begin{document}
+
+\maketitle
+
+% ----------------------------------------------------------------------------
+%
+%
+
+\section{Some matrixes of formal power serieses}
+
+
+It's well-known that for a commutative ring $A$, the category of free
+$A$-modules is equivalent to the category where an object is a set and a
+morphism is a column-finite matrix with entries in $A$, the composition
+of morphisms being accomplished by the usual procedure for matrix
+multiplication.
+
+In the case where $A$ is the commutative ring of formal power with
+coefficients in a field $k$, however, there's an interesting relaxation
+of the column-finiteness restriction that still allows us to form a
+category.  I'll describe this relaxation, and then begin to try to
+explain what's the use of the resulting category.
+
+Definition: A matrix $m$ of formal power serieses (in one variable $x$) is
+defined to be ``degree-wise column-finite" iff for any natural number
+$d$, $m$ becomes column-finite after truncating the power serieses to
+degree $d$.
+
+The naive rule for matrix multiplication still works on these matrixes.
+
+The main use of the resulting category is that it's the
+Kleisli-category of a (non-finitary) commutative monad $A$ on the
+category of sets.  (The Kleisli-category of a monad is the category of
+it's free algebras; the monad can then be recovered as the monad of
+the adjunction between its base-category and it's Kleisli-category.)
+
+Durov's thesis \cite{Durov2007} defines a ``generalized commutative ring" to be a
+\_finitary\_ commutative monad on the category of sets, and defines the
+(not-necessarily free) ``modules" of a generalized commutative ring to
+be the (not-necessarily free) algebras of the corresponding monad.
+The finitariness restriction is not essential, however and so we can
+regard the commutative monad $A$ as a ``generalized generalized
+commutative ring" (or ``generalized commutative ring" for short).
+
+We can then say a couple of interesting things about the modules of
+our generalized commutative ring $A$:
+
+1.  An $A$-module is essentially the same thing as a vector space $V$
+equipped with a linear operator $L$ satisfying Property $P$ described in
+manxometove's reddit post on ``Property dual to local nilpotence" [2].
+
+2.  The category of $A$-modules is the syntactic category of the
+algebro-geometric theory of ``a point of the co-commutative co-algebra
+of polynomials in $x$ with the 
+co-multiplication given by $x \mapsto x\tensor 1 + 1\tensor x$'',
+where a "point" of a
+co-commutative co-algebra is a morphism from the terminal
+co-commutative co-algebra.  In other words the $A$-modules are the
+"believers" in a morphism of $k$-co-algebras from the base field $k$ to
+the co-algebra $k[x]$ as described above.
+
+(Many details need to be checked here, and of course the conceptual
+picture needs to be clarified much more, but I'll stop here for now.)
+
+\subsection{Addendum}
+
+Perhaps another way to describe (some of) what's going on here is this:
+
+The truncations of the ring of polynomials in $x$ obtained by modding
+out by $x^d$ form an inverse system of commutative rings.  If you take
+the inverse limit of this inverse system in the category of
+commutative rings, or even in the category of Durov's generalized
+commutative rings, then you get the commutative ring of formal power
+serieses.  However if you take the inverse limit in the category of
+"generalized generalized commutative rings" (that is, removing Durov's
+requirement that the commutative monads on the category of sets have
+to be finitary), then you get something potentially more interesting,
+namely the generalized generalized commutative ring ``$A$'' described in
+``Some matrixes of formal power serieses".
+
+Meanwhile, I didn't get around yet to describing the duality between
+the $A$-modules (that is, the believers in a point of the co-algebra
+with co-multiplication $x \mapsto x\tensor 1 + 1\tensor x$) and the co-modules of that
+co-algebra ....
+
+
+
+\bibliography{refs2}{}
+\bibliographystyle{abbrv}
+
+
+\end{document}
+
+
+

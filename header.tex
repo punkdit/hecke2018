@@ -1,0 +1,94 @@
+
+
+
+% -------------- _Commands ----------------------
+
+\makeatletter
+\newcommand{\verbatimfont}[1]{\renewcommand{\verbatim@font}{\ttfamily#1}}
+\makeatother
+
+\newcommand{\Eref}[1]{(\ref{#1})}
+\newcommand{\Fref}[1]{Fig.~\ref{#1}}
+%\newcommand{\Aref}[1]{Appendix~\ref{#1}}
+\newcommand{\SRef}[1]{Section~\ref{#1}}
+
+\newcommand{\todo}[1]{\ \textcolor{red}{\{#1\}}\ }
+
+\newcommand{\Aut}{\mathrm{Aut}}
+\newcommand{\Stab}{\mathrm{Stab}}
+\newcommand{\Fix}{\mathrm{Fix}}
+\newcommand{\Orbit}{\mathrm{Orbit}}
+\newcommand{\Dim}{\mathrm{Dim}}
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\Det}{\mathrm{Det}}
+
+\newcommand{\Ker}{\mathrm{ker}}
+\newcommand{\Kernel}{\mathrm{ker}}
+\newcommand{\Image}{\mathrm{im}}
+\newcommand{\Coker}{\mathrm{coker}}
+\newcommand{\Cokernel}{\mathrm{coker}}
+\newcommand{\Coimage}{\mathrm{coim}}
+
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\AGL}{\mathrm{AGL}}
+\newcommand{\Unitary}{\mathrm{U}}
+
+\newcommand{\Complex}{\mathbb{C}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\Natural}{\mathbb{N}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\Integer}{\mathbb{Z}}
+\newcommand{\ZZ}{\mathbb{Z}}
+
+\newcommand{\Field}{\mathbb{F}}
+\newcommand{\Code}{\mathcal{C}}
+\newcommand{\End}{\mathrm{End}}
+\newcommand{\Mon}{{\mathcal{M}^\otimes}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\Inv}{\mathrm{Inv}}
+\newcommand{\Span}{\mathrm{Span}}
+\newcommand{\Hilb}{\mathcal{H}}
+\newcommand{\Rey}{\mathcal{R}}
+\newcommand{\tensor}{\otimes}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+
+% Lemma, proof, theorem, etc.
+\newcommand\nounderline[1]{ #1} 
+\newcommand\dolemma[1]{\vskip 5pt \noindent{\bf \underline{Lemma #1.}\ }}
+\newcommand\doproposition[1]{\vskip 5pt \noindent {\bf \underline{Proposition #1.}\ }}
+\newcommand\dotheorem[1]{\vskip 5pt \noindent {\bf \underline{Theorem #1.}\ }}
+\newcommand\doconjecture[1]{\vskip 5pt \noindent {\bf \underline{Conjecture #1.}\ }}
+\newcommand\dodefn[1]{\vskip 5pt \noindent {\bf \underline{Definition #1.}\ }}
+\newcommand\docorollary[1]{\vskip 5pt \noindent {\bf \underline{Corollary #1.}\ }}
+\newcommand\doexample[1]{\vskip 5pt \noindent {\bf \underline{Example #1.}\ }}
+\newcommand\doexamples[1]{\vskip 5pt \noindent {\bf \underline{Examples #1.}\ }}
+\newcommand\doproof{\vskip 5pt \noindent{\bf \nounderline{Proof:}\ }}
+\newcommand\doremark[1]{\vskip 5pt \noindent{\bf \underline{Remark #1.}\ }}
+
+%\newcommand\tombstone{\rule{.36em}{2ex}\vskip 5pt}
+%\newcommand\tombstone{\qedsymbol\vskip 5pt}
+\newcommand\tombstone{\rule{.6em}{.6em}}
+
+\newcounter{numitem}
+\newcommand{\numitem}[1]{\refstepcounter{numitem}\thenumitem\label{#1}}
+
+% braket notation...
+\newcommand{\ket}[1]{|{#1}\rangle}
+\newcommand{\expect}[1]{\langle{#1}\rangle}
+\newcommand{\bra}[1]{\langle{#1}|}
+\newcommand{\ketbra}[2]{\ket{#1}\!\bra{#2}}
+\newcommand{\braket}[2]{\langle{#1}|{#2}\rangle}
+
+% Categories
+\newcommand{\Set}{\mathbf{Set}}
+\newcommand{\FinSet}{\mathbf{FinSet}}
+\newcommand{\GSet}{\mathbf{GSet}}
+\newcommand{\GRep}{\mathbf{GRep}}
+
+\newcommand{\thinplus}{\!+\!}
+
+\renewcommand{\arraystretch}{1.2}
