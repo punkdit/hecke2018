@@ -1,5 +1,12 @@
 
 
+dolan.pdf: dolan.tex  refs2.bib
+	pdflatex dolan.tex
+	bibtex dolan
+	pdflatex dolan.tex
+	pdflatex dolan.tex
+
+
 sketches.pdf: sketches.tex  refs2.bib
 	pdflatex sketches.tex
 	bibtex sketches
