@@ -106,6 +106,7 @@
 
 \title{Sketching Algebraic Groups}
 
+\author{Sijato Budotr}
 
 \date{\today}
 
@@ -129,14 +130,18 @@ these groups.
 
 \section*{GL(1)}
 
+
+
 \section*{GL(2)}
 
 This pair of short exact sequences are key
 to understanding the following:
 \[
 \begin{tikzcd}
-    &  \SL(2) \arrow[rightarrowtail]{d} &  \\
-  \GL(1) \arrow[rightarrowtail]{r}{\mathrm{diag}} &  
+    &  
+    \SL(2) \arrow[rightarrowtail]{d}\arrow[two heads]{dr}{\mathrm{2-to-1}} &  \\
+    \GL(1) \arrow[rightarrowtail]{r}{\mathrm{diag}} 
+           \arrow[two heads]{dr}[below,left]{\mathrm{2-to-1\ }}  &  
     \GL(2) \arrow[two heads]{r}\arrow[two heads]{d}{\mathrm{det}}  &  \PGL(2)     \\
     &  \GL(1)             &     \\
 \end{tikzcd}
@@ -163,9 +168,32 @@ and its dual as $V^{\star}.$
 
 \section*{GL(3)}
 
+\[
+\begin{tikzcd}
+    &  
+    \SL(3) \arrow[rightarrowtail]{d}\arrow[two heads]{dr}{\mathrm{3-to-1}} &  \\
+    \GL(1) \arrow[rightarrowtail]{r}{\mathrm{diag}} 
+           \arrow[two heads]{dr}[below,left]{\mathrm{3-to-1\ }}  &  
+    \GL(3) \arrow[two heads]{r}\arrow[two heads]{d}{\mathrm{det}}  &  \PGL(3)     \\
+    &  \GL(1)             &     \\
+\end{tikzcd}
+\]
+
 We start with a picture of the $\SL(3)$ kaleidoscope:
 \begin{center}
 \includegraphics[scale=0.8]{images/sl3.pdf}
+\end{center}
+
+The epimorphism SL(3)$\to$PGL(3) is a 3-to-1 map,
+and so we find the irreps of PGL(3) as an index 3 
+sublattice of the SL(3) kaleidoscope:
+\begin{center}
+\includegraphics[scale=0.8]{images/pgl3.pdf}
+\end{center}
+
+The positive levels of $\GL(3)$:
+\begin{center}
+\includegraphics[scale=0.6]{images/gl3.pdf}
 \end{center}
 
 %\bibliography{refs2}{}
