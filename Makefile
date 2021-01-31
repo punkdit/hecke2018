@@ -1,5 +1,11 @@
 
 
+algebraic.pdf: algebraic.tex  
+	pdflatex algebraic.tex
+	bibtex algebraic
+	pdflatex algebraic.tex
+	pdflatex algebraic.tex
+
 dolan.pdf: dolan.tex  refs2.bib
 	pdflatex dolan.tex
 	bibtex dolan
