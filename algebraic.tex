@@ -65,6 +65,8 @@
 \newcommand{\Complex}{\mathbb{C}}
 \newcommand{\Integer}{\mathbb{Z}}
 \newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\newcommand{\PGL}{\mathrm{PGL}}
 \newcommand{\Field}{\mathbb{F}}
 
 % Lemma, proof, theorem, etc.
@@ -129,11 +131,14 @@ these groups.
 
 \section*{GL(2)}
 
+This pair of short exact sequences are key
+to understanding the following:
 \[
 \begin{tikzcd}
-                     &  SL(2) \arrow{d}{f} &  . \\
-  GL(1) \arrow{r}{g} &  GL(2) \arrow{r}{?}\arrow{d}   &  PGL(2)     \\
-                     &  GL(1)             &  .     \\
+    &  \SL(2) \arrow[rightarrowtail]{d} &  \\
+  \GL(1) \arrow[rightarrowtail]{r}{\mathrm{diag}} &  
+    \GL(2) \arrow[two heads]{r}\arrow[two heads]{d}{\mathrm{det}}  &  \PGL(2)     \\
+    &  \GL(1)             &     \\
 \end{tikzcd}
 \]
 
@@ -158,6 +163,10 @@ and its dual as $V^{\star}.$
 
 \section*{GL(3)}
 
+We start with a picture of the $\SL(3)$ kaleidoscope:
+\begin{center}
+\includegraphics[scale=0.8]{images/sl3.pdf}
+\end{center}
 
 %\bibliography{refs2}{}
 %\bibliographystyle{abbrv}
