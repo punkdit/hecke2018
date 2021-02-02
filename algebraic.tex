@@ -11,6 +11,11 @@
 \usepackage{tikz}
 \usepackage{tikz-cd}
 
+% http://www.maths.qmul.ac.uk/~mf/genyoungtabtikz.sty
+\usepackage[vcentermath]{genyoungtabtikz}
+\Yboxdim{8pt}
+%\Ylinethick{1pt}
+
 \RequirePackage{amsmath}
 \RequirePackage{amssymb}
 \RequirePackage{amsthm}
@@ -64,6 +69,8 @@
 \newcommand{\Dim}{\mathrm{Dim}}
 \newcommand{\Complex}{\mathbb{C}}
 \newcommand{\Integer}{\mathbb{Z}}
+\newcommand{\Natural}{\mathbb{N}}
+
 \newcommand{\GL}{\mathrm{GL}}
 \newcommand{\SL}{\mathrm{SL}}
 \newcommand{\PGL}{\mathrm{PGL}}
@@ -85,13 +92,6 @@
 \newcommand{\numlabel}[1]{\refstepcounter{numitem}\thenumitem\label{#1}}
 \newcommand{\numitem}{\refstepcounter{numitem}\thenumitem}
 
-% braket notation...
-\newcommand{\ket}[1]{|{#1}\rangle}
-\newcommand{\expect}[1]{\langle{#1}\rangle}
-\newcommand{\bra}[1]{\langle{#1}|}
-\newcommand{\ketbra}[2]{\ket{#1}\!\bra{#2}}
-\newcommand{\braket}[2]{\langle{#1}|{#2}\rangle}
-
 % Categories
 \newcommand{\Set}{\mathbf{Set}}
 \newcommand{\FinSet}{\mathbf{FinSet}}
@@ -101,6 +101,8 @@
 \newcommand{\thinplus}{\!+\!}
 
 \renewcommand{\arraystretch}{1.2}
+
+\newcommand{\tensor}{\otimes}
 
 
 
@@ -124,15 +126,110 @@
 %\doublespacing
 %\onehalfspacing
 
+\section*{Representation theory of $S_n$}
+
+% https://golem.ph.utexas.edu/category/2007/04/schur_functors.html#c008943
+%    There are two Schur functors, corresponding to the partitions
+%    (2) and (1,1); I’ll denote them by S2S^2 and S1,1S^{1,1}.
+%    The definition (according to Fulton) is that S2(V)S^2(V)
+%    is the quotient of V⊗2V^{\otimes 2} by the subspace spanned
+%    by expressions of the form u⊗v−v⊗uu \otimes v - v \otimes
+%    u; the definition of S1,1(V)S^{1,1}(V) is the quotient
+%    of V⊗2V^{\otimes 2} by the subspace spanned by elements
+%    of the forms u⊗uu \otimes u and u⊗v+v⊗uu \otimes v +
+%    v \otimes u. It is easy enough to see how S2S^2 and S1,1S^{1,1}
+%    should act on morphisms.
+%    
+%    Now, any construction involving quotients should have
+%    a dual construction involving subspaces. So let S2(V)S_2(V)
+%    be the kernel of V⊗2→S1,1(V)V^{\otimes 2} \to S^{1,1}(V)
+%    and let S1,1(V)S_{1,1}(V) be the kernel of V⊗2→S2(V)V^{\otimes
+%    2} \to S^2(V). S2S_2 and S1,1S_{1,1} are also functors
+%    in a clear way.
+
+
+We have the decomposition
+$$
+    V^{\tensor 2} \cong \yng(2)(V) \oplus \yng(1,1)(V)
+$$
+or, just counting dimensions:
+\begin{center}
+\begin{tabular}{cccc}
+V  &    $V^{\otimes 2}$ &  $\yng(2)(V)$  &  $\yng(1,1)(V)$   \\
+    \hline
+0&    0  &  0   &  0   \\
+1&    1  &  1   &  0   \\
+2&    4  &  3   &  1   \\
+3&    9  &  6   &  3   \\
+4&    16  &  10   &  6   \\
+... &  &     &     \\
+\end{tabular}
+\end{center}
+
+Going to a third tensor power, we get
+$$
+    V^{\tensor 3} \cong \yng(3)(V) \oplus 
+        2\cdot \yng(1,2)(V) \oplus \yng(1,1,1)(V).
+$$
+In general these tensor powers $V^{\tensor n}$ decompose as
+a sum over Young diagrams $\lambda$ with number of boxes $|\lambda|=n$,
+and with multiplicity $m_\lambda$:
+$$
+V^{\tensor n} \cong \bigoplus_{|\lambda|=n}
+    m_\lambda\cdot \lambda(V).
+$$
+
+A categorified binomial theorem (\cite{Brandenburg2014} Lemma 3.2.1).
+Given finite dimensional vector spaces $V,W$ and $n\in\Natural$,
+$$
+    (V\oplus W)^{\tensor n} \cong 
+        \bigoplus_{m=0}^n
+        {n\choose m}\cdot
+        V^{\tensor m}\tensor W^{\tensor (n-m)}.
+$$
+Now we combine this binomial theorem with the
+observations above, any Young diagram $\lambda$ with $n$ boxes
+we have a map:
+$$
+    \lambda(V\oplus W) \to 
+        \bigoplus_{m=0}^n
+        {n\choose m}\cdot
+        V^{\tensor m}\tensor W^{\tensor (n-m)}.
+$$
+So there should be a binomial formula for each Young diagram.
+Here are two examples:
+\begin{align*}
+\yng(1,2)(V\oplus W) 
+\cong\ \ \ \   & \yng(1,2)(V)\tensor\phi(W) \\
+\oplus\ & \yng(2)(V)  \tensor\yng(1)(W)  \\
+\oplus\ & \yng(1,1)(V)  \tensor\yng(1)(W)  \\
+\oplus\ & \yng(1)(V)  \tensor\yng(2)(W)  \\
+\oplus\ & \yng(1)(V)  \tensor\yng(1,1)(W)  \\
+\oplus\ & \phi(V)  \tensor\yng(1,2)(W) .
+\end{align*}
+The empty Young diagram is $\phi$ and $\phi(V)\cong \Complex.$
+Another example:
+\begin{align*}
+\yng(2,2)(V\oplus W) 
+\cong\ \ \ \   & \yng(2,2)(V)\tensor\phi(W) \\
+\oplus\ & \yng(1,2)(V)  \tensor\yng(1)(W)  \\
+\oplus\ & \yng(2)(V)  \tensor\yng(2)(W)  \\
+\oplus\ & \yng(1,1)(V)  \tensor\yng(1,1)(W)  \\
+\oplus\ & \yng(1)(V)  \tensor\yng(1,2)(W)  \\
+\oplus\ & \phi(V)  \tensor\yng(2,2)(W) .
+\end{align*}
+
+\section*{Representation theory of GL(n)}
+
 We are considering algebraic groups over the field of
 complex numbers, and the monoidal category of representations of 
 these groups.
 
-\section*{GL(1)}
+\subsection*{GL(1)}
 
 TODO
 
-\section*{GL(2)}
+\subsection*{GL(2)}
 
 This pair of short exact sequences are key
 to understanding the following:
@@ -166,7 +263,7 @@ The irreducible represenations of GL(2) look like this:
 Where we have labelled the tautological (natural) represenation as $V$
 and its dual as $V^{\star}.$
 
-\section*{GL(3)}
+\subsection*{GL(3)}
 
 \[
 \begin{tikzcd}
@@ -196,7 +293,7 @@ The positive levels of $\GL(3)$:
 \includegraphics[scale=0.6]{images/gl3.pdf}
 \end{center}
 
-%\bibliography{refs2}{}
-%\bibliographystyle{abbrv}
+\bibliography{refs2}{}
+\bibliographystyle{abbrv}
 
 \end{document}
