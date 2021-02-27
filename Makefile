@@ -1,6 +1,6 @@
 
 
-algebraic.pdf: algebraic.tex  
+algebraic.pdf: algebraic.tex   dynkin.tex
 	pdflatex algebraic.tex
 	bibtex algebraic
 	pdflatex algebraic.tex
