@@ -1,0 +1,152 @@
+
+\newcommand{\DynkinAn}{
+  \begin{tikzpicture}[scale=.4]
+    \draw (-1,0) node[anchor=east]  {$A_n$};
+    \foreach \x in {0,...,5}
+    \draw[xshift=\x cm,thick,fill=black] (\x cm,0) circle (.3cm);
+    \draw[dotted,thick] (0.3 cm,0) -- +(1.4 cm,0);
+    \foreach \y in {1.15,...,4.15}
+    \draw[xshift=\y cm,thick] (\y cm,0) -- +(1.4 cm,0);
+  \end{tikzpicture}
+}
+
+\newcommand{\DynkinAa}{
+  \begin{tikzpicture}[scale=.3]
+    \draw (0,0.2) node[anchor=south] {$a$};
+    \foreach \x in {0}
+    \draw[xshift=\x cm,thick,fill=black] (\x cm,0) circle (.3cm);
+  \end{tikzpicture}
+}
+
+\newcommand{\DynkinAab}{
+  \begin{tikzpicture}[scale=.3]
+    \draw (0,0.2) node[anchor=south] {$a$};
+    \draw (2,0.2) node[anchor=south] {$b$};
+    \foreach \x in {0,1}
+    \draw[xshift=\x cm,thick,fill=black] (\x cm,0) circle (.3cm);
+    \foreach \y in {0.15,...,0.15}
+    \draw[xshift=\y cm,thick] (\y cm,0) -- +(1.4 cm,0);
+  \end{tikzpicture}
+}
+
+\newcommand{\DynkinAabc}{
+  \begin{tikzpicture}[scale=.3]
+    \draw (0,0.2) node[anchor=south] {$a$};
+    \draw (2,0.2) node[anchor=south] {$b$};
+    \draw (4,0.2) node[anchor=south] {$c$};
+    \foreach \x in {0,1,2}
+    \draw[xshift=\x cm,thick,fill=black] (\x cm,0) circle (.3cm);
+    \foreach \y in {0.15,...,1.15}
+    \draw[xshift=\y cm,thick] (\y cm,0) -- +(1.4 cm,0);
+  \end{tikzpicture}
+}
+
+\newcommand{\DynkinAabcd}{
+  \begin{tikzpicture}[scale=.3]
+    \draw (0,0.2) node[anchor=south] {$a$};
+    \draw (2,0.2) node[anchor=south] {$b$};
+    \draw (4,0.2) node[anchor=south] {$c$};
+    \draw (6,0.2) node[anchor=south] {$d$};
+    \foreach \x in {0,1,2,3}
+    \draw[xshift=\x cm,thick,fill=black] (\x cm,0) circle (.3cm);
+    \foreach \y in {0.15,...,2.15}
+    \draw[xshift=\y cm,thick] (\y cm,0) -- +(1.4 cm,0);
+  \end{tikzpicture}
+}
+
+
+\newcommand{\DynkinBn}{
+  \begin{tikzpicture}[scale=.3]
+    \draw (-1,0) node[anchor=east]  {$B_n$};
+    \foreach \x in {0,...,4}
+    \draw[xshift=\x cm,thick] (\x cm,0) circle (.3cm);
+    \draw[xshift=5 cm,thick,fill=black] (5 cm, 0) circle (.3 cm);
+    \draw[dotted,thick] (0.3 cm,0) -- +(1.4 cm,0);
+    \foreach \y in {1.15,...,3.15}
+    \draw[xshift=\y cm,thick] (\y cm,0) -- +(1.4 cm,0);
+    \draw[thick] (8.3 cm, .1 cm) -- +(1.4 cm,0);
+    \draw[thick] (8.3 cm, -.1 cm) -- +(1.4 cm,0);
+  \end{tikzpicture}
+}
+
+\newcommand{\DynkinBab}{
+  \begin{tikzpicture}[scale=.3]
+    \draw (0,0.2) node[anchor=south] {$a$};
+    \draw (2,0.2) node[anchor=south] {$b$};
+    \foreach \x in {0}
+    \draw[xshift=\x cm,thick,fill=black] (\x cm,0) circle (.3cm);
+    \foreach \x in {1}
+    \draw[xshift=\x cm,thick,fill=lightgray] (\x cm,0) circle (.3cm);
+    \foreach \y in {0.15,...,0.15}
+    \draw[xshift=\y cm,thick] (\y cm,+0.1 cm) -- +(1.4 cm,0);
+    \foreach \y in {0.15,...,0.15}
+    \draw[xshift=\y cm,thick] (\y cm,-0.1 cm) -- +(1.4 cm,0);
+  \end{tikzpicture}
+}
+
+\newcommand{\DynkinBabc}{
+  \begin{tikzpicture}[scale=.3]
+    \draw (0,0.2) node[anchor=south] {$a$};
+    \draw (2,0.2) node[anchor=south] {$b$};
+    \draw (4,0.2) node[anchor=south] {$c$};
+    \foreach \x in {0,1}
+    \draw[xshift=\x cm,thick,fill=black] (\x cm,0) circle (.3cm);
+    \foreach \x in {2}
+    \draw[xshift=\x cm,thick,fill=lightgray] (\x cm,0) circle (.3cm);
+    \foreach \y in {0.15,...,0.15}
+    \draw[xshift=\y cm,thick] (\y cm,0) -- +(1.4 cm,0);
+    \foreach \y in {1.15,...,1.15}
+    \draw[xshift=\y cm,thick] (\y cm,+0.1 cm) -- +(1.4 cm,0);
+    \foreach \y in {1.15,...,1.15}
+    \draw[xshift=\y cm,thick] (\y cm,-0.1 cm) -- +(1.4 cm,0);
+  \end{tikzpicture}
+}
+
+
+\newcommand{\DynkinCn}{
+  \begin{tikzpicture}[scale=.4]
+    \draw (-1,0) node[anchor=east]  {$C_n$};
+    \foreach \x in {0,...,4}
+    \draw[xshift=\x cm,thick,fill=black] (\x cm,0) circle (.3cm);
+    \draw[xshift=5 cm,thick] (5 cm, 0) circle (.3 cm);
+    \draw[dotted,thick] (0.3 cm,0) -- +(1.4 cm,0);
+    \foreach \y in {1.15,...,3.15}
+    \draw[xshift=\y cm,thick] (\y cm,0) -- +(1.4 cm,0);
+    \draw[thick] (8.3 cm, .1 cm) -- +(1.4 cm,0);
+    \draw[thick] (8.3 cm, -.1 cm) -- +(1.4 cm,0);
+  \end{tikzpicture}
+}
+
+\newcommand{\DynkinCab}{
+  \begin{tikzpicture}[scale=.3]
+    \draw (0,0.2) node[anchor=south] {$a$};
+    \draw (2,0.2) node[anchor=south] {$b$};
+    \foreach \x in {0}
+    \draw[xshift=\x cm,thick,fill=lightgray] (\x cm,0) circle (.3cm);
+    \foreach \x in {1}
+    \draw[xshift=\x cm,thick,fill=black] (\x cm,0) circle (.3cm);
+    \foreach \y in {0.15,...,0.15}
+    \draw[xshift=\y cm,thick] (\y cm,+0.1 cm) -- +(1.4 cm,0);
+    \foreach \y in {0.15,...,0.15}
+    \draw[xshift=\y cm,thick] (\y cm,-0.1 cm) -- +(1.4 cm,0);
+  \end{tikzpicture}
+}
+
+\newcommand{\DynkinCabc}{
+  \begin{tikzpicture}[scale=.3]
+    \draw (0,0.2) node[anchor=south] {$a$};
+    \draw (2,0.2) node[anchor=south] {$b$};
+    \draw (4,0.2) node[anchor=south] {$c$};
+    \foreach \x in {0,1}
+    \draw[xshift=\x cm,thick,fill=lightgray] (\x cm,0) circle (.3cm);
+    \foreach \x in {2}
+    \draw[xshift=\x cm,thick,fill=black] (\x cm,0) circle (.3cm);
+    \foreach \y in {0.15,...,0.15}
+    \draw[xshift=\y cm,thick] (\y cm,0) -- +(1.4 cm,0);
+    \foreach \y in {1.15,...,1.15}
+    \draw[xshift=\y cm,thick] (\y cm,+0.1 cm) -- +(1.4 cm,0);
+    \foreach \y in {1.15,...,1.15}
+    \draw[xshift=\y cm,thick] (\y cm,-0.1 cm) -- +(1.4 cm,0);
+  \end{tikzpicture}
+}
+

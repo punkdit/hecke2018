@@ -73,6 +73,8 @@
 
 \newcommand{\GL}{\mathrm{GL}}
 \newcommand{\SL}{\mathrm{SL}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\Sp}{\mathrm{Sp}}
 \newcommand{\PGL}{\mathrm{PGL}}
 \newcommand{\Field}{\mathbb{F}}
 
@@ -97,6 +99,7 @@
 \newcommand{\FinSet}{\mathbf{FinSet}}
 \newcommand{\GSet}{\mathbf{GSet}}
 \newcommand{\GRep}{\mathbf{GRep}}
+\newcommand{\CRing}{\mathbf{CRing}}
 
 \newcommand{\thinplus}{\!+\!}
 
@@ -108,7 +111,8 @@
 
 \title{Sketching Algebraic Groups}
 
-\author{Sijato Budotr}
+%\author{Sijato Budotr}
+\author{Simon Burton}
 
 \date{\today}
 
@@ -126,7 +130,7 @@
 %\doublespacing
 %\onehalfspacing
 
-\section*{Representation theory of $S_n$}
+\section{Representation theory of $S_n$}
 
 % https://golem.ph.utexas.edu/category/2007/04/schur_functors.html#c008943
 %    There are two Schur functors, corresponding to the partitions
@@ -219,17 +223,25 @@ Another example:
 \oplus\ & \phi(V)  \tensor\yng(2,2)(W) .
 \end{align*}
 
-\section*{Representation theory of GL(n)}
+\section{Algebraic groups}
+
+The slick definition of an algebraic group is
+a group object in the category of affine schemes.
+Instead of worrying about what is the category of
+affine schemes, we just define this to be the opposite
+of the category of commutative rings, $\CRing$.
+
+\section{Representation theory of GL(n)}
 
 We are considering algebraic groups over the field of
 complex numbers, and the monoidal category of representations of 
 these groups.
 
-\subsection*{GL(1)}
+\subsection{GL(1)}
 
 TODO
 
-\subsection*{GL(2)}
+\subsection{GL(2)}
 
 This pair of short exact sequences are key
 to understanding the following:
@@ -263,7 +275,7 @@ The irreducible represenations of GL(2) look like this:
 Where we have labelled the tautological (natural) represenation as $V$
 and its dual as $V^{\star}.$
 
-\subsection*{GL(3)}
+\subsection{GL(3)}
 
 \[
 \begin{tikzcd}
@@ -292,6 +304,255 @@ The positive levels of $\GL(3)$:
 \begin{center}
 \includegraphics[scale=0.6]{images/gl3.pdf}
 \end{center}
+
+\section{Dimension of irreducibles}
+
+%\begin{center}
+%\begin{tabular}{ccc}
+%hi & there & xyz \\
+%hi & there & xyz \\
+%hi & there & xyz \\
+%\end{tabular}
+%\end{center}
+
+Here we record some observational mathematics, ie. numerology,
+got by torturing sage python and eyeballing the results.
+We try to be brief, before someone calls the mathematics police on us.
+
+\subsection{The $A$ series}
+
+%\newcommand{\DynkinAn}{
+%  \begin{tikzpicture}[scale=.4]
+%    \draw (-1,0) node[anchor=east]  {$A_n$};
+%    \foreach \x in {0,...,5}
+%    \draw[xshift=\x cm,thick,fill=black] (\x cm,0) circle (.3cm);
+%    \draw[dotted,thick] (0.3 cm,0) -- +(1.4 cm,0);
+%    \foreach \y in {1.15,...,4.15}
+%    \draw[xshift=\y cm,thick] (\y cm,0) -- +(1.4 cm,0);
+%  \end{tikzpicture}
+%}
+%
+%\newcommand{\DynkinAa}{
+%  \begin{tikzpicture}[scale=.3]
+%    \draw (0,0.2) node[anchor=south] {$a$};
+%    \foreach \x in {0}
+%    \draw[xshift=\x cm,thick,fill=black] (\x cm,0) circle (.3cm);
+%  \end{tikzpicture}
+%}
+%
+%\newcommand{\DynkinAab}{
+%  \begin{tikzpicture}[scale=.3]
+%    \draw (0,0.2) node[anchor=south] {$a$};
+%    \draw (2,0.2) node[anchor=south] {$b$};
+%    \foreach \x in {0,1}
+%    \draw[xshift=\x cm,thick,fill=black] (\x cm,0) circle (.3cm);
+%    \foreach \y in {0.15,...,0.15}
+%    \draw[xshift=\y cm,thick] (\y cm,0) -- +(1.4 cm,0);
+%  \end{tikzpicture}
+%}
+%
+%\newcommand{\DynkinAabc}{
+%  \begin{tikzpicture}[scale=.3]
+%    \draw (0,0.2) node[anchor=south] {$a$};
+%    \draw (2,0.2) node[anchor=south] {$b$};
+%    \draw (4,0.2) node[anchor=south] {$c$};
+%    \foreach \x in {0,1,2}
+%    \draw[xshift=\x cm,thick,fill=black] (\x cm,0) circle (.3cm);
+%    \foreach \y in {0.15,...,1.15}
+%    \draw[xshift=\y cm,thick] (\y cm,0) -- +(1.4 cm,0);
+%  \end{tikzpicture}
+%}
+%
+%\newcommand{\DynkinAabcd}{
+%  \begin{tikzpicture}[scale=.3]
+%    \draw (0,0.2) node[anchor=south] {$a$};
+%    \draw (2,0.2) node[anchor=south] {$b$};
+%    \draw (4,0.2) node[anchor=south] {$c$};
+%    \draw (6,0.2) node[anchor=south] {$d$};
+%    \foreach \x in {0,1,2,3}
+%    \draw[xshift=\x cm,thick,fill=black] (\x cm,0) circle (.3cm);
+%    \foreach \y in {0.15,...,2.15}
+%    \draw[xshift=\y cm,thick] (\y cm,0) -- +(1.4 cm,0);
+%  \end{tikzpicture}
+%}
+%
+%
+%\newcommand{\DynkinBn}{
+%  \begin{tikzpicture}[scale=.3]
+%    \draw (-1,0) node[anchor=east]  {$B_n$};
+%    \foreach \x in {0,...,4}
+%    \draw[xshift=\x cm,thick] (\x cm,0) circle (.3cm);
+%    \draw[xshift=5 cm,thick,fill=black] (5 cm, 0) circle (.3 cm);
+%    \draw[dotted,thick] (0.3 cm,0) -- +(1.4 cm,0);
+%    \foreach \y in {1.15,...,3.15}
+%    \draw[xshift=\y cm,thick] (\y cm,0) -- +(1.4 cm,0);
+%    \draw[thick] (8.3 cm, .1 cm) -- +(1.4 cm,0);
+%    \draw[thick] (8.3 cm, -.1 cm) -- +(1.4 cm,0);
+%  \end{tikzpicture}
+%}
+%
+%\newcommand{\DynkinBab}{
+%  \begin{tikzpicture}[scale=.3]
+%    \draw (0,0.2) node[anchor=south] {$a$};
+%    \draw (2,0.2) node[anchor=south] {$b$};
+%    \foreach \x in {0}
+%    \draw[xshift=\x cm,thick,fill=black] (\x cm,0) circle (.3cm);
+%    \foreach \x in {1}
+%    \draw[xshift=\x cm,thick,fill=lightgray] (\x cm,0) circle (.3cm);
+%    \foreach \y in {0.15,...,0.15}
+%    \draw[xshift=\y cm,thick] (\y cm,+0.1 cm) -- +(1.4 cm,0);
+%    \foreach \y in {0.15,...,0.15}
+%    \draw[xshift=\y cm,thick] (\y cm,-0.1 cm) -- +(1.4 cm,0);
+%  \end{tikzpicture}
+%}
+%
+%\newcommand{\DynkinBabc}{
+%  \begin{tikzpicture}[scale=.3]
+%    \draw (0,0.2) node[anchor=south] {$a$};
+%    \draw (2,0.2) node[anchor=south] {$b$};
+%    \draw (4,0.2) node[anchor=south] {$c$};
+%    \foreach \x in {0,1}
+%    \draw[xshift=\x cm,thick,fill=black] (\x cm,0) circle (.3cm);
+%    \foreach \x in {2}
+%    \draw[xshift=\x cm,thick,fill=lightgray] (\x cm,0) circle (.3cm);
+%    \foreach \y in {0.15,...,0.15}
+%    \draw[xshift=\y cm,thick] (\y cm,0) -- +(1.4 cm,0);
+%    \foreach \y in {1.15,...,1.15}
+%    \draw[xshift=\y cm,thick] (\y cm,+0.1 cm) -- +(1.4 cm,0);
+%    \foreach \y in {1.15,...,1.15}
+%    \draw[xshift=\y cm,thick] (\y cm,-0.1 cm) -- +(1.4 cm,0);
+%  \end{tikzpicture}
+%}
+%
+%
+%\newcommand{\DynkinCn}{
+%  \begin{tikzpicture}[scale=.4]
+%    \draw (-1,0) node[anchor=east]  {$C_n$};
+%    \foreach \x in {0,...,4}
+%    \draw[xshift=\x cm,thick,fill=black] (\x cm,0) circle (.3cm);
+%    \draw[xshift=5 cm,thick] (5 cm, 0) circle (.3 cm);
+%    \draw[dotted,thick] (0.3 cm,0) -- +(1.4 cm,0);
+%    \foreach \y in {1.15,...,3.15}
+%    \draw[xshift=\y cm,thick] (\y cm,0) -- +(1.4 cm,0);
+%    \draw[thick] (8.3 cm, .1 cm) -- +(1.4 cm,0);
+%    \draw[thick] (8.3 cm, -.1 cm) -- +(1.4 cm,0);
+%  \end{tikzpicture}
+%}
+%
+%\newcommand{\DynkinCab}{
+%  \begin{tikzpicture}[scale=.3]
+%    \draw (0,0.2) node[anchor=south] {$a$};
+%    \draw (2,0.2) node[anchor=south] {$b$};
+%    \foreach \x in {0}
+%    \draw[xshift=\x cm,thick,fill=lightgray] (\x cm,0) circle (.3cm);
+%    \foreach \x in {1}
+%    \draw[xshift=\x cm,thick,fill=black] (\x cm,0) circle (.3cm);
+%    \foreach \y in {0.15,...,0.15}
+%    \draw[xshift=\y cm,thick] (\y cm,+0.1 cm) -- +(1.4 cm,0);
+%    \foreach \y in {0.15,...,0.15}
+%    \draw[xshift=\y cm,thick] (\y cm,-0.1 cm) -- +(1.4 cm,0);
+%  \end{tikzpicture}
+%}
+%
+%\newcommand{\DynkinCabc}{
+%  \begin{tikzpicture}[scale=.3]
+%    \draw (0,0.2) node[anchor=south] {$a$};
+%    \draw (2,0.2) node[anchor=south] {$b$};
+%    \draw (4,0.2) node[anchor=south] {$c$};
+%    \foreach \x in {0,1}
+%    \draw[xshift=\x cm,thick,fill=lightgray] (\x cm,0) circle (.3cm);
+%    \foreach \x in {2}
+%    \draw[xshift=\x cm,thick,fill=black] (\x cm,0) circle (.3cm);
+%    \foreach \y in {0.15,...,0.15}
+%    \draw[xshift=\y cm,thick] (\y cm,0) -- +(1.4 cm,0);
+%    \foreach \y in {1.15,...,1.15}
+%    \draw[xshift=\y cm,thick] (\y cm,+0.1 cm) -- +(1.4 cm,0);
+%    \foreach \y in {1.15,...,1.15}
+%    \draw[xshift=\y cm,thick] (\y cm,-0.1 cm) -- +(1.4 cm,0);
+%  \end{tikzpicture}
+%}
+
+\input{dynkin.tex}
+
+The $A_n$ series Dynkin diagram has $n$ nodes:
+$$ \DynkinAn $$
+In the following table we have labelled
+each node in the Dynkin diagram with a natural number,
+and use these numbers to label the complex irreducible
+representations of $\SL(n+1,\Complex)$.
+The dimension of each of these representations
+can be written as a multivariate polynomial in the labels of degree 
+$n(n+1)/2$ which has linear factors of a nice form.
+Each of these factors involves labels from a contiguous subset on
+the labelled Dynkin diagram.
+
+$$
+\begin{array}{c|c|rl}
+\text{Lie group} & \text{Dynkin diagram} & \text{dimension} & \\
+\hline
+\SL(2,\Complex)           & \DynkinAa   & A_1(a) =& a+1 \\
+\SL(3,\Complex)           & \DynkinAab  & A_2(a,b) =& (a+1)(b+1)(a+b+2)/2 \\
+\SL(4,\Complex)           & \DynkinAabc   & A_3(a,b,c) =& (a+1)(b+1)(c+1) \\
+ & & &\ \ (a+b+2)(b+c+2)(a+b+c+3)/12 \\
+\SL(5,\Complex)           & \DynkinAabcd  & A_4(a,b,c,d) =& (a+1)(b+1)(c+1)(d+1) \\
+ & & &\ \ (a+b+2)(b+c+2)(c+d+2) \\
+ & & &\ \ (a+b+c+3)(b+c+d+3) \\
+    & & & \ \ (a+b+c+d+4)/288 \\
+\end{array}
+$$
+
+Evidently there is a nice recurrence relation,
+$$
+    A_n(x_1,...,x_n) = A_{n-1}(x_1,...,x_{n-1})
+    (x_n + 1)
+    (x_{n-1} + x_n + 2)
+    ...
+    (x_1 + ... + x_n + n) 
+    / n!
+$$
+
+\subsection{The $B$ series}
+
+The Lie group corresponding to $B_n$ is $\SO(2n+1).$
+
+$$
+\begin{array}{c|c|rl}
+\text{Lie group} & \text{Dynkin diagram} & \text{dimension} & \\
+\hline
+\SO(5,\Complex) & \DynkinBab  & B_2(a,b) =& (a+1)(2b+1)(2a+2b+3)(2a+4b+4)/12 \\
+\SO(7,\Complex) & \DynkinBabc & B_3(a,b,c) =& (a+1)(b+1)(2c+1) \\
+                             & & &\ \ (a+b+2)(b+2c+2)(2b+2c+3) \\
+                             & & &\ \ (a+b+2c+3)(a+2b+2c+4) \\
+            & & &\ \ (2a+2b+2c+5)/720 \\
+\end{array}
+$$
+
+
+\subsection{The $C$ series}
+
+The Lie group corresponding to $C_n$ is $\Sp(2n).$
+
+$$
+\begin{array}{c|c|rl}
+\text{Lie group} & \text{Dynkin diagram} & \text{dimension} & \\
+\hline
+\Sp(4,\Complex) & \DynkinCab  & C_2(a,b) =& (a+1)(b+1)(a+b+2)(a+2b+3)/6 \\
+\Sp(6,\Complex) & \DynkinCabc & C_3(a,b,c) =& (a+1)(b+1)(c+1) \\
+                             & & &\ \ (a+b+2)(b+c+2)(b+2c+3)\\
+                             & & &\ \ (a+b+c+3)(a+b+2c+4)\\
+            & & &\ \ (a+2b+2c+5)/720 \\
+\end{array}
+$$
+
+\subsection{The $D$ series}
+
+The Lie group corresponding to $D_n$ is $\SO(2n).$
+
+\subsection{The exceptionals}
+
+We still have remaining: $G_2, F_4, E_6, E_7, E_8.$
+
+% ---------------------------------------------------------
 
 \bibliography{refs2}{}
 \bibliographystyle{abbrv}
