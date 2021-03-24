@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+<script type="text/javascript">
+MathJax.Hub.Config({ "tex2jax": { inlineMath: [ [ '$', '$' ] ] } });
+MathJax.Hub.Config({
+  TeX: {
+    Macros: {
+    Complex: "{\\mathbb C}",
+    Real: "{\\mathbb R}",
+    Rational: "{\\mathbb Q}",
+    Integer: "{\\mathbb Z}",
+    Natural: "{\\mathbb N}",
+    End: "{\\mathrm{End}}",
+    Hom: "{\\mathrm{Hom}}",
+    Aut: "{\\mathrm{Aut}}",
+    ket: ["{|{#1}\\rangle}",1],
+    SL: "{\\mathrm{SL}}",
+    GL: "{\\mathrm{GL}}",
+    //RR: "{\\bf R}",
+    //bold: ["{\\bf #1}",1]
+    }
+  }
+});
+</script>
+
+<head> 
+<link rel="icon" type="image/svg+xml" href="/pub/favicon.svg" />
+<link rel="stylesheet" type="text/css" href="superstyle.css"> 
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Spectral">
+<link rel="stylesheet" 
+    href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" 
+    integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" 
+    crossorigin="anonymous">
+<style>
+    body {
+        font-family: 'Spectral', serif;
+        font-size: 16px;
+    }
+
+    html, button, input, select, textarea,
+    .pure-g [class *= "pure-u"] {
+        font-family: 'Spectral', serif;
+        font-size: 16px;
+    }
+
+    .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+.jazz-table {
+    /* Remove spacing between table cells (from Normalize.css) */
+    border-collapse: collapse;
+    border-spacing: 0;
+    empty-cells: show;
+    /* border: 1px solid #cbcbcb; */
+    border: 0px;
+    margin: 0 auto;
+}
+
+.jazz-table-bordered {
+    border: 1px solid #cbcbcb;
+}
+
+.jazz-table caption {
+    color: #000;
+    /* font: italic 85%/1 arial, sans-serif; */
+    padding: 1em 0;
+    text-align: center;
+}
+
+.jazz-table td, 
+.jazz-table th {
+    /*
+    border-left: 1px solid #cbcbcb;
+    border-width: 0 0 0 1px;
+    */
+    font-size: inherit;
+    margin: 0;
+    overflow: visible; /*to make ths where the title is really long work*/
+    padding: 0.5em 1em; /* cell padding */
+}
+
+.jazz-table thead {
+    background-color: #e0e0e0;
+    color: #000;
+    text-align: left;
+    vertical-align: bottom;
+}
+
+
+
+.btn {
+  -webkit-appearance: none;
+  background: #dbdbdb;
+  background-image: -webkit-linear-gradient(top, #dbdbdb, #a3a3a3);
+  background-image: -moz-linear-gradient(top, #dbdbdb, #a3a3a3);
+  background-image: -ms-linear-gradient(top, #dbdbdb, #a3a3a3);
+  background-image: -o-linear-gradient(top, #dbdbdb, #a3a3a3);
+  background-image: linear-gradient(to bottom, #dbdbdb, #a3a3a3);
+  -webkit-border-radius: 4;
+  -moz-border-radius: 4;
+  border-radius: 4px;
+  font-family: Arial;
+  color: #000000;
+  padding: 5px 55px 0px 55px;
+  text-decoration: none;
+    display: inline-block;
+    margin-right:4px;
+}
+
+.btn:hover {
+  background: #f0f0f0;
+  background-image: -webkit-linear-gradient(top, #f0f0f0, #d6d6d6);
+  background-image: -moz-linear-gradient(top, #f0f0f0, #d6d6d6);
+  background-image: -ms-linear-gradient(top, #f0f0f0, #d6d6d6);
+  background-image: -o-linear-gradient(top, #f0f0f0, #d6d6d6);
+  background-image: linear-gradient(to bottom, #f0f0f0, #d6d6d6);
+  text-decoration: none;
+}
+
+.btn:active {
+  color: #dddddd;
+  background: #f0f0f0;
+  background-image: -webkit-linear-gradient(top, #f0f0f0, #d6d6d6);
+  background-image: -moz-linear-gradient(top, #f0f0f0, #d6d6d6);
+  background-image: -ms-linear-gradient(top, #f0f0f0, #d6d6d6);
+  background-image: -o-linear-gradient(top, #f0f0f0, #d6d6d6);
+  background-image: linear-gradient(to bottom, #f0f0f0, #d6d6d6);
+  text-decoration: none;
+}
+
+/*
+    range input css adapted from
+    https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/
+*/
+
+input[type=range] {
+  -webkit-appearance: none;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-right: 15px;
+  width: 70%;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 70%;
+  height: 8.4px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #FAE59F;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -14px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #ffd165;
+}
+input[type=range]::-moz-range-track {
+  width: 70%;
+  height: 8.4px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #FAE59F;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 70%;
+  height: 8.4px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  border-width: 16px 0;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: #2a6495;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]::-ms-fill-upper {
+  background: #FAE59F;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]::-ms-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: #FAE59F;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #ffd165;
+}
+
+
+    </style>
+</head>
+
+<body>
+
+<noscript><h3>Please enable JavaScript </h3></noscript>
+
+<main>
+
+<h2>Index</h2>
+<p><a href="20190331.pdf">20190331.pdf</a>
+Synthetic differential geometry, categorification of infinitesimal numbers.</p>
+<hr />
+<p><a href="20190403.pdf">20190403.pdf</a>
+Coexponential </p>
+<hr />
+<p><a href="20190405.pdf">20190405.pdf</a>
+morphism of affine k-algebraic varieties (geometry) is the opposite of
+a morphism of commutative algebras (algebra). Examples.</p>
+<hr />
+<p><a href="20190411.pdf">20190411.pdf</a></p>
+<p><table class="pure-table pure-table-bordered" style="margin: 0 auto">
+<tbody>
+<tr><td style="text-align: center; vertical-align: top;">    Algebra       </td><td>                                         </td><td style="text-align: left; vertical-align: top;"> Geometry         </td></tr>
+<tr><td style="text-align: center; vertical-align: top;">    CommRing      </td><td style="text-align: center; vertical-align: top;"> <script type="math/tex"> \xleftarrow{\text{coordinate ring}} </script> </td><td style="text-align: left; vertical-align: top;"> Scheme           </td></tr>
+<tr><td>                  </td><td style="text-align: center; vertical-align: top;"> <script type="math/tex">\xrightarrow{\text{spectrum       }} </script> </td><td>                  </td></tr>
+</tbody></table></p>
+<p>definition of a pseudo-coexponent</p>
+<hr />
+<p><a href="20190414.pdf">20190414.pdf</a></p>
+<p>categorified plethory</p>
+<p>biring = affine algebraic CommRing = pseudo-coexponent
+= CommRing object in category of affine schemes </p>
+<hr />
+<p><a href="20190417.pdf">20190417.pdf</a></p>
+<p>presheaves = free cocompletion</p>
+<hr />
+<p><a href="20190419.pdf">20190419.pdf</a></p>
+<p>set valued functors and presheaves</p>
+<hr />
+<p><a href="20190427.pdf">20190427.pdf</a></p>
+<p>Categorifying the construction of
+the free commutative ring on a set.</p>
+<hr />
+<p><a href="20190505.pdf">20190505.pdf</a></p>
+<p>Probability, entropy, groupoids, Huffman encoding.</p>
+<hr />
+<p><a href="20190527.pdf">20190527.pdf</a></p>
+<p>Adjunction in a 2-category.</p>
+<p>Example: pair of small categories A, B.
+Left adjoints L:presheaf(A)-&gt;presheaf(B)
+are "matrices", or "bi-presheaves", or bimodules,
+<script type="math/tex"> L \in \mathrm{presheaf}(A^{op} \times B) </script>.</p>
+<p>Doctrine of colimits.</p>
+<p>Categorified presentation is a sketch.</p>
+<p>Presheaves on simplexes = simplicial sets.</p>
+<p>Syntactic category is the universal model.</p>
+<p>Amazing fact: syntactic category = co-classical models.</p>
+<hr />
+<p><a href="20190604.pdf">20190604.pdf</a></p>
+<p>Categorified Grobner basis methods.
+Presentations in commutative algebra:
+generators and relations.</p>
+<p><table class="pure-table pure-table-bordered" style="margin: 0 auto">
+<tbody>
+<tr><td style="text-align: left; vertical-align: top;"> maps out of                          </td><td style="text-align: left; vertical-align: top;"> maps into                             </td></tr>
+<tr><td style="text-align: left; vertical-align: top;"> Co-elements                          </td><td style="text-align: left; vertical-align: top;"> Elements                              </td></tr>
+<tr><td style="text-align: left; vertical-align: top;"> Easy to map out of a presentation    </td><td style="text-align: left; vertical-align: top;"> Hard to map into a presentation       </td></tr>
+<tr><td style="text-align: left; vertical-align: top;"> A model of the theory                </td><td style="text-align: left; vertical-align: top;"> A construction of the theory          </td></tr>
+<tr><td style="text-align: left; vertical-align: top;"> A model is a point                   </td><td style="text-align: left; vertical-align: top;"> A construction is a polynomial        </td></tr>
+</tbody></table></p>
+<p>Amazing fact: constructions of the theory = co-classical models.</p>
+<p>Colimits of representables in presheaf category.</p>
+<hr />
+<p><a href="20190609.pdf">20190609.pdf</a></p>
+<p>Free cocompletion = presheaf.</p>
+<p>Create the generic model of a theory
+by assembling the constructions which believe
+the theory. This is a categorified Grobner basis algorithm.</p>
+<p>Example: sheaves live in the topos doctrine:
+(1) small colimits 
+(2) finite limites 
+(3) distributivity of limits over colimits.</p>
+<p>Linearize a simplicial set gives a chain complex.
+A chain complex is a presheaf in the reletavised case.
+Localization, aka belief method.</p>
+<p>A sketch is a categorified presentation.
+A theory is a categorified algebra.</p>
+<p>The belief method refines &amp; generalizes the
+calculus of fractions.</p>
+<hr />
+<p><a href="20190611.pdf">20190611.pdf</a></p>
+<p>The algebro-geometric doctrine of 
+colimits and symmetric tensor products.
+Commutative quantales.</p>
+<hr />
+<p><a href="20190612.pdf">20190612.pdf</a></p>
+<p>Example: the tropical circle.</p>
+<hr />
+<p><a href="20190712.pdf">20190712.pdf</a></p>
+<p>Commutative monads on the tensor category of structure types.</p>
+<p>Kliesli category: category of free algebras on a monad.</p>
+<p>Eilenberg-Moore category:
+category of all algebras on a monad.</p>
+<p>Example: in Set, freely adjoin a morphism a:1-&gt;2,
+preserving colimits.</p>
+<hr />
+<p><a href="20190714.pdf">20190714.pdf</a></p>
+<p>Lemma: coproduct has no inverse,
+so naively we cannot categorify negatives.
+Belief in an Euler-Schanuel object: X+1+X = X.</p>
+<p>Step 1 (stuff) 
+belief in an object X.
+Step 2 (structure)
+believe in morphisms l:X-&gt;X, m:1-&gt;X, r:X-&gt;X,
+such that
+Step 3 (property)
+l+m+r is an isomorphism.</p>
+<hr />
+<p><a href="20190717.pdf">20190717.pdf</a></p>
+<p>Belief doctrine.
+Abstract definition of j-belief on a theory.
+Adepts and novices.
+Structure types.</p>
+<hr />
+<p><a href="20190719.pdf">20190719.pdf</a></p>
+<p>Example theories.
+Post-Tannakian philosophy.</p>
+<hr />
+<p><a href="20190722.pdf">20190722.pdf</a></p>
+<p>Recursive definition of locally presentable categories.
+Example sketches &amp; syntactic categories.</p>
+<hr />
+<p><a href="20190724.pdf">20190724.pdf</a></p>
+<p>Theory of a co-category.</p>
+<p>What is a functor from a poset to a group ?</p>
+<hr />
+<p><a href="20190727.pdf">20190727.pdf</a></p>
+<p>Base doctrine of colimits, the belief method is presheaves.
+Change to the doctrine of small colimits with
+symmetric tensor product.</p>
+<p>Pushout of theories. Schur functors. Young diagrams. Bump rule.</p>
+<p>Belief in an object X, whose exterior square is isomorphic
+to the tensor unit.</p>
+<hr />
+<p><a href="20190801.pdf">20190801.pdf</a></p>
+<p>Use internal hom when in doctrine of tensor products and colimits.</p>
+<p>Internal hom of Young diagrams.</p>
+<p>GL(2) as a commutative Hopf algebra over <script type="math/tex">\Complex</script>.</p>
+<hr />
+<p><a href="20190821.pdf">20190821.pdf</a></p>
+<p>Belief method with Young diagrams.</p>
+<hr />
+<p><a href="20190824.pdf">20190824.pdf</a></p>
+<hr />
+<p><a href="20190825.pdf">20190825.pdf</a></p>
+<hr />
+<p><a href="20190828.pdf">20190828.pdf</a></p>
+<hr />
+<p><a href="20190901.pdf">20190901.pdf</a></p>
+<hr />
+<p><a href="20190912.pdf">20190912.pdf</a></p>
+<p>Crackpot matrix. Super crackpot matrix.</p>
+<hr />
+<p><a href="20190927.pdf">20190927.pdf</a></p>
+<p>Super vector spaces.
+Transpose of Young diagrams.
+Applying rectangular Young diagrams to
+annihilate a super vector space.</p>
+<hr />
+<p><a href="20200101_1.jpg">20200101_1.jpg</a>
+<a href="20200101_2.jpg">20200101_2.jpg</a>
+<a href="20200101_3.jpg">20200101_3.jpg</a>
+<a href="20200101_4.jpg">20200101_4.jpg</a>
+<a href="20200101_5.jpg">20200101_5.jpg</a></p>
+<p>Schubert calculus.
+<script type="math/tex">A_2</script> related to monic depressed cubic polynomial.
+Three roots and kaleidoscope.
+Infinitesimal fuzz. A graded ring.</p>
+<hr />
+<p><a href="20200117_1.jpg">20200117_1.jpg</a>
+<a href="20200117_2.jpg">20200117_2.jpg</a>
+<a href="20200117_3.jpg">20200117_3.jpg</a>
+<a href="20200117_4.jpg">20200117_4.jpg</a></p>
+<p>Cohomology ring of classifying spaces &amp;
+characteristic classes.</p>
+<hr />
+<p><a href="20200121_1.jpg">20200121_1.jpg</a>
+<a href="20200121_2.jpg">20200121_2.jpg</a>
+<a href="20200121_3.jpg">20200121_3.jpg</a>
+<a href="20200121_4.jpg">20200121_4.jpg</a>
+<a href="20200121_5.jpg">20200121_5.jpg</a></p>
+<p>K-theory as generalized cohomology theory
+via characteristic classes and ordinary cohomology
+of flag varieties.</p>
+<p>Lambda operations and Adams operations.</p>
+<hr />
+<p><a href="20200125_1.jpg">20200125_1.jpg</a>
+<a href="20200125_2.jpg">20200125_2.jpg</a>
+<a href="20200125_3.jpg">20200125_3.jpg</a></p>
+<p>Bott periodicity.</p>
+<p>
+<script type="math/tex">(\infty,1)</script>-category of spaces enriched over itself.
+Internal hom of a j-sphere into <script type="math/tex">X</script> is <script type="math/tex">\pi_j(X).</script>
+</p>
+<p>Formally invert shift operator on the homotopy groups
+to get stable homotopy.</p>
+<p>Ring spectrums &lt;-&gt; formal group laws.</p>
+<hr />
+<p><a href="20200205_1.jpg">20200205_1.jpg</a>
+<a href="20200205_2.jpg">20200205_2.jpg</a>
+<a href="20200205_3.jpg">20200205_3.jpg</a>
+<a href="20200205_4.jpg">20200205_4.jpg</a></p>
+<p>Complex cobordism and importance in homotopy theory.</p>
+<p>Doctrine of symmetric monoidal categories with duals.</p>
+<p>Thom-Pontryagin: turns cobordisms into homotopies.
+Hopf fibration.</p>
+<hr />
+<p><a href="20200225_1.jpg">20200225_1.jpg</a>
+<a href="20200225_2.jpg">20200225_2.jpg</a>
+<a href="20200225_3.jpg">20200225_3.jpg</a></p>
+<p>Affine and projective algebraic geometry
+and sections of line bundles.
+A dimensional category = a dimensional algebra.</p>
+<hr />
+<p><a href="20200301_1.jpg">20200301_1.jpg</a>
+<a href="20200301_2.jpg">20200301_2.jpg</a>
+<a href="20200301_3.jpg">20200301_3.jpg</a>
+<a href="20200301_4.jpg">20200301_4.jpg</a>
+<a href="20200301_5.jpg">20200301_5.jpg</a>
+<a href="20200301_6.jpg">20200301_6.jpg</a>
+<a href="20200301_7.jpg">20200301_7.jpg</a></p>
+<p>Complex cobordisms.
+<script type="math/tex">A_\infty</script> is a homotopy monoidal space,
+<script type="math/tex">E_\infty</script> is like this but with rings instead of monoids.</p>
+<p>Formal group law <script type="math/tex">\mu:T\times T\to T</script> is a group object in a category
+of "infinitesimal spaces". These look like power serieses.
+Chern class.</p>
+<p>Example: <script type="math/tex">\mu(a,b)=a+b</script> corresponds to ordinary cohomology.</p>
+<p>Example: <script type="math/tex">\mu(a,b)=ab</script> corresponds to complex K-theory.</p>
+<p>The purpose in life of a complex oriented cohomology theory is
+to be a homotopification (like categorification)
+of a formal group law.
+Example: elliptic cohomology is a homotopification of an elliptic
+curve formal group law.</p>
+<p>Cohomology functors are representable, with representing
+object a classifying space.
+Ordinary cohomology is represented by Eilenberg-MacLane
+space <script type="math/tex">K(Z,1)=S^1.</script>
+</p>
+<p>Homotopy belief method.</p>
+<hr />
+<p><a href="20200303_1.jpg">20200303_1.jpg</a>
+<a href="20200303_2.jpg">20200303_2.jpg</a>
+<a href="20200303_3.jpg">20200303_3.jpg</a></p>
+<hr />
+<p><a href="20200310_1.jpg">20200310_1.jpg</a>
+<a href="20200310_2.jpg">20200310_2.jpg</a>
+<a href="20200310_3.jpg">20200310_3.jpg</a>
+<a href="20200310_4.jpg">20200310_4.jpg</a>
+<a href="20200310_5.jpg">20200310_5.jpg</a>
+<a href="20200310_6.jpg">20200310_6.jpg</a></p>
+<p>Infinite loop spaces as believers in the
+# invertability of <script type="math/tex">S^1.</script>
+</p>
+<p>Homotopy colimit preserving.</p>
+<p>The symmetry <script type="math/tex">J \# J \to J \# J</script>
+is "fermionic", because it is orientation reversing.</p>
+<hr />
+<p><a href="20200313_1.jpg">20200313_1.jpg</a>
+<a href="20200313_2.jpg">20200313_2.jpg</a>
+<a href="20200313_3.jpg">20200313_3.jpg</a>
+<a href="20200313_4.jpg">20200313_4.jpg</a>
+<a href="20200313_5.jpg">20200313_5.jpg</a>
+<a href="20200313_6.jpg">20200313_6.jpg</a></p>
+<p>Homotopy belief in <script type="math/tex">S^{-1}</script> and
+Brown representability theorem.</p>
+<p>
+<script type="math/tex">T</script>-enriched presheaf category and bimodules.</p>
+<p>Connective spectrums versus spectrums.</p>
+<hr />
+<p><a href="20200317_1.jpg">20200317_1.jpg</a>
+<a href="20200317_2.jpg">20200317_2.jpg</a>
+<a href="20200317_3.jpg">20200317_3.jpg</a>
+<a href="20200317_4.jpg">20200317_4.jpg</a>
+<a href="20200317_5.jpg">20200317_5.jpg</a>
+<a href="20200317_6.jpg">20200317_6.jpg</a>
+<a href="20200317_7.jpg">20200317_7.jpg</a></p>
+<p>Long exact homotopy sequence of <script type="math/tex">M</script>.
+Homotopy kernels.</p>
+<hr />
+<p><a href="20200320_1.jpg">20200320_1.jpg</a>
+<a href="20200320_2.jpg">20200320_2.jpg</a>
+<a href="20200320_3.jpg">20200320_3.jpg</a>
+<a href="20200320_4.jpg">20200320_4.jpg</a>
+<a href="20200320_5.jpg">20200320_5.jpg</a></p>
+<hr />
+<p><a href="20200411_1.jpg">20200411_1.jpg</a>
+<a href="20200411_2.jpg">20200411_2.jpg</a>
+<a href="20200411_3.jpg">20200411_3.jpg</a>
+<a href="20200411_4.jpg">20200411_4.jpg</a>
+<a href="20200411_5.jpg">20200411_5.jpg</a></p>
+<hr />
+<p><a href="20200414_1.jpg">20200414_1.jpg</a>
+<a href="20200414_2.jpg">20200414_2.jpg</a>
+<a href="20200414_3.jpg">20200414_3.jpg</a>
+<a href="20200414_4.jpg">20200414_4.jpg</a>
+<a href="20200414_5.jpg">20200414_5.jpg</a></p>
+<p>Chain complexes and spectrums both form
+very nice <script type="math/tex">(\infty,1)-</script>categories with
+<script type="math/tex">L:Spectra \to Chain</script> a very nice left adjoint functor
+(very nice = symmetric monoidal locally presentable).</p>
+<p>Homological algebra, group cohomology, carrying.</p>
+<p>Heisenberg group.</p>
+<hr />
+<p><a href="20200420_1.jpg">20200420_1.jpg</a>
+<a href="20200420_2.jpg">20200420_2.jpg</a>
+<a href="20200420_3.jpg">20200420_3.jpg</a>
+<a href="20200420_4.jpg">20200420_4.jpg</a>
+<a href="20200420_5.jpg">20200420_5.jpg</a></p>
+<hr />
+<p><a href="20200426_1.jpg">20200426_1.jpg</a>
+<a href="20200426_2.jpg">20200426_2.jpg</a>
+<a href="20200426_3.jpg">20200426_3.jpg</a>
+<a href="20200426_4.jpg">20200426_4.jpg</a>
+<a href="20200426_5.jpg">20200426_5.jpg</a>
+<a href="20200426_6.jpg">20200426_6.jpg</a>
+<a href="20200426_7.jpg">20200426_7.jpg</a></p>
+<hr />
+<p><a href="20200507_1.jpg">20200507_1.jpg</a>
+<a href="20200507_2.jpg">20200507_2.jpg</a>
+<a href="20200507_3.jpg">20200507_3.jpg</a>
+<a href="20200507_4.jpg">20200507_4.jpg</a>
+<a href="20200507_5.jpg">20200507_5.jpg</a></p>
+<hr />
+<p><a href="20200509_1.jpg">20200509_1.jpg</a>
+<a href="20200509_2.jpg">20200509_2.jpg</a>
+<a href="20200509_3.jpg">20200509_3.jpg</a></p>
+<hr />
+<p><a href="20200513_1.jpg">20200513_1.jpg</a>
+<a href="20200513_2.jpg">20200513_2.jpg</a>
+<a href="20200513_3.jpg">20200513_3.jpg</a></p>
+<hr />
+<p><a href="20200519_1.jpg">20200519_1.jpg</a>
+<a href="20200519_2.jpg">20200519_2.jpg</a>
+<a href="20200519_3.jpg">20200519_3.jpg</a>
+<a href="20200519_4.jpg">20200519_4.jpg</a>
+<a href="20200519_5.jpg">20200519_5.jpg</a>
+<a href="20200519_6.jpg">20200519_6.jpg</a></p>
+<hr />
+<p><a href="20200525_1.jpg">20200525_1.jpg</a>
+<a href="20200525_2.jpg">20200525_2.jpg</a>
+<a href="20200525_3.jpg">20200525_3.jpg</a>
+<a href="20200525_4.jpg">20200525_4.jpg</a>
+<a href="20200525_5.jpg">20200525_5.jpg</a>
+<a href="20200525_6.jpg">20200525_6.jpg</a></p>
+<hr />
+<p><a href="20200613_1.jpg">20200613_1.jpg</a>
+<a href="20200613_2.jpg">20200613_2.jpg</a>
+<a href="20200613_3.jpg">20200613_3.jpg</a>
+<a href="20200613_4.jpg">20200613_4.jpg</a>
+<a href="20200613_5.jpg">20200613_5.jpg</a>
+<a href="20200613_6.jpg">20200613_6.jpg</a></p>
+<hr />
+<p><a href="20200615_1.jpg">20200615_1.jpg</a>
+<a href="20200615_2.jpg">20200615_2.jpg</a>
+<a href="20200615_3.jpg">20200615_3.jpg</a>
+<a href="20200615_4.jpg">20200615_4.jpg</a>
+<a href="20200615_5.jpg">20200615_5.jpg</a></p>
+<hr />
+<p><a href="20200623_1.jpg">20200623_1.jpg</a>
+<a href="20200623_2.jpg">20200623_2.jpg</a>
+<a href="20200623_3.jpg">20200623_3.jpg</a>
+<a href="20200623_4.jpg">20200623_4.jpg</a></p>
+<hr />
+<p><a href="20200628_1.jpg">20200628_1.jpg</a>
+<a href="20200628_2.jpg">20200628_2.jpg</a>
+<a href="20200628_3.jpg">20200628_3.jpg</a>
+<a href="20200628_4.jpg">20200628_4.jpg</a>
+<a href="20200628_5.jpg">20200628_5.jpg</a>
+<a href="20200628_6.jpg">20200628_6.jpg</a></p>
+<hr />
+<p><a href="20200709_1.jpg">20200709_1.jpg</a>
+<a href="20200709_2.jpg">20200709_2.jpg</a>
+<a href="20200709_3.jpg">20200709_3.jpg</a>
+<a href="20200709_4.jpg">20200709_4.jpg</a>
+<a href="20200709_5.jpg">20200709_5.jpg</a>
+<a href="20200709_6.jpg">20200709_6.jpg</a>
+<a href="20200709_7.jpg">20200709_7.jpg</a>
+<a href="20200709_8.jpg">20200709_8.jpg</a></p>
+<hr />
+<p><a href="20200714_1.jpg">20200714_1.jpg</a>
+<a href="20200714_2.jpg">20200714_2.jpg</a>
+<a href="20200714_3.jpg">20200714_3.jpg</a>
+<a href="20200714_4.jpg">20200714_4.jpg</a>
+<a href="20200714_5.jpg">20200714_5.jpg</a>
+<a href="20200714_6.jpg">20200714_6.jpg</a>
+<a href="20200714_7.jpg">20200714_7.jpg</a>
+<a href="20200714_8.jpg">20200714_8.jpg</a></p>
+<hr />
+<p><a href="20200718_1.jpg">20200718_1.jpg</a>
+<a href="20200718_2.jpg">20200718_2.jpg</a>
+<a href="20200718_3.jpg">20200718_3.jpg</a>
+<a href="20200718_4.jpg">20200718_4.jpg</a>
+<a href="20200718_5.jpg">20200718_5.jpg</a>
+<a href="20200718_6.jpg">20200718_6.jpg</a>
+<a href="20200718_7.jpg">20200718_7.jpg</a>
+<a href="20200718_8.jpg">20200718_8.jpg</a></p>
+<hr />
+<p><a href="20200720_1.jpg">20200720_1.jpg</a>
+<a href="20200720_2.jpg">20200720_2.jpg</a>
+<a href="20200720_3.jpg">20200720_3.jpg</a>
+<a href="20200720_4.jpg">20200720_4.jpg</a>
+<a href="20200720_5.jpg">20200720_5.jpg</a></p>
+<hr />
+<p><a href="20200804_1.jpg">20200804_1.jpg</a>
+<a href="20200804_2.jpg">20200804_2.jpg</a>
+<a href="20200804_3.jpg">20200804_3.jpg</a>
+<a href="20200804_4.jpg">20200804_4.jpg</a>
+<a href="20200804_5.jpg">20200804_5.jpg</a>
+<a href="20200804_6.jpg">20200804_6.jpg</a></p>
+<hr />
+<p><a href="20200808_1.jpg">20200808_1.jpg</a>
+<a href="20200808_2.jpg">20200808_2.jpg</a>
+<a href="20200808_3.jpg">20200808_3.jpg</a>
+<a href="20200808_4.jpg">20200808_4.jpg</a>
+<a href="20200808_5.jpg">20200808_5.jpg</a>
+<a href="20200808_6.jpg">20200808_6.jpg</a>
+<a href="20200808_7.jpg">20200808_7.jpg</a>
+<a href="20200808_8.jpg">20200808_8.jpg</a></p>
+<hr />
+<p><a href="20200811_1.jpg">20200811_1.jpg</a>
+<a href="20200811_2.jpg">20200811_2.jpg</a>
+<a href="20200811_3.jpg">20200811_3.jpg</a>
+<a href="20200811_4.jpg">20200811_4.jpg</a>
+<a href="20200811_5.jpg">20200811_5.jpg</a></p>
+<hr />
+<p><a href="20200819_1.jpg">20200819_1.jpg</a>
+<a href="20200819_2.jpg">20200819_2.jpg</a>
+<a href="20200819_3.jpg">20200819_3.jpg</a>
+<a href="20200819_4.jpg">20200819_4.jpg</a>
+<a href="20200819_5.jpg">20200819_5.jpg</a>
+<a href="20200819_6.jpg">20200819_6.jpg</a>
+<a href="20200819_7.jpg">20200819_7.jpg</a>
+<a href="20200819_8.jpg">20200819_8.jpg</a></p>
+<hr />
+<p><a href="20200823_1.jpg">20200823_1.jpg</a>
+<a href="20200823_2.jpg">20200823_2.jpg</a>
+<a href="20200823_3.jpg">20200823_3.jpg</a>
+<a href="20200823_4.jpg">20200823_4.jpg</a>
+<a href="20200823_5.jpg">20200823_5.jpg</a>
+<a href="20200823_6.jpg">20200823_6.jpg</a>
+<a href="20200823_7.jpg">20200823_7.jpg</a>
+<a href="20200823_8.jpg">20200823_8.jpg</a></p>
+<hr />
+<p><a href="20201008_1.jpg">20201008_1.jpg</a>
+<a href="20201008_2.jpg">20201008_2.jpg</a>
+<a href="20201008_3.jpg">20201008_3.jpg</a>
+<a href="20201008_4.jpg">20201008_4.jpg</a>
+<a href="20201008_5.jpg">20201008_5.jpg</a></p>
+<hr />
+<p><a href="20201010_1.jpg">20201010_1.jpg</a>
+<a href="20201010_2.jpg">20201010_2.jpg</a>
+<a href="20201010_3.jpg">20201010_3.jpg</a>
+<a href="20201010_4.jpg">20201010_4.jpg</a>
+<a href="20201010_5.jpg">20201010_5.jpg</a>
+<a href="20201010_6.jpg">20201010_6.jpg</a>
+<a href="20201010_7.jpg">20201010_7.jpg</a></p>
+<hr />
+<p><a href="20201017_1.jpg">20201017_1.jpg</a>
+<a href="20201017_2.jpg">20201017_2.jpg</a>
+<a href="20201017_3.jpg">20201017_3.jpg</a>
+<a href="20201017_4.jpg">20201017_4.jpg</a></p>
+<hr />
+<p><a href="20201025_1.jpg">20201025_1.jpg</a>
+<a href="20201025_2.jpg">20201025_2.jpg</a>
+<a href="20201025_3.jpg">20201025_3.jpg</a>
+<a href="20201025_4.jpg">20201025_4.jpg</a>
+<a href="20201025_5.jpg">20201025_5.jpg</a>
+<a href="20201025_6.jpg">20201025_6.jpg</a>
+<a href="20201025_7.jpg">20201025_7.jpg</a>
+<a href="20201025_8.jpg">20201025_8.jpg</a></p>
+<hr />
+<p><a href="20201105_1.jpg">20201105_1.jpg</a>
+<a href="20201105_2.jpg">20201105_2.jpg</a>
+<a href="20201105_3.jpg">20201105_3.jpg</a>
+<a href="20201105_4.jpg">20201105_4.jpg</a>
+<a href="20201105_5.jpg">20201105_5.jpg</a>
+<a href="20201105_6.jpg">20201105_6.jpg</a>
+<a href="20201105_7.jpg">20201105_7.jpg</a></p>
+<hr />
+<p><a href="20201113_1.jpg">20201113_1.jpg</a>
+<a href="20201113_2.jpg">20201113_2.jpg</a>
+<a href="20201113_3.jpg">20201113_3.jpg</a>
+<a href="20201113_4.jpg">20201113_4.jpg</a></p>
+<hr />
+<p><a href="20201116_1.jpg">20201116_1.jpg</a>
+<a href="20201116_2.jpg">20201116_2.jpg</a>
+<a href="20201116_3.jpg">20201116_3.jpg</a>
+<a href="20201116_4.jpg">20201116_4.jpg</a>
+<a href="20201116_5.jpg">20201116_5.jpg</a>
+<a href="20201116_6.jpg">20201116_6.jpg</a></p>
+<hr />
+<p><a href="20201120_1.jpg">20201120_1.jpg</a>
+<a href="20201120_2.jpg">20201120_2.jpg</a>
+<a href="20201120_3.jpg">20201120_3.jpg</a>
+<a href="20201120_4.jpg">20201120_4.jpg</a>
+<a href="20201120_5.jpg">20201120_5.jpg</a>
+<a href="20201120_6.jpg">20201120_6.jpg</a></p>
+<hr />
+
+<hr>
+
+Copyright (c) 2018 - 2021.
+
+</main>
+
+</body>
+
+

@@ -1,4 +1,6 @@
 
+all: algebraic.pdf sketches.pdf
+
 
 algebraic.pdf: algebraic.tex   dynkin.tex
 	pdflatex algebraic.tex

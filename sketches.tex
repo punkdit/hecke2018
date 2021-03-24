@@ -51,7 +51,7 @@
 %\newcommand{\Aref}[1]{Appendix~\ref{#1}}
 \newcommand{\SRef}[1]{Section~\ref{#1}}
 
-\newcommand{\todo}[1]{\ \textcolor{red}{\{#1\}}\ }
+\newcommand{\todo}[1]{\ \textcolor{red}{#1}\ }
 
 \newcommand{\Aut}{\mathrm{Aut}}
 \newcommand{\Hom}{\mathrm{Hom}}
@@ -77,7 +77,7 @@
 \newcommand\doexample[1]{\vskip 5pt \noindent {\bf \underline{Example #1.}\ }}
 \newcommand\doproof{\vskip 5pt \noindent{\bf \nounderline{Proof:}\ }}
 
-\newcommand\tombstone{\rule{.36em}{2ex}\vskip 5pt}
+\newcommand\tombstone{\rule{.42em}{1.4ex}\vskip 5pt}
 
 \newcounter{numitem}
 \newcommand{\numlabel}[1]{\refstepcounter{numitem}\thenumitem\label{#1}}
@@ -102,9 +102,7 @@
 
 
 
-\title{Notes on Locally Presentable Categories}
-
-\author{Simon Burton}
+\title{The Belief Method}
 
 
 \date{\today}
@@ -127,64 +125,40 @@
 
 \newcommand{\ACat}{\mathsf{A}}
 \newcommand{\BCat}{\mathsf{B}}
+\newcommand{\CCat}{\mathsf{C}}
+\newcommand{\DCat}{\mathsf{D}}
+
 \newcommand{\CatSet}{\mathsf{Set}}
 \newcommand{\Ob}{\mathrm{Ob}}
 \newcommand{\Mor}{\mathrm{Mor}}
 
-\section*{Commutative Algebra}
-
-\dodef{\numitem}
-A commutative ring is {\it local} when it has a unique
-maximal idea. \tombstone
-
-
-
-\section*{Adjoint functors}
-
-We wish to categorify linear algebra and also commutative algebra.
-
-A functor that preserves colimits is called {\it cocontinuous.}
-\dotheorem{\numitem}
-(\cite{Riehl2017} 4.5.3)
-Any left adjoint functor is cocontinuous.
-\tombstone
-
-\dodef{\numitem}
-(\cite{Riehl2017} 4.5.12)
-A {\it reflective subcategory}
-of a category $\ACat$ is a full subcategory $\BCat$
-where the inclusion
-$ \BCat \rightarrowtail \ACat $ 
-admits a left adjoint, called the {\it reflector}
-or {\it localization}:
-$$
-\begin{tikzcd}
-    \ACat \arrow{r}{L} & \BCat \arrow[d, rightarrowtail, "\dashv"'] &          \\
-                       & \ACat \arrow{r}{L}              & \BCat    
-\end{tikzcd}
-$$
-\tombstone
-
 \section*{Constructing locally presentable categories}
+
+An alternate name for a locally presentable category is
+a {\it smally sketched colimit theory} (\cite{Dolan} 2019-07-19).
 
 \dodef{\numitem} (\cite{Dolan} 2019-07-22)
 A {\it locally presentable category} is defined recursively as:
 
 {\bf (Axiom)} The terminal category $\mathbbm{1}$ is locally presentable.
+This is the \emph{theory of nothing}, the \emph{empty sketch}.
 
 {\bf (0-cell)} 
 Given a locally presentable category $\mathsf{A}$,
 we freely adjoin an object to $\mathsf{A}$ giving
+the locally presentable category 
 $$
     \mathsf{B} = \mathsf{A}\times\mathsf{Set}.
 $$
-The new object is $(0,\star)\in \mathsf{A}\times\mathsf{Set}.$
+The new object in $\BCat$ is $(0,\star)\in \mathsf{A}\times\mathsf{Set}.$
 This construction adds {\it stuff}.
+\todo{We are adding an object to the sketch.}
 
 {\bf (1-cell)} 
 Given a locally presentable category $\mathsf{A}$,
 and objects $c,d\in \mathsf{A}$,
 we freely adjoin a morphism $f:d\to c$ to $\mathsf{A}$ giving
+the locally presentable category 
 $\mathsf{B}$ with
 $$
     \Ob(\BCat) := \{ (b,g) : b\in\Ob(\ACat), g:\Hom(c,b)\to\Hom(d,b) \}
@@ -198,21 +172,25 @@ $$
 $$
 commutes.
 This construction adds {\it structure}.
+\todo{We are adding a morphism to the sketch.}
 
 {\bf (2-cell)}
 Given a locally presentable category $\mathsf{A}$,
 with morphism $f:d\to c$ we freely adjoin an inverse $g:c\to d$
-giving $\BCat$ as the full subcategory of $\ACat$
+giving the locally presentable category $\BCat$
+as the full subcategory of $\ACat$
 with objects 
 $ b\in\Ob(\ACat) $ such that  $\Hom(f,b):\Hom(c,b)\to\Hom(d,b)$
         is invertible in $\CatSet$.
 This construction adds a {\it property}.
+\todo{We are adding a relation (formal inverse) to the sketch.}
+
+We combine steps {\bf (0,1,2-cell)} a set amount of times 
+\todo{ie. the steps are indexed by a set}.
 \tombstone
 
-An alternate name for a locally presentable category is
-a {\it smally sketched colimit theory} (\cite{Dolan} 2019-07-19).
-The next theorem shows that this theory is a
-categorified linear algebra.
+The next theorem shows that we are doing a kind of 
+\emph{categorified linear algebra}.
 
 \dotheorem{\numitem}
 (\cite{Riehl2017} 4.6.17)
@@ -221,12 +199,80 @@ presentable categories is a left adjoint
 if and only if it is cocontinuous.
 \tombstone
 
-\section*{Sketches}
-
-\dodef{\numitem} (\cite{Adamek1994} 1.49)
+\section*{Belief doctrines}
 
 
-References: \cite{Adamek1994} \cite{Durov2007} \cite{Riehl2017} \cite{Heunen2019}
+\dodef{\numitem}
+A \emph{belief doctrine} is a monad on the bicategory of
+locally presentable categories.
+\tombstone
+
+Given a belief doctrine $\DCat$, 
+we sometimes refer to its algebras as its
+\emph{theories}, just as with Lawvere's definition of a doctrine, 
+and to
+homomorphisms between the algebras as \emph{interpretations} between the
+theories.
+
+\dodef{\numitem} 
+Given a belief doctrine $\DCat$ 
+and an interpretation $T \xrightarrow{J} U$
+of $\DCat$-theories, a \emph{$J$-belief} on a 
+$x\in\Ob(T)$
+is equivalently either a
+lift of $x$ along the right-adjoint of $J$, or a continuous extension of
+$\Hom(-,x)$ along $T^{op} \xrightarrow{J^{op}} U^{op}$.
+\tombstone
+
+Example. ``Categorified symmetric algebra'' is a belief doctrine; its
+theories are the symmetric-monoidal locally presentable categories,
+and its interpretations are the symmetric-monoidal left-adjoint functors
+between them.
+
+
+%\section*{Sketches}
+%
+%\dodef{\numitem} (\cite{Adamek1994} 1.49)
+%
+%References: \cite{Adamek1994} \cite{Durov2007} \cite{Riehl2017} \cite{Heunen2019}
+
+
+%\section*{Appendix}
+%
+%\subsection*{Commutative Algebra}
+%
+%\dodef{\numitem}
+%A commutative ring is {\it local} when it has a unique
+%maximal idea. \tombstone
+%
+%
+%
+%\subsection*{Adjoint functors}
+%
+%We wish to categorify linear algebra and also commutative algebra.
+%
+%A functor that preserves colimits is called {\it cocontinuous.}
+%\dotheorem{\numitem}
+%(\cite{Riehl2017} 4.5.3)
+%Any left adjoint functor is cocontinuous.
+%\tombstone
+%
+%\dodef{\numitem}
+%(\cite{Riehl2017} 4.5.12)
+%A {\it reflective subcategory}
+%of a category $\ACat$ is a full subcategory $\BCat$
+%where the inclusion
+%$ \BCat \rightarrowtail \ACat $ 
+%admits a left adjoint, called the {\it reflector}
+%or {\it localization}:
+%$$
+%\begin{tikzcd}
+%    \ACat \arrow{r}{L} & \BCat \arrow[d, rightarrowtail, "\dashv"'] &          \\
+%                       & \ACat \arrow{r}{L}              & \BCat    
+%\end{tikzcd}
+%$$
+%\tombstone
+
 
 \bibliography{refs2}{}
 \bibliographystyle{abbrv}
