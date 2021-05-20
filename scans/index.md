@@ -479,6 +479,9 @@ Heisenberg group.
 [20200420_4.jpg](20200420_4.jpg)
 [20200420_5.jpg](20200420_5.jpg)
 
+Composing exact sequences. Ext(-,-).
+
+
 --------
 
 [20200426_1.jpg](20200426_1.jpg)
@@ -489,6 +492,12 @@ Heisenberg group.
 [20200426_6.jpg](20200426_6.jpg)
 [20200426_7.jpg](20200426_7.jpg)
 
+Homotopy theory is a client of homological algebra.
+
+Vector bundles.
+In general, $K(G,1)$ classifies
+principle $G$-bundles when $G$ is a discrete group.
+
 --------
 
 [20200507_1.jpg](20200507_1.jpg)
@@ -497,17 +506,24 @@ Heisenberg group.
 [20200507_4.jpg](20200507_4.jpg)
 [20200507_5.jpg](20200507_5.jpg)
 
+Commutative quantales.
+
 --------
 
 [20200509_1.jpg](20200509_1.jpg)
 [20200509_2.jpg](20200509_2.jpg)
 [20200509_3.jpg](20200509_3.jpg)
 
+More commutative quantales.
+Categorifying gives quasi-coherent sheaves.
+
 --------
 
 [20200513_1.jpg](20200513_1.jpg)
 [20200513_2.jpg](20200513_2.jpg)
 [20200513_3.jpg](20200513_3.jpg)
+
+Matrix notation for left adjoint functors.
 
 --------
 
@@ -517,6 +533,8 @@ Heisenberg group.
 [20200519_4.jpg](20200519_4.jpg)
 [20200519_5.jpg](20200519_5.jpg)
 [20200519_6.jpg](20200519_6.jpg)
+
+0-cells: posets. 1-cells: functors. 2-cells: $\le$ between functors.
 
 --------
 
