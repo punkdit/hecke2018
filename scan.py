@@ -20,12 +20,12 @@ def main(name):
     mode = 'color'
     
     ver = sane.init()
-    print('SANE version:', ver)
+    #print('SANE version:', ver)
     
     devices = sane.get_devices()
-    print('Available devices:', devices)
+    #print('Available devices:', devices)
     
-    dev = sane.open(devices[1][0])
+    dev = sane.open(devices[0][0])
     
     params = dev.get_parameters()
     #print("params:", params)
@@ -46,7 +46,7 @@ def main(name):
     #    print('Cannot set scan area, using default')
     
     params = dev.get_parameters()
-    print('params:', params)
+    #print('params:', params)
     
     if name.endswith(".jpg") or name.endswith(".png"):
         pass
@@ -62,8 +62,8 @@ def main(name):
 
     #print(dir(dev))
     #return
-    for op in dev.get_options():
-        print(op)
+    #for op in dev.get_options():
+    #    print(op)
 
     dev.mode = "Color"
     dev.resolution = 300
