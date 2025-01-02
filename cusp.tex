@@ -1,0 +1,271 @@
+
+\documentclass[11pt,oneside]{article} 
+
+\usepackage{a4wide}
+
+\usepackage{amsmath}
+\usepackage{color}
+%\usepackage{natbib} % kills arxiv 
+\usepackage{framed}
+%\usepackage{cite}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% http://www.maths.qmul.ac.uk/~mf/genyoungtabtikz.sty
+\usepackage[vcentermath]{genyoungtabtikz}
+\Yboxdim{8pt}
+%\Ylinethick{1pt}
+
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{amsthm}
+
+%\RequirePackage{algorithmic}
+%\RequirePackage{algorithm}
+%\RequirePackage{theorem}
+%\RequirePackage{eucal}
+\RequirePackage{color}
+\RequirePackage{url}
+\RequirePackage{mdwlist}
+
+\RequirePackage{rotating}
+
+
+\RequirePackage[all]{xy}
+%\_CompileMatrices
+%\RequirePackage{hyperref}
+\RequirePackage{graphicx}
+%\RequirePackage[dvips]{geometry}
+
+\usepackage{xcolor}
+%\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage[caption=false]{subfig}
+\usepackage{enumerate}
+\usepackage{mathrsfs}
+\usepackage{bbm}
+
+% -------------- Commands ----------------------
+
+\makeatletter
+\newcommand{\verbatimfont}[1]{\renewcommand{\verbatim@font}{\ttfamily#1}}
+\makeatother
+
+\newcommand{\Eref}[1]{(\ref{#1})}
+\newcommand{\Fref}[1]{Fig.~\ref{#1}}
+%\newcommand{\Aref}[1]{Appendix~\ref{#1}}
+\newcommand{\SRef}[1]{Section~\ref{#1}}
+
+\newcommand{\todo}[1]{\ \textcolor{red}{\{#1\}}\ }
+
+\newcommand{\Aut}{\mathrm{Aut}}
+\newcommand{\Hom}{\mathrm{Hom}}
+%\newcommand{\hom}{\mathrm{hom}} % internal hom ?
+\newcommand{\Stab}{\mathrm{Stab}}
+\newcommand{\Fix}{\mathrm{Fix}}
+\newcommand{\Orbit}{\mathrm{Orbit}}
+\newcommand{\Ker}{\mathrm{Ker}}
+\newcommand{\Image}{\mathrm{Im}}
+\newcommand{\Dim}{\mathrm{Dim}}
+\newcommand{\Complex}{\mathbb{C}}
+\newcommand{\Integer}{\mathbb{Z}}
+\newcommand{\Natural}{\mathbb{N}}
+
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\Sp}{\mathrm{Sp}}
+\newcommand{\PGL}{\mathrm{PGL}}
+\newcommand{\Field}{\mathbb{F}}
+
+% Lemma, proof, theorem, etc.
+\newcommand\nounderline[1]{ #1} 
+\newcommand\dodef[1]{\vskip 5pt \noindent{\bf \underline{Definition #1.}\ }}
+\newcommand\dolemma[1]{\vskip 5pt \noindent{\bf \underline{Lemma #1.}\ }}
+\newcommand\doproposition[1]{\vskip 5pt \noindent {\bf \underline{Proposition #1.}\ }}
+\newcommand\dotheorem[1]{\vskip 5pt \noindent {\bf \underline{Theorem #1.}\ }}
+\newcommand\docorollary[1]{\vskip 5pt \noindent {\bf \underline{Corollary #1.}\ }}
+\newcommand\doexample[1]{\vskip 5pt \noindent {\bf \underline{Example #1.}\ }}
+\newcommand\doproof{\vskip 5pt \noindent{\bf \nounderline{Proof:}\ }}
+
+\newcommand\tombstone{\rule{.36em}{2ex}\vskip 5pt}
+
+\newcounter{numitem}
+\newcommand{\numlabel}[1]{\refstepcounter{numitem}\thenumitem\label{#1}}
+\newcommand{\numitem}{\refstepcounter{numitem}\thenumitem}
+
+% Categories
+\newcommand{\Set}{\mathbf{Set}}
+\newcommand{\FinSet}{\mathbf{FinSet}}
+\newcommand{\GSet}{\mathbf{GSet}}
+\newcommand{\GRep}{\mathbf{GRep}}
+\newcommand{\CRing}{\mathbf{CRing}}
+
+\newcommand{\thinplus}{\!+\!}
+
+\newcommand{\tensor}{\otimes}
+
+%\input{dynkin.tex}
+
+
+\title{The philosophy of cusp forms?}
+
+%\author{Sijato Budotr}
+\author{Simon Burton}
+
+\date{\today}
+
+\flushbottom
+
+\begin{document}
+
+\maketitle
+
+%\section{here we go...}
+
+We are trying to make sense of chapter 47 in \cite{Bump2004}.
+Part of this is the correspondence (duality)
+between the irreducible complex
+representations of a group $G$ and the conjugacy classes of the dual group $G^{\vee}$.
+And also \cite{Joyal1995}.
+
+Elements of a 
+conjugacy class of $\GL(n,\Field_p)$ have the same characteristic polynomial.
+
+
+%$$
+%\begin{array}{cc}
+%\end{array}
+%$$
+
+\setlength{\tabcolsep}{10pt}
+\setlength{\arraycolsep}{1pt}
+\renewcommand{\arraystretch}{0.5}
+
+%\begin{center}
+%\begin{tabular}{c|c}
+%\# & char. poly \\
+%\hline
+%1 & $(x+1)^3$ \\
+%21 & $(x+1)^3$ \\
+%24 & $x^3+x^2+1$ \\
+%24 & $x^3+x+1$ \\
+%42 & $(x+1)^3$ \\
+%56 & $(x+1)(x^2+x+1)$ \\
+%\end{tabular}
+%\end{center}
+
+$G=\GL(1,\Field_2)$ has order 1, with 1 conjugacy class:
+\begin{center}
+\begin{tabular}{r|l|c|c|c}
+\# & representative & char. polynomial & irrep & dim. \\
+\hline
+1 & $[1]$           & $x+1$            & $A$   & 1    \\
+\end{tabular}
+\end{center}
+
+$G=\GL(2,\Field_2)$ has order 6, with 3 conjugacy classes:
+\begin{center}
+\begin{tabular}{r|l|c|c|c}
+\# & representative(s) & char. polynomial & irrep & dim. \\
+\hline
+1  & $\begin{bmatrix}1&.\\.&1\end{bmatrix}$    & $(x+1)^2$  & $\yng(1,1)(A)$  & 1 \\
+2  & $\begin{bmatrix}1&1\\1&.\end{bmatrix}$, $\begin{bmatrix}.&1\\1&1\end{bmatrix}$     & $x^2+x+1$  &  $B$  & 1 \\
+3  & $\begin{bmatrix}1&1\\.&1\end{bmatrix}$    & $(x+1)^2$  & $\yng(2)(A)$ & 2  \\
+\end{tabular}
+\end{center}
+
+$G=\GL(3,\Field_2)$ has order 168 and 6 conjugacy classes:
+\begin{center}
+\begin{tabular}{r|l|c|c|c}
+\# & representative(s) & char. polynomial & irrep & dim. \\
+\hline
+ 1 & $\begin{bmatrix}1&.&.\\.&1&.\\.&.&1\end{bmatrix}$ & $(x+1)^3$  
+    & $\yng(1,1,1)(A)$ & 1 \\
+21 & $\begin{bmatrix}1&1&.\\.&1&.\\.&.&1\end{bmatrix}$ ,
+     $\begin{bmatrix}1&.&.\\.&1&1\\.&.&1\end{bmatrix}$ & $(x+1)^3$  
+    & $\yng(2,1)(A)$ , $\yng(1,2)(A)$ & 6  \\
+24 & 
+$\begin{bmatrix}1&1&.\\1&.&1\\.&1&.\end{bmatrix}$
+,
+$\begin{bmatrix}.&1&.\\1&.&1\\.&1&1\end{bmatrix}$
+& $x^3+x^2+1$      & $C$ & 3 \\
+24 & 
+$\begin{bmatrix}1&1&.\\1&1&1\\.&1&.\end{bmatrix}$
+,
+$\begin{bmatrix}.&1&.\\1&1&1\\.&1&1\end{bmatrix}$
+& $x^3+x+1$        & $D$ & 3 \\
+42 & $\begin{bmatrix}1&1&1\\.&1&1\\.&.&1\end{bmatrix}$
+    ,  $\begin{bmatrix}1&1&.\\.&1&1\\.&.&1\end{bmatrix}$
+    & $(x+1)^3$ 
+    & $\yng(3)(A)$ & 8  \\
+56 & $\begin{bmatrix}1&.&.\\.&1&1\\.&1&.\end{bmatrix}$ & $(x+1)(x^2+x+1)$
+    & $A\tensor B$ & 7 \\
+\hline
+\strut =168 \\
+\end{tabular}
+\end{center}
+
+%Here we show the dimension of the irreps:
+%\renewcommand{\arraystretch}{1.4}
+%\begin{center}
+%\begin{tabular}{c|c}
+%$d$  & irrep  \\
+%\hline
+%1    &  $\yng(1,1,1)(A)$ \\
+%3    &  $C$ \\
+%3    &  $D$ \\
+%6    &  $\yng(2,1)(A)$ \\
+%7    &  $A\tensor B$ \\
+%8    &  $\yng(3)(A)$ \\
+%\end{tabular}
+%\end{center}
+
+$G=\GL(4,\Field_2)$ has order 20160 and 14 conjugacy classes:
+\begin{center}
+\begin{tabular}{r|l|c|c|c}
+\# & representative & char. polynomial & irrep & dim. \\
+\hline
+1  & $\begin{bmatrix}1&.&.&.\\.&1&.&.\\.&.&1&.\\.&.&.&1\end{bmatrix}$  & $(x+1)^4$  & $\yng(1,1,1,1)(A)$ & 1  \\
+105  & $\begin{bmatrix}1&1&.&.\\.&1&.&.\\.&.&1&.\\.&.&.&1\end{bmatrix}$  & $(x+1)^4$  & $\yng(2,1,1)(A)$ & ?  \\
+112  & $\begin{bmatrix}1&1&.&.\\1&.&.&.\\.&.&1&1\\.&.&1&.\end{bmatrix}$  & $(x^2+x+1)^2$  & $\yng(1,1)(B)$ & ?  \\
+210  & $\begin{bmatrix}1&1&.&.\\.&1&.&.\\.&.&1&1\\.&.&.&1\end{bmatrix}$  & $(x+1)^4$  & $\yng(2,2)(A)$ & ?  \\
+1120  & $\begin{bmatrix}1&.&.&.\\.&1&.&.\\.&.&1&1\\.&.&1&.\end{bmatrix}$
+  & $(x+1)^2(x^2+x+1)$  & $\yng(1,1)(A)\tensor B$ & ?  \\
+1260  & $\begin{bmatrix}1&1&.&.\\.&1&1&.\\.&.&1&.\\.&.&.&1\end{bmatrix}$  & $(x+1)^4$  & $\yng(3,1)(A)$ & ?  \\
+1344  & 
+$\begin{bmatrix}.&1&.&.\\1&1&1&.\\.&1&.&1\\.&.&1&.\end{bmatrix}$,
+$\begin{bmatrix}.&1&.&.\\1&.&1&.\\.&1&1&1\\.&.&1&.\end{bmatrix}$
+& $x^4+x^3+x^2+x+1$  & $E$ & 21 ?  \\
+1344  & 
+$\begin{bmatrix}1&1&.&.\\1&1&1&.\\.&1&.&1\\.&.&1&1\end{bmatrix}$,
+$\begin{bmatrix}1&1&.&.\\1&.&1&.\\.&1&1&1\\.&.&1&1\end{bmatrix}$
+& $x^4+x^3+1$        & $F$ & 21 ?  \\
+1344  & 
+$\begin{bmatrix}.&1&.&.\\1&1&1&.\\.&1&.&1\\.&.&1&1\end{bmatrix}$,
+$\begin{bmatrix}1&1&.&.\\1&.&1&.\\.&1&1&1\\.&.&1&.\end{bmatrix}$
+& $x^4+x+1$          & $G$ & 21 ?  \\
+1680  & $\begin{bmatrix}1&1&1&1\\1&.&1&.\\.&.&1&1\\.&.&1&.\end{bmatrix}$  & $(x^2+x+1)^2$  & $\yng(2)(B)$ & ?  \\
+2520  & $\begin{bmatrix}1&1&.&.\\.&1&1&.\\.&.&1&1\\.&.&.&1\end{bmatrix}$  & $(x+1)^4$  & $\yng(4)(A)$ & 64 ?  \\
+2880  & $\begin{bmatrix}1&.&.&.\\.&1&1&.\\.&1&.&1\\.&.&1&.\end{bmatrix}$
+  & $(x+1)(x^3+x^2+1)$  & $A\tensor C$ & 45 ?  \\
+2880  & $\begin{bmatrix}1&.&.&.\\.&1&1&.\\.&1&1&1\\.&.&1&.\end{bmatrix}$
+  & $(x+1)(x^3+x+1)$  & $A\tensor D$ & 45 ?  \\
+3360  & $\begin{bmatrix}1&1&.&.\\.&1&.&.\\.&.&1&1\\.&.&1&.\end{bmatrix}$  & $(x+1)^2(x^2+x+1)$  & $\yng(2)(A)\tensor B$ & ?  \\
+\hline
+\strut = 20160 \\
+\end{tabular}
+\end{center}
+
+Where the irrep dimensions have square sum:
+$$
+ 20160 = 1^2 + 7^2 + 14^2 + 20^2 + 21^2 + 21^2 + 21^2 + 28^2 + 35^2 + 45^2 + 45^2 + 56^2 + 64^2 + 70^2.
+$$
+
+
+
+
+\bibliography{refs2}{}
+\bibliographystyle{abbrv}
+
+\end{document}
