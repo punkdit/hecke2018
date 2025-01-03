@@ -263,6 +263,20 @@ $$
  20160 = 1^2 + 7^2 + 14^2 + 20^2 + 21^2 + 21^2 + 21^2 + 28^2 + 35^2 + 45^2 + 45^2 + 56^2 + 64^2 + 70^2.
 $$
 
+We tabulate how many times the characteristic polynomial $(x+1)^n$ appears
+in the conjugacy classes of $\GL(n,\Field_2)$:
+\begin{center}\begin{tabular}{c|r|r}
+$\GL(n,\Field_2)$ & cgy. classes  & \# $(x+1)^n$ \\
+\hline
+$\GL(1,\Field_2)$  & 1    & 1 \\
+$\GL(2,\Field_2)$  & 3    & 2 \\
+$\GL(3,\Field_2)$  & 6   & 3 \\
+$\GL(4,\Field_2)$  & 14   & 5 \\
+$\GL(5,\Field_2)$  & 27   & 7 \\
+$\GL(6,\Field_2)$  & 60   & 11 \\
+$\GL(7,\Field_2)$  & 117   & 15 \\
+\end{tabular} \end{center}
+Evidently these numbers 1,2,3,5,.. count the partitions on $n$.
 
 \section{$\Sp(2n,\Field_p)$}
 
@@ -272,7 +286,7 @@ $$
 % https://arxiv.org/abs/2409.14624
 % 
 
-Note that $\Sp(2n,\Field_2) \cong \SO(2n+1,\Field_2)$.
+Note that $\Sp(2n,\Field_2) \cong \SO(2n+1,\Field_2)$, and also $\Sp(4,2)\cong S_6$.
 
 $G=\Sp(4,\Field_2)$ has order 720 and 11 conjugacy classes:
 \begin{center}
@@ -337,6 +351,33 @@ $G = \Sp(6,\Field_2)$  has order 1451520 and 30 conjugacy classes:
 \strut = 1451520 \\
 \end{tabular}
 \end{center}
+
+%$G = \Sp(8,\Field_2)$ has 81 conjugacy classes.
+%The characteristic polynomial $(x+1)^8$ appears 25 times.
+%
+%$G = \Sp(10,\Field_2)$ has 198 conjugacy classes.
+%The characteristic polynomial $(x+1)^{10}$ appears 46 times.
+%
+%$G = \Sp(12,\Field_2)$ has 477 conjugacy classes.
+%The characteristic polynomial $(x+1)^{12}$ appears 86 times.
+
+We tabulate the appearences of the characteristic polynomial 
+$(x+1)^{2n}$ in the conjugacy classes of $\Sp(2n,\Field_2)$:
+\begin{center}\begin{tabular}{c|r|r}
+$\Sp(2n,\Field_2)$ & cgy. classes  & \# $(x+1)^{2n}$ \\
+\hline
+$\Sp(2,\Field_2)$   & 3     & 2 \\
+$\Sp(4,\Field_2)$   & 11    & 6 \\
+$\Sp(6,\Field_2)$   & 30    & 12 \\
+$\Sp(8,\Field_2)$   & 81    & 25 \\
+$\Sp(10,\Field_2)$  & 198   & 46 \\
+$\Sp(12,\Field_2)$  & 477   & 86 \\
+$\Sp(14,\Field_2)$  & 1089  & 148? \\
+\end{tabular} \end{center}
+The sequence 2,6,12,25,46,86 appears as OEIS A137829:
+``Expansion of $\psi(q^2) / f(-q)^2$ in powers of $q$ where
+$\psi(), f()$ are Ramanujan theta functions. 
+''
 
 
 \bibliography{refs2}{}
