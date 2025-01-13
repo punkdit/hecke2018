@@ -124,6 +124,14 @@
 
 \maketitle
 
+We are trying to make sense of the ``philosophy of cusp forms''
+which is explained in chapter 47 of \cite{Bump2004},
+and also the categorified representation rings of \cite{Joyal1995}.
+Part of this is the correspondence (duality)
+between the irreducible complex
+representations of a group $G$ and the 
+conjugacy classes of the Langlands dual group $G^{\vee}$.
+
 \section{$\GL(n,\Field_q)$}
 
 Recall the $q$-deformed Pascal triangle, for $q=2$ this begins:
@@ -139,16 +147,16 @@ A_4: &  & 1 &  & 31 &  & 155 &  & 155 &  & 31 &  & 1 \\
 $$
 which is sequence A022166 in the OEIS.
 
-
-We are trying to make sense of chapter 47 in \cite{Bump2004}.
-Part of this is the correspondence (duality)
-between the irreducible complex
-representations of a group $G$ and the conjugacy classes of the dual group $G^{\vee}$.
-And also \cite{Joyal1995}.
-
 Elements of a 
 conjugacy class of $\GL(n,\Field_q)$ have the same characteristic polynomial.
-
+In the tables below, for each conjugacy class,
+we notate a representative matrix (or matrices) together with its
+characteristic polynomial, the corresponding complex irrep,
+and the dimension of the irrep.
+Cuspidal irreps are given names $A, B, C,$ etc.
+These are combined using the monoidal product
+$\tensor$ and Schur functors.
+So far, much of this is numerological guesswork and should not be particularly trusted.
 
 %$$
 %\begin{array}{cc}
@@ -451,6 +459,6 @@ However, the appearance of $(x^2+x+1)^n$ as a characteristic polynomial
 in $\Sp$ follows the partition number sequence: 1,2,3,5,7,11,15,...
 
 \bibliography{refs2}{}
-\bibliographystyle{abbrv}
+\bibliographystyle{plainnat}
 
 \end{document}
