@@ -350,7 +350,7 @@ $
 $
 
 
-\section{$\GL(2)$}
+\section{$\GL(n,\Field_3)$}
 
 $G=\GL(1,\Field_3)$ has order 2, with 2 conjugacy class:
 \begin{center}
@@ -394,6 +394,8 @@ $|\GL(2,\Field_3)|=48$
 \end{center}
 
 
+\section{$\GL(n,\Field_5)$}
+
 
 $\GL(1,\Field_5)$
 
@@ -436,6 +438,10 @@ $\GL(2,\Field_5)$
 %[ 6, -1, -6*E(4), -E(4), -6, 1, 6*E(4), E(4), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1-E(4), 0, -1+E(4), 1-E(4), 0, 1+E(4) ] ) ]
 
 
+Here we label the new cuspidals $E$ through $N$, even though we don't know
+the exact order these appear in, ie.
+the exact correspondence
+between the cuspidals $E-N$ and the conjugacy classes of $\GL(2,\Field_5)$ is unknown.
 $$
 \begin{array}{c|c|c|c|r}
 \#    &             \text{representative}  &  \text{factored} & \text{irrep} & \text{dim.}  \\
@@ -444,16 +450,16 @@ $$
 1  &  \begin{bmatrix}3&.\\.&3\end{bmatrix}   & (x+2)^2  & \yng(2)(B) & 1  \\
 1  &  \begin{bmatrix}2&.\\.&2\end{bmatrix}   & (x+3)^2  & \yng(2)(C) & 1  \\
 1  &  \begin{bmatrix}1&.\\.&1\end{bmatrix}   & (x+4)^2  & \yng(2)(D) & 1  \\
-20  &  \begin{bmatrix}.&3\\1&1\end{bmatrix}   & x^2+4x+2  & ? & 4  \\
-20  &  \begin{bmatrix}.&2\\1&.\end{bmatrix}   & x^2+3     & ? & 4  \\
-20  &  \begin{bmatrix}.&3\\1&.\end{bmatrix}   & x^2+2     & ? & 4  \\
-20  &  \begin{bmatrix}.&2\\1&2\end{bmatrix}   & x^2+3x+3  & ? & 4  \\
-20  &  \begin{bmatrix}.&4\\1&1\end{bmatrix}   & x^2+4x+1  & ? & 4  \\
-20  &  \begin{bmatrix}.&1\\1&3\end{bmatrix}   & x^2+2x+4  & ? & 4  \\
-20  &  \begin{bmatrix}.&2\\1&3\end{bmatrix}   & x^2+2x+3  & ? & 4  \\
-20  &  \begin{bmatrix}.&1\\1&2\end{bmatrix}   & x^2+3x+4  & ? & 4  \\
-20  &  \begin{bmatrix}.&4\\1&4\end{bmatrix}   & x^2+x+1   & ? & 4  \\
-20  &  \begin{bmatrix}.&3\\1&4\end{bmatrix}   & x^2+x+2   & ? & 4  \\
+20  &  \begin{bmatrix}.&3\\1&1\end{bmatrix}   & x^2+4x+2  & E & 4  \\
+20  &  \begin{bmatrix}.&2\\1&.\end{bmatrix}   & x^2+3     & F & 4  \\
+20  &  \begin{bmatrix}.&3\\1&.\end{bmatrix}   & x^2+2     & G & 4  \\
+20  &  \begin{bmatrix}.&2\\1&2\end{bmatrix}   & x^2+3x+3  & H & 4  \\
+20  &  \begin{bmatrix}.&4\\1&1\end{bmatrix}   & x^2+4x+1  & I & 4  \\
+20  &  \begin{bmatrix}.&1\\1&3\end{bmatrix}   & x^2+2x+4  & J & 4  \\
+20  &  \begin{bmatrix}.&2\\1&3\end{bmatrix}   & x^2+2x+3  & K & 4  \\
+20  &  \begin{bmatrix}.&1\\1&2\end{bmatrix}   & x^2+3x+4  & L & 4  \\
+20  &  \begin{bmatrix}.&4\\1&4\end{bmatrix}   & x^2+x+1   & M & 4  \\
+20  &  \begin{bmatrix}.&3\\1&4\end{bmatrix}   & x^2+x+2   & N & 4  \\
 24  &  \begin{bmatrix}.&4\\1&3\end{bmatrix}   & (x+1)^2   & \yng(1,1)(A) & 5  \\
 24  &  \begin{bmatrix}.&1\\1&1\end{bmatrix}   & (x+2)^2   & \yng(1,1)(B) & 5  \\
 24  &  \begin{bmatrix}.&1\\1&4\end{bmatrix}   & (x+3)^2   & \yng(1,1)(C) & 5  \\
@@ -467,37 +473,46 @@ $$
 \end{array}
 $$
 
+We choose a torus subgroup $T$ of $\GL(2,\Field_5)$ of order 24.
+Then we induce characters of $T$ up to $\GL(2,\Field_5)$ and show the
+irreducible content of these induced representations.
+The blue lines denote orbits of the Frobenius in $\GL(1,\Field_{25})$.
+
 \begin{center}
-\begin{tabular}{r|l|c|c|c}
-\# & representative & char. polynomial & irrep & dim. \\
-\hline
-1  &   & $(x+1)^2$  & ? & ?  \\
-1  &   & $(x+3)^2$  & ? & ?  \\
-1  &   & $(x+2)^2$  & ? & ?  \\
-1  &   & $(x+4)^2$  & ? & ?  \\
-20  &   & $x^2+4x+2$  & ? & ?  \\
-20  &   & $x^2+2x+4$  & ? & ?  \\
-20  &   & $x^2+4x+1$  & ? & ?  \\
-20  &   & $x^2+3x+4$  & ? & ?  \\
-20  &   & $x^2+2$  & ? & ?  \\
-20  &   & $x^2+x+1$  & ? & ?  \\
-20  &   & $x^2+3$  & ? & ?  \\
-20  &   & $x^2+2x+3$  & ? & ?  \\
-20  &   & $x^2+3x+3$  & ? & ?  \\
-20  &   & $x^2+x+2$  & ? & ?  \\
-24  &   & $(x+3)^2$  & ? & ?  \\
-24  &   & $(x+1)^2$  & ? & ?  \\
-24  &   & $(x+4)^2$  & ? & ?  \\
-24  &   & $(x+2)^2$  & ? & ?  \\
-30  &   & $(x+1)(x+3)$  & ? & ?  \\
-30  &   & $(x+1)(x+2)$  & ? & ?  \\
-30  &   & $(x+2)(x+3)$  & ? & ?  \\
-30  &   & $(x+3)(x+4)$  & ? & ?  \\
-30  &   & $(x+1)(x+4)$  & ? & ?  \\
-30  &   & $(x+2)(x+4)$  & ? & ?  \\
-\end{tabular}
+\includegraphics[scale=0.5]{images/cusp_24.pdf}
 \end{center}
 
+%\begin{center}
+%\begin{tabular}{r|l|c|c|c}
+%\# & representative & char. polynomial & irrep & dim. \\
+%\hline
+%1  &   & $(x+1)^2$  & ? & ?  \\
+%1  &   & $(x+3)^2$  & ? & ?  \\
+%1  &   & $(x+2)^2$  & ? & ?  \\
+%1  &   & $(x+4)^2$  & ? & ?  \\
+%20  &   & $x^2+4x+2$  & ? & ?  \\
+%20  &   & $x^2+2x+4$  & ? & ?  \\
+%20  &   & $x^2+4x+1$  & ? & ?  \\
+%20  &   & $x^2+3x+4$  & ? & ?  \\
+%20  &   & $x^2+2$  & ? & ?  \\
+%20  &   & $x^2+x+1$  & ? & ?  \\
+%20  &   & $x^2+3$  & ? & ?  \\
+%20  &   & $x^2+2x+3$  & ? & ?  \\
+%20  &   & $x^2+3x+3$  & ? & ?  \\
+%20  &   & $x^2+x+2$  & ? & ?  \\
+%24  &   & $(x+3)^2$  & ? & ?  \\
+%24  &   & $(x+1)^2$  & ? & ?  \\
+%24  &   & $(x+4)^2$  & ? & ?  \\
+%24  &   & $(x+2)^2$  & ? & ?  \\
+%30  &   & $(x+1)(x+3)$  & ? & ?  \\
+%30  &   & $(x+1)(x+2)$  & ? & ?  \\
+%30  &   & $(x+2)(x+3)$  & ? & ?  \\
+%30  &   & $(x+3)(x+4)$  & ? & ?  \\
+%30  &   & $(x+1)(x+4)$  & ? & ?  \\
+%30  &   & $(x+2)(x+4)$  & ? & ?  \\
+%\end{tabular}
+%\end{center}
+%
 
 
 

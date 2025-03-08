@@ -11,7 +11,12 @@ from numpy import array
 #from bruhat.action import Group, Perm, mulclose_fast
 
 from huygens import config
-config(text="pdflatex")
+config(text="pdflatex",
+latex_header=r"""
+\usepackage[vcentermath]{genyoungtabtikz}
+\Yboxdim{8pt}
+"""
+)
 from huygens.back import arc_to_bezier
 from huygens.front import *
 from huygens.pov import *
@@ -39,10 +44,37 @@ def save(name):
 
 # ------------------------------------------------------
 
+reps = r"""
+\yng(2)(A)\bigoplus \yng(1,1)(C)\bigoplus B\otimes D\bigoplus H\bigoplus J
+A\otimes B\bigoplus C\otimes D\bigoplus E\bigoplus K
+\yng(1,1)(B)\bigoplus \yng(1,1)(D)\bigoplus A\otimes C\bigoplus F
+A\otimes D\bigoplus B\otimes C\bigoplus G\bigoplus I
+\yng(1,1)(A)\bigoplus \yng(1,1)(C)\bigoplus B\otimes D\bigoplus H
+A\otimes B\bigoplus C\otimes D\bigoplus E\bigoplus K
+\yng(2)(B)\bigoplus \yng(1,1)(D)\bigoplus A\otimes C\bigoplus F\bigoplus M
+A\otimes D\bigoplus B\otimes C\bigoplus I\bigoplus N
+\yng(1,1)(A)\bigoplus \yng(1,1)(C)\bigoplus B\otimes D\bigoplus J
+A\otimes B\bigoplus C\otimes D\bigoplus K\bigoplus L
+\yng(1,1)(B)\bigoplus \yng(1,1)(D)\bigoplus A\otimes C\bigoplus F
+A\otimes D\bigoplus B\otimes C\bigoplus I\bigoplus N
+\yng(1,1)(A)\bigoplus \yng(2)(C)\bigoplus B\otimes D\bigoplus H\bigoplus J
+A\otimes B\bigoplus C\otimes D\bigoplus E\bigoplus L
+\yng(1,1)(B)\bigoplus \yng(1,1)(D)\bigoplus A\otimes C\bigoplus M
+A\otimes D\bigoplus B\otimes C\bigoplus G\bigoplus I
+\yng(1,1)(A)\bigoplus \yng(1,1)(C)\bigoplus B\otimes D\bigoplus J
+A\otimes B\bigoplus C\otimes D\bigoplus E\bigoplus L
+\yng(1,1)(B)\bigoplus \yng(2)(D)\bigoplus A\otimes C\bigoplus F\bigoplus M
+A\otimes D\bigoplus B\otimes C\bigoplus G\bigoplus N
+\yng(1,1)(A)\bigoplus \yng(1,1)(C)\bigoplus B\otimes D\bigoplus H
+A\otimes B\bigoplus C\otimes D\bigoplus K\bigoplus L
+\yng(1,1)(B)\bigoplus \yng(1,1)(D)\bigoplus A\otimes C\bigoplus M
+A\otimes D\bigoplus B\otimes C\bigoplus G\bigoplus N
+""".strip().split("\n")
+assert len(reps) == 24, len(reps)
 
 N = 24
 
-R = 10.0
+R = 8.0
 cvs = Canvas()
 
 cvs.stroke(path.circle(0,0,1.3*R), [white])
@@ -58,6 +90,11 @@ for i in range(N):
     cvs.fill(path.circle(x, y, 0.1), [blue])
     m = 1.05
     cvs.text(m*x, m*y, r"$x^{%d}$"%i, st_center)
+
+    deco = reps[i]
+    m = 1.15
+    cvs.text(m*x, m*y, "$%s$"%deco, [Rotate(theta-pi/6)])
+
 
 for i in range(N):
     j = (i*5)%N
