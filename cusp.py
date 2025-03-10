@@ -49,7 +49,6 @@ for p in [2, 3, 5, 7, 11]:
     N = p**2 - 1
     R = 1.6*p
     cvs = Canvas()
-
     
     cvs.stroke(path.circle(0,0,1.3*R), [white])
     
@@ -65,11 +64,6 @@ for p in [2, 3, 5, 7, 11]:
         m = 1.05
         cvs.text(m*x, m*y, r"$x^{%d}$"%i, st_center)
     
-        #deco = reps[i]
-        #m = 1.15
-        #cvs.text(m*x, m*y, "$%s$"%deco, [Rotate(theta-pi/6)])
-    
-    
     for i in range(N):
         j = (i*p)%N
         #if j <= i:
@@ -77,6 +71,35 @@ for p in [2, 3, 5, 7, 11]:
         cvs.stroke(path.line(*pts[i], *pts[j]), [blue.alpha(0.5)] + st_THIck)
     
     save("cusp_%d"%p)
+
+    
+# ------------------------------------------------------
+
+for l in [2,3,4,6]:
+    for p in [2, 3, 5]:
+        N = p**l - 1
+        R = N/8
+        cvs = Canvas()
+        
+        cvs.stroke(path.circle(0,0,1.3*R), [white])
+        
+        pts = []
+        for i in range(N):
+            theta = 2*pi*i/N
+            x = R*sin(theta)
+            y = R*cos(theta)
+            pts.append((x,y))
+        
+            cvs.fill(path.circle(x, y, 0.1), [blue])
+            #m = 1.05
+            #cvs.text(m*x, m*y, r"$x^{%d}$"%i, st_center)
+        
+        for i in range(N):
+            j = (i*p)%N
+            cvs.stroke(path.line(*pts[i], *pts[j]), [blue.alpha(0.5)] + st_THIck)
+        
+        save("cusp_%d_%d"%(p,l))
+    
     
 exit()
 
