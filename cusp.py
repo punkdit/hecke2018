@@ -44,6 +44,46 @@ def save(name):
 
 # ------------------------------------------------------
 
+
+for p in [2, 3, 5, 7, 11]:
+    N = p**2 - 1
+    R = 1.6*p
+    cvs = Canvas()
+
+    
+    cvs.stroke(path.circle(0,0,1.3*R), [white])
+    
+    pts = []
+    for i in range(N):
+    
+        theta = 2*pi*i/N
+        x = R*sin(theta)
+        y = R*cos(theta)
+        pts.append((x,y))
+    
+        cvs.fill(path.circle(x, y, 0.1), [blue])
+        m = 1.05
+        cvs.text(m*x, m*y, r"$x^{%d}$"%i, st_center)
+    
+        #deco = reps[i]
+        #m = 1.15
+        #cvs.text(m*x, m*y, "$%s$"%deco, [Rotate(theta-pi/6)])
+    
+    
+    for i in range(N):
+        j = (i*p)%N
+        #if j <= i:
+        #    continue
+        cvs.stroke(path.line(*pts[i], *pts[j]), [blue.alpha(0.5)] + st_THIck)
+    
+    save("cusp_%d"%p)
+    
+exit()
+
+
+
+# ------------------------------------------------------
+
 reps = r"""
 \yng(2)(A)\bigoplus \yng(1,1)(C)\bigoplus B\otimes D\bigoplus H\bigoplus J
 A\otimes B\bigoplus C\otimes D\bigoplus E\bigoplus K
