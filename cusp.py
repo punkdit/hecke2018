@@ -208,7 +208,6 @@ for (p,l) in [(2,6)]:
         F.cycle = cycle
 
         frob = lambda x : x**p
-        print(F.coeffs, F.op)
 
         # re-order the roots
         #roots = F.roots
@@ -220,11 +219,13 @@ for (p,l) in [(2,6)]:
             assert F.fn(a) == 0
         rows = []
         for a in roots:
-            print("\t", a)
             rows.append([a[i] for i in range(l)])
         A = elim.array(rows)
         if elim.rank(F, A) != l:
             continue # wtf.
+        print(F.coeffs, F.op)
+        for a in roots:
+            print("\t", a)
         #print(elim.shortstr(A))
         B = elim.pseudo_inverse(F, A, check=True)
         #print(elim.shortstr(B))
