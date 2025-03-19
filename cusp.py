@@ -9,6 +9,9 @@ from functools import reduce, lru_cache
 cache = lru_cache(maxsize=None)
 from operator import add, mul
 from math import prod
+from string import ascii_uppercase
+
+labels = ascii_uppercase
 
 
 import numpy
@@ -46,6 +49,104 @@ def save(name):
     print("save(%r)"%(name,))
     cvs.writePDFfile("images/"+name+".pdf")
     cvs.writeSVGfile("images/"+name+".svg")
+
+
+# ------------------------------------------------------
+
+from bruhat.repr_sage import Space, Algebraic, CyclotomicField, dixon_irr, Rep, shortstr
+
+
+def get_cusp(n=2, p=5):
+
+    space = Space(n, p)
+    gl = Algebraic.GL(n,p)
+    gl1 = Algebraic.GL(1,p)
+    print("|GL(%d,%d)| = %d"%(n, p, len(gl)))
+
+    Rep.ring = CyclotomicField(p**n - 1)
+
+    torus = gl.get_torus()
+    assert len(torus) == p**n-1
+
+    G = space.get_permrep(gl)
+    Torus = space.get_permrep(torus)
+
+    table = dixon_irr(G)
+    #print(table)
+
+    print([row[0] for row in table])
+
+    dim = p-1
+    idxs = [idx for idx,row in enumerate(table) if row[0] == dim] # cusp irr's
+
+    rows = []
+    for jdx in range(len(Torus)):
+        r = Rep.fourier(Torus, jdx)
+        #rG = r.induce(G)
+        #print(rG)
+        #print(table * rG.chi)
+
+        chiG = r.chi.induce(G)
+        #assert rG.chi == chiG
+        row = table * chiG
+        rows.append([int(str(row[idx])) for idx in idxs])
+
+    return rows
+
+
+
+for p in [3, 5, 7]:
+    N = p**2 - 1
+
+    rows = get_cusp(2, p)
+    print( shortstr(rows), len(rows) )
+
+    R = 1.6*p
+    cvs = Canvas()
+    
+    cvs.stroke(path.circle(0,0,1.3*R), [white])
+    
+    pts = []
+    for i in range(N):
+    
+        theta = 2*pi*i/N
+        x = R*sin(theta)
+        y = R*cos(theta)
+        pts.append((x,y))
+    
+        cvs.fill(path.circle(x, y, 0.1), [blue])
+        m = 1.05
+        #cvs.text(m*x, m*y, r"$x^{%d}$"%i, st_center)
+
+        deco = []
+        row = rows[i]
+        for j,c in enumerate(row):
+            if c:
+                deco.append(labels[j])
+        if not deco:
+            continue
+        deco = r"\bigoplus ".join(deco)
+        m = 1.05
+        cvs.text(m*x, m*y, "$%s$"%deco, [Rotate(theta-pi/2)]+st_west)
+        #cvs.text(m*x, m*y, "$%s$"%deco, st_center)
+
+    
+    for i in range(N):
+        j = (i*p)%N
+        #if j <= i:
+        #    continue
+        cvs.stroke(path.line(*pts[i], *pts[j]), [blue.alpha(0.5)] + st_THIck)
+    
+    save("cusp_induce_%d"%p)
+
+    
+exit()
+
+# ------------------------------------------------------
+
+
+
+
 
 
 # ------------------------------------------------------
@@ -134,6 +235,8 @@ from bruhat.slow_element import PolynomialRing, FiniteField, GaloisField
 from bruhat.util import cross
 from bruhat.gset import Perm, mulclose, Group
 from bruhat import elim
+
+
 
 def GF(p, l):
     Fp = FiniteField(p)
@@ -245,8 +348,6 @@ for (p,l) in [(2,6)]:
         save("neck_%d_%d_%d"%(p,l,count))
         count += 1
         #break
-
-exit()
 
 # ------------------------------------------------------
 
