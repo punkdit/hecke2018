@@ -96,6 +96,7 @@ def get_cusp(n=2, p=5):
 
 
 for p in [3, 5, 7]:
+    break
     N = p**2 - 1
 
     rows = get_cusp(2, p)
@@ -140,7 +141,7 @@ for p in [3, 5, 7]:
     save("cusp_induce_%d"%p)
 
     
-exit()
+#exit()
 
 # ------------------------------------------------------
 
@@ -190,13 +191,13 @@ def render(p, l, F, gen):
             remain.remove(j)
         orbits.append(orbit)
 
-    cls = {2:black, 3:red, 6:blue}
+    cls = {2:black, 3:red, 4:orange, 6:blue, 8:grey}
     orbits.sort(key = len, reverse=True)
     for orbit in orbits:
         K = len(orbit)
         if K==1:
             continue
-        cl = cls[K]
+        cl = cls.get(K, grey)
         for idx in range(K):
             i,j = orbit[idx], orbit[(idx+1)%K]
             cvs.stroke(
@@ -279,7 +280,7 @@ for p in [2,3,5,7]:
     if p**l > 5**3:
         continue
 
-for (p,l) in [(2,6)]:
+for (p,l) in [(2,2), (2,3), (2,6), (2,4), (2,8)]:
 
     print()
     print("GF(%d^%d)"%(p,l))
